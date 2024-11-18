@@ -11,11 +11,13 @@ class CommonModalItem extends StatelessWidget {
     super.key,
     required this.title,
     required this.child,
+    this.vertical,
     required this.onTap,
   });
 
   String title;
   Widget child;
+  double? vertical;
   Function() onTap;
 
   @override
@@ -27,7 +29,7 @@ class CommonModalItem extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 15),
+            padding: EdgeInsets.symmetric(vertical: vertical ?? 15),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

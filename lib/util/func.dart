@@ -575,3 +575,11 @@ String getFontName(String fontFamily) {
       .indexWhere((element) => element['fontFamily'] == fontFamily);
   return idx != -1 ? fontFamilyList[idx]['name']! : initFontName;
 }
+
+bool isEmptyWeekDays(List<WeekDayClass> weekDays) {
+  return weekDays.any((weekDay) => weekDay.isVisible) == false;
+}
+
+bool isEmptyMonthDays(List<MonthDayClass> monthDays) {
+  return monthDays.any((monthDay) => monthDay.isVisible) == false;
+}

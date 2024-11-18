@@ -98,6 +98,7 @@ flutter:
     - assets/translations/ja.json
     - assets/images/background-image.png
     - assets/images/deep-red.png
+    - assets/images/deep-blue.png
     - assets/svgs/Korea.svg
     - assets/svgs/Japan.svg
     - assets/svgs/Usa.svg
@@ -144,6 +145,9 @@ flutter:
     - assets/svgs/review.svg
     - assets/svgs/share.svg
     - assets/svgs/lock.svg
+    - assets/svgs/pencil.svg
+    - assets/svgs/plus.svg
+    - assets/svgs/expand.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

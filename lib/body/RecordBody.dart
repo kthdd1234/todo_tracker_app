@@ -24,7 +24,10 @@ class _RecordBodyState extends State<RecordBody> {
     return GestureDetector(
       child: Column(
         children: [
-          RecordAppBar(),
+          RecordAppBar(
+            calendarFormat: calendarFormat,
+            onFormatChanged: onFormatChanged,
+          ),
           Expanded(
             child: SingleChildScrollView(
               child: Column(

@@ -72,7 +72,10 @@ class CommonModalSheet extends StatelessWidget {
                             ? Container(
                                 color: Colors.transparent,
                                 padding: const EdgeInsets.only(
-                                    bottom: 10, left: 23, right: 5),
+                                  bottom: 10,
+                                  left: 23,
+                                  right: 5,
+                                ),
                               )
                             : CommonNull(),
                         Expanded(

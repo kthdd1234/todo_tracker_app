@@ -27,7 +27,7 @@ class _RecordContainerTitleState extends State<RecordContainerTitle> {
     showModalBottomSheet(
       isScrollControlled: true,
       context: context,
-      builder: (context) => TitleSettingModalSheet(userInfo: userInfo),
+      builder: (context) => TitleBottomSheet(userInfo: userInfo),
     );
   }
 

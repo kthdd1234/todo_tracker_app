@@ -223,6 +223,28 @@ class TitleInfoClass {
   Map<String, dynamic> toJson() => {'title': title, 'colorName': colorName};
 }
 
+class WeekDayClass {
+  WeekDayClass({
+    required this.id,
+    required this.name,
+    required this.isVisible,
+  });
+
+  int id;
+  String name;
+  bool isVisible;
+}
+
+class MonthDayClass {
+  MonthDayClass({
+    required this.id,
+    required this.isVisible,
+  });
+
+  int id;
+  bool isVisible;
+}
+
 //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ firestore data modeling ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ//
 
 class UserInfoClass {

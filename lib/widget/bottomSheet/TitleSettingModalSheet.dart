@@ -10,16 +10,16 @@ import 'package:todo_tracker_app/util/class.dart';
 import 'package:todo_tracker_app/util/func.dart';
 import 'package:todo_tracker_app/widget/list/ColorList.dart';
 
-class TitleSettingModalSheet extends StatefulWidget {
-  TitleSettingModalSheet({super.key, required this.userInfo});
+class TitleBottomSheet extends StatefulWidget {
+  TitleBottomSheet({super.key, required this.userInfo});
 
   UserInfoClass userInfo;
 
   @override
-  State<TitleSettingModalSheet> createState() => _TitleSettingModalSheetState();
+  State<TitleBottomSheet> createState() => _TitleBottomSheetState();
 }
 
-class _TitleSettingModalSheetState extends State<TitleSettingModalSheet> {
+class _TitleBottomSheetState extends State<TitleBottomSheet> {
   String selectedColorName = '남색';
   TextEditingController controller = TextEditingController();
 

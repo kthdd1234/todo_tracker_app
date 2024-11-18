@@ -8,8 +8,8 @@ import 'package:todo_tracker_app/common/CommonModalSheet.dart';
 import 'package:todo_tracker_app/provider/ThemeProvider.dart';
 import 'package:todo_tracker_app/util/constants.dart';
 
-class CategoryNameBottomSheet extends StatefulWidget {
-  CategoryNameBottomSheet({
+class GroupNameBottomSheet extends StatefulWidget {
+  GroupNameBottomSheet({
     super.key,
     required this.onCompleted,
     // this.groupInfo,
@@ -19,11 +19,10 @@ class CategoryNameBottomSheet extends StatefulWidget {
   Function(String) onCompleted;
 
   @override
-  State<CategoryNameBottomSheet> createState() =>
-      _CategoryNameBottomSheetState();
+  State<GroupNameBottomSheet> createState() => _GroupNameBottomSheetState();
 }
 
-class _CategoryNameBottomSheetState extends State<CategoryNameBottomSheet> {
+class _GroupNameBottomSheetState extends State<GroupNameBottomSheet> {
   TextEditingController controller = TextEditingController();
 
   @override
