@@ -3,7 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:todo_tracker_app/common/CommonSpace.dart';
 import 'package:todo_tracker_app/common/CommonSvgText.dart';
+import 'package:todo_tracker_app/page/GroupPage.dart';
 import 'package:todo_tracker_app/provider/FontSizeProvider.dart';
 import 'package:todo_tracker_app/provider/SelectedDateTimeProvider.dart';
 import 'package:todo_tracker_app/provider/ThemeProvider.dart';
@@ -30,7 +32,7 @@ class RecordAppBar extends StatefulWidget {
 
 class _RecordAppBarState extends State<RecordAppBar> {
   onGroupPage() {
-    //
+    movePage(context: context, page: const GroupPage());
   }
 
   onHorizontalDragEnd(
@@ -93,7 +95,8 @@ class _RecordAppBarState extends State<RecordAppBar> {
               width: 17,
               color: isLight ? darkButtonColor : Colors.white,
             ),
-          )
+          ),
+          CommonSpace(width: 2)
         ],
       ),
     );

@@ -6,8 +6,8 @@ import 'package:todo_tracker_app/provider/ThemeProvider.dart';
 import 'package:todo_tracker_app/util/final.dart';
 import 'package:todo_tracker_app/util/func.dart';
 
-class ColorList extends StatelessWidget {
-  ColorList({
+class CommonColorList extends StatelessWidget {
+  CommonColorList({
     super.key,
     required this.selectedColorName,
     required this.onColor,

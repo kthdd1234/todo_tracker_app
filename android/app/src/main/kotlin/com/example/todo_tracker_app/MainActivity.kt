@@ -1,4 +1,4 @@
-package com.example.todo_tracker_app
+package com.kthdd.todo_tracker_app
 
 import io.flutter.embedding.android.FlutterActivity
 

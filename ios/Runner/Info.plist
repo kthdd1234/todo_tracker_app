@@ -49,6 +49,19 @@
 		<string>This identifier will be used to deliver personalized ads to you.</string>
 		<key>GADApplicationIdentifier</key>
 		<string>ca-app-pub-6804308271128440~1175147222</string>
+		<key>GIDClientID</key>
+		<string>1055038615919-e2dbgrs5d9jcs1sgns1k619pd2f7nu7t.apps.googleusercontent.com</string>
+		<key>CFBundleURLTypes</key>
+		<array>
+			<dict>
+				<key>CFBundleTypeRole</key>
+				<string>Editor</string>
+				<key>CFBundleURLSchemes</key>
+				<array>
+					<string>com.googleusercontent.apps.1055038615919-e2dbgrs5d9jcs1sgns1k619pd2f7nu7t</string>
+				</array>
+			</dict>
+		</array>
 		<key>SKAdNetworkItems</key>
 		<array>
 			<dict>

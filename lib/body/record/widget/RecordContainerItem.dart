@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_tracker_app/body/record/widget/RecordMarkButton.dart';
 import 'package:todo_tracker_app/common/CommonDivider.dart';
@@ -8,14 +8,29 @@ import 'package:todo_tracker_app/common/CommonText.dart';
 import 'package:todo_tracker_app/common/CommonVerticalBar.dart';
 import 'package:todo_tracker_app/provider/FontSizeProvider.dart';
 import 'package:todo_tracker_app/provider/ThemeProvider.dart';
-import 'package:todo_tracker_app/provider/UserInfoProvider.dart';
 import 'package:todo_tracker_app/util/class.dart';
 import 'package:todo_tracker_app/util/final.dart';
+import 'package:todo_tracker_app/widget/bottomSheet/TaskInfoBottomSheet.dart';
 
-class RecordContainerItem extends StatelessWidget {
+class RecordContainerItem extends StatefulWidget {
   const RecordContainerItem({super.key});
 
-  onMark() {}
+  @override
+  State<RecordContainerItem> createState() => _RecordContainerItemState();
+}
+
+class _RecordContainerItemState extends State<RecordContainerItem> {
+  onInfo() {
+    showModalBottomSheet(
+      isScrollControlled: true,
+      context: context,
+      builder: (context) => TaskInfoBottomSheet(),
+    );
+  }
+
+  onMark() {
+    //
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,59 +40,62 @@ class RecordContainerItem extends StatelessWidget {
 
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          child: IntrinsicHeight(
-            child: Row(
-              children: [
-                Expanded(
-                  flex: 0,
-                  child: CommonVerticalBar(
-                    width: 3,
-                    right: 10,
-                    color: isLight ? color.s200 : color.s300,
+        IntrinsicHeight(
+          child: Row(
+            children: [
+              Expanded(
+                child: InkWell(
+                  onTap: onInfo,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Row(
+                      children: [
+                        CommonVerticalBar(
+                          width: 3,
+                          right: 10,
+                          color: isLight ? color.s200 : color.s300,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            CommonText(
+                              text: '책 읽기',
+                              overflow: TextOverflow.clip,
+                              isBold: !isLight,
+                              initFontSize: fontSize,
+                              softWrap: false,
+                              textAlign: TextAlign.start,
+                              isNotTr: true,
+                            ),
+                            '' != null
+                                ? Padding(
+                                    padding: const EdgeInsets.only(top: 2),
+                                    child: CommonText(
+                                      text: '딱 30분만 읽음',
+                                      color:
+                                          isLight ? grey.original : grey.s400,
+                                      initFontSize: fontSize - 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      textAlign: TextAlign.start,
+                                      isBold: !isLight,
+                                      isNotTr: true,
+                                    ),
+                                  )
+                                : const CommonNull()
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      CommonText(
-                        text: '책 읽기',
-                        overflow: TextOverflow.clip,
-                        isBold: !isLight,
-                        initFontSize: fontSize,
-                        softWrap: false,
-                        textAlign: TextAlign.start,
-                        isNotTr: true,
-                      ),
-                      '' != null
-                          ? Padding(
-                              padding: const EdgeInsets.only(top: 2),
-                              child: CommonText(
-                                text: '딱 30분만 읽음',
-                                color: isLight ? grey.original : grey.s400,
-                                initFontSize: fontSize - 2,
-                                overflow: TextOverflow.ellipsis,
-                                textAlign: TextAlign.start,
-                                isBold: !isLight,
-                                isNotTr: true,
-                              ),
-                            )
-                          : const CommonNull()
-                    ],
-                  ),
-                ),
-                const Spacer(),
-                CommonSpace(width: 15),
-                RecordMarkButton(
-                  svgName: 'mark-${'E'}',
-                  width: 20,
-                  color: color.s200,
-                  onTap: onMark,
-                ),
-              ],
-            ),
+              ),
+              RecordMarkButton(
+                svgName: 'mark-${'E'}',
+                width: 20,
+                color: color.s200,
+                onTap: onMark,
+              ),
+            ],
           ),
         ),
         CommonDivider()

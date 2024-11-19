@@ -300,3 +300,133 @@ class UserInfoClass {
         'passwords': passwords,
       };
 }
+
+class GroupInfoClass {
+  GroupInfoClass({
+    required this.gid,
+    required this.name,
+    required this.colorName,
+    required this.createDateTime,
+    required this.isOpen,
+    required this.taskOrderList,
+    required this.taskInfoList,
+  });
+
+  String gid, name, colorName;
+  DateTime createDateTime;
+  bool isOpen;
+  List<TaskOrderClass> taskOrderList;
+  List<TaskInfoClass> taskInfoList;
+
+  GroupInfoClass.fromJson(Map<String, dynamic> json)
+      : gid = json['gid'] as String,
+        name = json['name'] as String,
+        colorName = json['colorName'] as String,
+        createDateTime = timestampToDateTime(json['createDateTime']),
+        isOpen = json['isOpen'] as bool,
+        taskOrderList = taskOrderFromJson(json['taskOrderList']),
+        taskInfoList = taskInfoFromJson(json['taskInfoList']);
+
+  Map<String, dynamic> toJson() => {
+        'gid': gid,
+        'name': name,
+        'colorName': colorName,
+        'createDateTime': createDateTime,
+        'isOpen': isOpen,
+        'taskOrderList': taskOrderToJson(taskOrderList),
+        'taskInfoList': taskInfoToJson(taskInfoList)
+      };
+}
+
+class TaskInfoClass {
+  TaskInfoClass({
+    required this.createDateTime,
+    required this.tid,
+    required this.name,
+    required this.dateTimeType,
+    required this.dateTimeList,
+    required this.recordInfoList,
+  });
+
+  DateTime createDateTime;
+  String tid, name, dateTimeType;
+  List<DateTime> dateTimeList;
+  List<RecordInfoClass> recordInfoList;
+
+  TaskInfoClass.fromJson(Map<String, dynamic> json)
+      : createDateTime = timestampToDateTime(json['createDateTime']),
+        tid = json['tid'] as String,
+        name = json['name'] as String,
+        dateTimeType = json['dateTimeType'] as String,
+        dateTimeList = timestampToDateTimeList(json['dateTimeList']),
+        recordInfoList = recordFromJson(json['recordInfoList']);
+
+  Map<String, dynamic> toJson() => {
+        'createDateTime': createDateTime,
+        'tid': tid,
+        'name': name,
+        'dateTimeType': dateTimeType,
+        'dateTimeList': dateTimeList,
+        'recordInfoList': recordToJson(recordInfoList),
+      };
+}
+
+class TaskOrderClass {
+  TaskOrderClass({required this.dateTimeKey, required this.list});
+
+  int dateTimeKey;
+  List<String> list;
+
+  TaskOrderClass.fromJson(Map<String, dynamic> json)
+      : dateTimeKey = json['dateTimeKey'],
+        list = json['list'];
+
+  Map<String, dynamic> toJson() => {
+        'dateTimeKey': dateTimeKey,
+        'list': list,
+      };
+}
+
+class RecordInfoClass {
+  RecordInfoClass({required this.dateTimeKey, this.memo, this.mark});
+
+  int dateTimeKey;
+  String? memo, mark;
+
+  RecordInfoClass.fromJson(Map<String, dynamic> json)
+      : dateTimeKey = json['dateTimeKey'] as int,
+        memo = json['memo'] as String?,
+        mark = json['mark'] as String?;
+
+  Map<String, dynamic> toJson() =>
+      {'dateTimeKey': dateTimeKey, 'memo': memo, 'mark': mark};
+}
+
+class MemoInfoClass {
+  MemoInfoClass({
+    required this.dateTimeKey,
+    this.path,
+    this.imgUrl,
+    this.text,
+    this.textAlign,
+  });
+
+  int dateTimeKey;
+  String? path, imgUrl, text;
+  TextAlign? textAlign;
+
+  MemoInfoClass.fromJson(Map<String, dynamic> json)
+      : dateTimeKey = json['dateTimeKey'] as int,
+        path = json['path'] as String?,
+        imgUrl = json['imgUrl'] as String?,
+        text = json['text'] as String?,
+        textAlign = stringToTextAlign(json['textAlign']);
+
+  Map<String, dynamic> toJson() => {
+        'dateTimeKey': dateTimeKey,
+        'path': path,
+        'text': text,
+        'imgUrl': imgUrl,
+        'textAlign': textAlignToString(textAlign)
+      };
+}

@@ -29,7 +29,7 @@ class CalendarDateTimeMaker extends StatelessWidget {
         width: size,
         height: size,
         decoration: BoxDecoration(
-          color: isLight ? color.s200 : color.s300,
+          color: isLight ? color.s300 : color.s400,
           borderRadius: BorderRadius.circular(borderRadius ?? 100),
         ),
         child: Padding(

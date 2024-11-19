@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1055038615919",
+    "project_id": "todo-tracker-project-a3af0",
+    "storage_bucket": "todo-tracker-project-a3af0.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1055038615919:android:665f1c7ae40e2704ba789a",
+        "android_client_info": {
+          "package_name": "com.kthdd.todo_tracker_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1055038615919-2ef73jh700tlb7m221tim5sle2m19bvl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCedR-V1L29NTl5ww0rykTa35hA6vYXkUk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1055038615919-2ef73jh700tlb7m221tim5sle2m19bvl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

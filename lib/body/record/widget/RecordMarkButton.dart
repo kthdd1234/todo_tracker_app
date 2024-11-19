@@ -24,6 +24,8 @@ class RecordMarkButton extends StatelessWidget {
         onTap: onTap,
         child: Padding(
           padding: const EdgeInsets.only(
+            top: 10,
+            bottom: 10,
             left: 15,
             right: 3,
           ),

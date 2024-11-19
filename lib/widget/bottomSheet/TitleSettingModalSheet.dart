@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_tracker_app/common/CommonColorList.dart';
 import 'package:todo_tracker_app/common/CommonContainer.dart';
 import 'package:todo_tracker_app/common/CommonModalItem.dart';
 import 'package:todo_tracker_app/common/CommonModalSheet.dart';
@@ -8,7 +9,6 @@ import 'package:todo_tracker_app/common/CommonSpace.dart';
 import 'package:todo_tracker_app/provider/ThemeProvider.dart';
 import 'package:todo_tracker_app/util/class.dart';
 import 'package:todo_tracker_app/util/func.dart';
-import 'package:todo_tracker_app/widget/list/ColorList.dart';
 
 class TitleBottomSheet extends StatefulWidget {
   TitleBottomSheet({super.key, required this.userInfo});
@@ -63,7 +63,7 @@ class _TitleBottomSheetState extends State<TitleBottomSheet> {
               CommonModalItem(
                 title: '색상',
                 onTap: () {},
-                child: ColorList(
+                child: CommonColorList(
                   selectedColorName: selectedColorName,
                   onColor: onColor,
                 ),

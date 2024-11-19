@@ -9,16 +9,14 @@ import 'package:todo_tracker_app/body/TableBody.dart';
 import 'package:todo_tracker_app/common/CommonBackground.dart';
 import 'package:todo_tracker_app/common/CommonScaffold.dart';
 import 'package:todo_tracker_app/provider/BottomTabIndexProvider.dart';
-import 'package:todo_tracker_app/provider/FontSizeProvider.dart';
-import 'package:todo_tracker_app/provider/PremiumProvider.dart';
 import 'package:todo_tracker_app/provider/SelectedDateTimeProvider.dart';
 import 'package:todo_tracker_app/provider/ThemeProvider.dart';
 import 'package:todo_tracker_app/provider/TitleDateTimeProvider.dart';
-import 'package:todo_tracker_app/provider/UserInfoProvider.dart';
-import 'package:todo_tracker_app/util/class.dart';
+import 'package:todo_tracker_app/service/InterstitialAdService.dart';
 import 'package:todo_tracker_app/util/func.dart';
 import 'package:todo_tracker_app/widget/button/FnbButton.dart';
-import 'package:todo_tracker_app/widget/button/SpeedDialButton.dart';
+
+InterstitialAdService interstitialAdService = InterstitialAdService();
 
 class HomePage extends StatefulWidget {
   HomePage({super.key, required this.locale});

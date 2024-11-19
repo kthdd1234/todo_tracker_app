@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -319,38 +320,60 @@ String getLocaleName(String locale) {
   }
 }
 
-// onSegmentedWidget({
-//   required String title,
-//   required SegmentedTypeEnum type,
-//   required SegmentedTypeEnum selected,
-//   required bool isLight,
-//   required ColorClass selectedColor,
-//   required double fontSize,
-//   Map<String, String>? nameArgs,
-// }) {
-//   Color color = isLight
-//       ? selected == type
-//           ? selectedColor.s400
-//           : grey.original
-//       : selected == type
-//           ? selectedColor.s300
-//           : grey.s400;
-
-//   return CommonText(
-//     text: title,
-//     nameArgs: nameArgs,
-//     initFontSize: fontSize - 1,
-//     color: color,
-//     isBold: !isLight,
-//   );
-// }
-
 DateTime timestampToDateTime(timestamp) {
   return DateTime.parse(timestamp.toDate().toString());
 }
 
+List<DateTime> timestampToDateTimeList(List<dynamic> timestampList) {
+  return timestampList
+      .map((timestamp) => timestampToDateTime(timestamp))
+      .toList();
+}
+
 List<String> dynamicToIdList(List<dynamic> dynamicList) {
   return dynamicList.map((id) => id.toString()).toList();
+}
+
+List<Map<String, dynamic>> taskOrderToJson(List<TaskOrderClass> list) {
+  return list.map((info) => info.toJson()).toList();
+}
+
+List<Map<String, dynamic>> taskInfoToJson(List<TaskInfoClass> list) {
+  return list.map((info) => info.toJson()).toList();
+}
+
+List<RecordInfoClass> recordFromJson(List<dynamic> list) {
+  return list.map((info) => RecordInfoClass.fromJson(info)).toList();
+}
+
+List<Map<String, dynamic>> recordToJson(List<RecordInfoClass> list) {
+  return list.map((info) => info.toJson()).toList();
+}
+
+List<TaskOrderClass> taskOrderFromJson(List<dynamic> list) {
+  return list
+      .map(
+        (info) => TaskOrderClass(
+          dateTimeKey: info['dateTimeKey'],
+          list: dynamicToIdList(info['list']),
+        ),
+      )
+      .toList();
+}
+
+List<TaskInfoClass> taskInfoFromJson(List<dynamic> list) {
+  return list
+      .map(
+        (info) => TaskInfoClass(
+          createDateTime: timestampToDateTime(info['createDateTime']),
+          tid: info['tid'],
+          name: info['name'],
+          dateTimeType: info['dateTimeType'],
+          dateTimeList: timestampToDateTimeList(info['dateTimeList']),
+          recordInfoList: recordFromJson(info['recordInfoList']),
+        ),
+      )
+      .toList();
 }
 
 String? textAlignToString(TextAlign? textAlign) {
@@ -582,4 +605,31 @@ bool isEmptyWeekDays(List<WeekDayClass> weekDays) {
 
 bool isEmptyMonthDays(List<MonthDayClass> monthDays) {
   return monthDays.any((monthDay) => monthDay.isVisible) == false;
+}
+
+Future<Uint8List> getCacheData(String url) async {
+  File file = await DefaultCacheManager().getSingleFile(url);
+  return file.readAsBytes();
+}
+
+Future<void> removeImage({required String imgUrl, required String path}) async {
+  await DefaultCacheManager().removeFile(imgUrl);
+  // await storageRef.child(path).delete();
+}
+
+Future<String?> getDownloadUrl(String imgUrl) async {
+  // try {
+  //   Reference imgRef = storageRef.child(imgUrl);
+  //   return await imgRef.getDownloadURL();
+  // } catch (e) {
+  //   log('$e');
+  //   return null;
+  // }
+}
+
+String getImagePath(String mid) {
+  // String uid = auth.currentUser!.uid;
+  String uid = '';
+
+  return '$uid/$mid/img.jpg';
 }

@@ -23,6 +23,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:provider/provider.dart';
 import 'package:privacy_screen/privacy_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 // PurchasesConfiguration _configuration =
 //     PurchasesConfiguration(Platform.isIOS ? appleApiKey : googleApiKey);
@@ -35,6 +37,9 @@ void main() async {
   // await Purchases.configure(_configuration);
   await MobileAds.instance.initialize();
   await dotenv.load(fileName: ".env");
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   runApp(
     MultiProvider(
