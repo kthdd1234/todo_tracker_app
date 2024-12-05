@@ -633,3 +633,102 @@ String getImagePath(String mid) {
 
   return '$uid/$mid/img.jpg';
 }
+
+String getGroupName(String locale) {
+  return {
+    'ko': '할 일 리스트',
+    'en': 'Todo List',
+    'ja': 'やることリスト',
+  }[locale]!;
+}
+
+getGroupInfoOrderList(
+  List<String> groupOrderList,
+  List<GroupInfoClass> groupInfoList,
+) {
+  groupInfoList.sort((groupA, groupB) {
+    int indexA = groupOrderList.indexOf(groupA.gid);
+    int indexB = groupOrderList.indexOf(groupB.gid);
+
+    return indexA.compareTo(indexB);
+  });
+
+  return groupInfoList;
+}
+
+List<RecordItemClass> getTaskInfoList({
+  required String locale,
+  required DateTime targetDateTime,
+  required List<GroupInfoClass> groupInfoList,
+  required List<TaskOrderClass> taskOrderList,
+}) {
+  List<RecordItemClass> recordItemList = [];
+
+  for (final groupInfo in groupInfoList) {
+    List<TaskInfoClass> taskFilterList = groupInfo.taskInfoList.where((task) {
+      String cDateTimeType = task.dateTimeType;
+      List<DateTime> cDateTimeList = task.dateTimeList;
+
+      if (cDateTimeType == dateTimeType.selection) {
+        return cDateTimeList.any(
+          (dateTime) => dateTimeKey(dateTime) == dateTimeKey(targetDateTime),
+        );
+      } else {
+        return cDateTimeList.any((dateTime) {
+          if (cDateTimeType == dateTimeType.everyWeek) {
+            return eFormatter(locale: locale, dateTime: dateTime) ==
+                eFormatter(locale: locale, dateTime: targetDateTime);
+          } else if (cDateTimeType == dateTimeType.everyMonth) {
+            return dateTime.day == targetDateTime.day;
+          }
+
+          return false;
+        });
+      }
+    }).toList();
+
+    for (final taskInfo in taskFilterList) {
+      recordItemList.add(
+        RecordItemClass(groupInfo: groupInfo, taskInfo: taskInfo),
+      );
+    }
+
+    int index = taskOrderList.indexWhere(
+      (taskOrder) => taskOrder.dateTimeKey == dateTimeKey(targetDateTime),
+    );
+    List<String> taskOrderIdList = index != -1 ? taskOrderList[index].list : [];
+
+    taskFilterList.sort((taskA, taskB) {
+      int indexA = taskOrderIdList.indexOf(taskA.tid);
+      int indexB = taskOrderIdList.indexOf(taskB.tid);
+
+      indexA = indexA == -1 ? 999999 : indexA;
+      indexB = indexB == -1 ? 999999 : indexB;
+
+      return indexA.compareTo(indexB);
+    });
+  }
+
+  return recordItemList;
+}
+
+int getRecordIndex({
+  required List<RecordInfoClass> recordInfoList,
+  required DateTime targetDateTime,
+}) {
+  return recordInfoList.indexWhere(
+    (recordInfo) => recordInfo.dateTimeKey == dateTimeKey(targetDateTime),
+  );
+}
+
+RecordInfoClass? getRecordInfo({
+  required List<RecordInfoClass> recordInfoList,
+  required DateTime targetDateTime,
+}) {
+  int index = getRecordIndex(
+    recordInfoList: recordInfoList,
+    targetDateTime: targetDateTime,
+  );
+
+  return index != -1 ? recordInfoList[index] : null;
+}

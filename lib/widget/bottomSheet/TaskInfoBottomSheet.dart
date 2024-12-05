@@ -11,6 +11,7 @@ import 'package:todo_tracker_app/common/CommonSpace.dart';
 import 'package:todo_tracker_app/common/CommonTag.dart';
 import 'package:todo_tracker_app/common/CommonText.dart';
 import 'package:todo_tracker_app/provider/FontSizeProvider.dart';
+import 'package:todo_tracker_app/provider/SelectedDateTimeProvider.dart';
 import 'package:todo_tracker_app/provider/ThemeProvider.dart';
 import 'package:todo_tracker_app/util/class.dart';
 import 'package:todo_tracker_app/util/constants.dart';
@@ -20,7 +21,9 @@ import 'package:todo_tracker_app/widget/bottomSheet/TaskBottomSheet.dart';
 import 'package:todo_tracker_app/widget/dateTime/CalendarDateTimeMaker.dart';
 
 class TaskInfoBottomSheet extends StatefulWidget {
-  TaskInfoBottomSheet({super.key});
+  TaskInfoBottomSheet({super.key, required this.groupInfo});
+
+  GroupInfoClass groupInfo;
 
   @override
   State<TaskInfoBottomSheet> createState() => _TaskInfoBottomSheetState();
@@ -134,15 +137,6 @@ class _TaskInfoBottomSheetState extends State<TaskInfoBottomSheet> {
     setState(() => titleDateTime = dateTime);
   }
 
-  onEdit() {
-    navigatorPop(context);
-    showModalBottomSheet(
-      isScrollControlled: true,
-      context: context,
-      builder: (context) => const TaskBottomSheet(),
-    );
-  }
-
   onRemove() {
     //
   }
@@ -152,8 +146,21 @@ class _TaskInfoBottomSheetState extends State<TaskInfoBottomSheet> {
     bool isLight = context.watch<ThemeProvider>().isLight;
     String locale = context.locale.toString();
     ColorClass color = getColorClass('남색');
-
     double fontSize = context.watch<FontSizeProvider>().fintSize;
+    DateTime selectedDateTime =
+        context.watch<SelectedDateTimeProvider>().seletedDateTime;
+
+    onEdit() {
+      navigatorPop(context);
+      showModalBottomSheet(
+        isScrollControlled: true,
+        context: context,
+        builder: (context) => TaskBottomSheet(
+          groupInfo: widget.groupInfo,
+          selectedDateTime: selectedDateTime,
+        ),
+      );
+    }
 
     return CommonModalSheet(
       title: '테스트용',

@@ -1,19 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_tracker_app/common/CommonSvgButton.dart';
+import 'package:todo_tracker_app/util/class.dart';
+import 'package:todo_tracker_app/util/func.dart';
 
-class RecordMarkButton extends StatelessWidget {
-  RecordMarkButton({
+class RecordItemMaker extends StatelessWidget {
+  RecordItemMaker({
     super.key,
-    required this.svgName,
     required this.color,
-    required this.width,
     required this.onTap,
+    this.mark,
   });
 
-  String svgName;
-  Color color;
-  double width;
+  String? mark;
+  ColorClass color;
   Function() onTap;
 
   @override
@@ -30,9 +30,9 @@ class RecordMarkButton extends StatelessWidget {
             right: 3,
           ),
           child: CommonSvgButton(
-            width: width,
-            name: svgName,
-            color: color,
+            width: 20,
+            name: 'mark-${mark ?? 'E'}',
+            color: color.s200,
             onTap: onTap,
           ),
         ),

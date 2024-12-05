@@ -4,8 +4,12 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:todo_tracker_app/method/UserMethod.dart';
 // import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:todo_tracker_app/page/HomePage.dart';
+import 'package:todo_tracker_app/page/IntroPage.dart';
+import 'package:todo_tracker_app/page/LoadingPage.dart';
+import 'package:todo_tracker_app/page/MemoInfoListProvider.dart';
 import 'package:todo_tracker_app/provider/BottomTabIndexProvider.dart';
 import 'package:todo_tracker_app/provider/FontSizeProvider.dart';
 import 'package:todo_tracker_app/provider/GroupInfoListProvider.dart';
@@ -15,6 +19,7 @@ import 'package:todo_tracker_app/provider/SelectedDateTimeProvider.dart';
 import 'package:todo_tracker_app/provider/ThemeProvider.dart';
 import 'package:todo_tracker_app/provider/TitleDateTimeProvider.dart';
 import 'package:todo_tracker_app/provider/UserInfoProvider.dart';
+import 'package:todo_tracker_app/util/class.dart';
 import 'package:todo_tracker_app/util/constants.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -53,6 +58,7 @@ void main() async {
         ChangeNotifierProvider(create: (context) => UserInfoProvider()),
         ChangeNotifierProvider(create: (context) => GroupInfoListProvider()),
         ChangeNotifierProvider(create: (context) => FontSizeProvider()),
+        ChangeNotifierProvider(create: (context) => MemoInfoListProvider()),
       ],
       child: EasyLocalization(
         supportedLocales: const [Locale('ko'), Locale('en'), Locale('ja')],
@@ -72,29 +78,21 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
-  /* start: 로그인 페이지, loading: 로딩 페이지, succeed: 홈 페이지, locked: 잠금 페이지 */
+  /* start: 로그인 페이지, loading: 로딩 페이지, succeed: 홈 페이지 */
   String loginStatus = 'loading';
 
   initializeLogin() {
-    // auth.authStateChanges().listen((user) async {
-    //   if (mounted) {
-    //     if (user != null) {
-    //       bool isUser = await userMethod.isUser;
-    //       UserInfoClass? userInfo = await userMethod.getUserInfo;
-    //       bool isPasswords = userInfo?.passwords != null;
+    auth.authStateChanges().listen((user) async {
+      if (mounted) {
+        if (user != null) {
+          loginStatus = await userMethod.isUser ? 'succeed' : "start";
+        } else {
+          loginStatus = 'start';
+        }
 
-    //       loginStatus = isUser
-    //           ? isPasswords
-    //               ? 'locked'
-    //               : 'succeed'
-    //           : "start";
-    //     } else {
-    //       loginStatus = 'start';
-    //     }
-
-    //     setState(() {});
-    //   }
-    // });
+        setState(() {});
+      }
+    });
   }
 
   initializeATT() async {
@@ -179,13 +177,13 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     String locale = context.locale.toString();
-    // UserInfoClass userInfo = context.watch<UserInfoProvider>().userInfo;
+    UserInfoClass userInfo = context.watch<UserInfoProvider>().userInfo;
 
     context.watch<ReloadProvider>().isReload;
 
     ThemeData themeData = ThemeData(
       useMaterial3: true,
-      fontFamily: initFontFamily, // userInfo.fontFamily
+      fontFamily: userInfo.fontFamily,
       cupertinoOverrideTheme: const CupertinoThemeData(applyThemeToAll: true),
     );
 
@@ -197,11 +195,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       locale: context.locale,
       debugShowCheckedModeBanner: false,
       home: {
-        'loading': HomePage(locale: locale),
-        // 'loading': const LoadingPage(),
-        // 'start': const IntroPage(),
-        // 'succeed': HomePage(locale: locale)
-        // 'locked': EnterPasswordPage(),
+        'loading': const LoadingPage(),
+        'start': const IntroPage(),
+        'succeed': HomePage(locale: locale)
       }[loginStatus],
     );
   }

@@ -7,7 +7,7 @@ import 'package:todo_tracker_app/common/CommonNull.dart';
 import 'package:todo_tracker_app/common/CommonScaffold.dart';
 import 'package:todo_tracker_app/common/CommonSpace.dart';
 import 'package:todo_tracker_app/common/CommonText.dart';
-import 'package:todo_tracker_app/util/AuthService.dart';
+import 'package:todo_tracker_app/service/AuthService.dart';
 import 'package:todo_tracker_app/util/class.dart';
 import 'package:todo_tracker_app/util/constants.dart';
 

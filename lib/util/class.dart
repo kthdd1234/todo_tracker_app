@@ -166,37 +166,6 @@ class DateTimeTypeClass {
   String selection, everyWeek, everyMonth;
 }
 
-class RepeatWeeklyClass {
-  RepeatWeeklyClass({
-    required this.id,
-    required this.name,
-    required this.isVisible,
-  });
-
-  int id;
-  String name;
-  bool isVisible;
-}
-
-class RepeatMonthlyClass {
-  RepeatMonthlyClass({required this.id, required this.isVisible});
-
-  int id;
-  bool isVisible;
-}
-
-class RecordItemClass {
-  // RecordItemClass({
-  //   required this.categoryInfo,
-  //   required this.recordInfo,
-  //   required this.householdInfo,
-  // });
-
-  // CategoryInfoClass categoryInfo;
-  // RecordInfoClass recordInfo;
-  // HouseholdInfoClass householdInfo;
-}
-
 class GraphData {
   GraphData(this.x, this.y);
 
@@ -245,6 +214,29 @@ class MonthDayClass {
   bool isVisible;
 }
 
+class RecordItemClass {
+  RecordItemClass({required this.groupInfo, required this.taskInfo});
+
+  GroupInfoClass groupInfo;
+  TaskInfoClass taskInfo;
+}
+
+class MarkClass {
+  MarkClass({
+    required this.E,
+    required this.O,
+    required this.X,
+    required this.M,
+    required this.T,
+  });
+
+  markName(String mark) {
+    return {'O': '완료했어요', 'X': '안했어요', 'M': '덜 했어요', 'T': '내일 할래요'}[mark]!;
+  }
+
+  String E, O, X, M, T;
+}
+
 //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ firestore data modeling ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ//
 
 class UserInfoClass {
@@ -259,6 +251,7 @@ class UserInfoClass {
     required this.appStartIndex,
     required this.titleInfo,
     required this.groupOrderList,
+    required this.taskOrderList,
     required this.fontSize,
     this.passwords,
   });
@@ -268,6 +261,7 @@ class UserInfoClass {
   int appStartIndex;
   TitleInfoClass titleInfo;
   List<String> groupOrderList;
+  List<TaskOrderClass> taskOrderList;
   double fontSize;
   String? passwords;
 
@@ -282,6 +276,7 @@ class UserInfoClass {
         theme = json['theme'] as String,
         titleInfo = TitleInfoClass.fromJson(json['titleInfo']),
         groupOrderList = dynamicToIdList(json['groupOrderList']),
+        taskOrderList = taskOrderFromJson(json['taskOrderList']),
         fontSize = json['fontSize'] as double,
         passwords = json['passwords'] as String?;
 
@@ -296,6 +291,7 @@ class UserInfoClass {
         'theme': theme,
         'titleInfo': titleInfo.toJson(),
         'groupOrderList': groupOrderList,
+        'taskOrderList': taskOrderToJson(taskOrderList),
         'fontSize': fontSize,
         'passwords': passwords,
       };
@@ -308,14 +304,12 @@ class GroupInfoClass {
     required this.colorName,
     required this.createDateTime,
     required this.isOpen,
-    required this.taskOrderList,
     required this.taskInfoList,
   });
 
   String gid, name, colorName;
   DateTime createDateTime;
   bool isOpen;
-  List<TaskOrderClass> taskOrderList;
   List<TaskInfoClass> taskInfoList;
 
   GroupInfoClass.fromJson(Map<String, dynamic> json)
@@ -324,7 +318,6 @@ class GroupInfoClass {
         colorName = json['colorName'] as String,
         createDateTime = timestampToDateTime(json['createDateTime']),
         isOpen = json['isOpen'] as bool,
-        taskOrderList = taskOrderFromJson(json['taskOrderList']),
         taskInfoList = taskInfoFromJson(json['taskInfoList']);
 
   Map<String, dynamic> toJson() => {
@@ -333,7 +326,6 @@ class GroupInfoClass {
         'colorName': colorName,
         'createDateTime': createDateTime,
         'isOpen': isOpen,
-        'taskOrderList': taskOrderToJson(taskOrderList),
         'taskInfoList': taskInfoToJson(taskInfoList)
       };
 }

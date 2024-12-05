@@ -1,42 +1,55 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_tracker_app/body/record/widget/RecordMarkButton.dart';
+import 'package:todo_tracker_app/body/record/widget/item/RecordItemBar.dart';
+import 'package:todo_tracker_app/body/record/widget/item/RecordItemMemo.dart';
+import 'package:todo_tracker_app/body/record/widget/item/RecordItemName.dart';
+import 'package:todo_tracker_app/body/record/widget/item/RecordItemMarker.dart';
 import 'package:todo_tracker_app/common/CommonDivider.dart';
-import 'package:todo_tracker_app/common/CommonNull.dart';
-import 'package:todo_tracker_app/common/CommonSpace.dart';
-import 'package:todo_tracker_app/common/CommonText.dart';
-import 'package:todo_tracker_app/common/CommonVerticalBar.dart';
 import 'package:todo_tracker_app/provider/FontSizeProvider.dart';
-import 'package:todo_tracker_app/provider/ThemeProvider.dart';
+import 'package:todo_tracker_app/provider/SelectedDateTimeProvider.dart';
 import 'package:todo_tracker_app/util/class.dart';
-import 'package:todo_tracker_app/util/final.dart';
+import 'package:todo_tracker_app/util/func.dart';
 import 'package:todo_tracker_app/widget/bottomSheet/TaskInfoBottomSheet.dart';
+import 'package:todo_tracker_app/widget/popup/MarkPopup.dart';
 
-class RecordContainerItem extends StatefulWidget {
-  const RecordContainerItem({super.key});
+class RecordContainerItem extends StatelessWidget {
+  RecordContainerItem({super.key, required this.recordItem});
 
-  @override
-  State<RecordContainerItem> createState() => _RecordContainerItemState();
-}
-
-class _RecordContainerItemState extends State<RecordContainerItem> {
-  onInfo() {
-    showModalBottomSheet(
-      isScrollControlled: true,
-      context: context,
-      builder: (context) => TaskInfoBottomSheet(),
-    );
-  }
-
-  onMark() {
-    //
-  }
+  RecordItemClass recordItem;
 
   @override
   Widget build(BuildContext context) {
-    bool isLight = context.watch<ThemeProvider>().isLight;
     double fontSize = context.watch<FontSizeProvider>().fintSize;
-    ColorClass color = indigo;
+    DateTime selectedDateTime =
+        context.watch<SelectedDateTimeProvider>().seletedDateTime;
+
+    GroupInfoClass groupInfo = recordItem.groupInfo;
+    TaskInfoClass taskInfo = recordItem.taskInfo;
+    ColorClass color = getColorClass(groupInfo.colorName);
+    RecordInfoClass? recordInfo = getRecordInfo(
+      recordInfoList: taskInfo.recordInfoList,
+      targetDateTime: selectedDateTime,
+    );
+
+    onInfo() {
+      showModalBottomSheet(
+        isScrollControlled: true,
+        context: context,
+        builder: (context) => TaskInfoBottomSheet(groupInfo: groupInfo),
+      );
+    }
+
+    onMark() {
+      showDialog(
+        context: context,
+        builder: (context) => MarkPopup(
+          fontSize: fontSize,
+          groupInfo: groupInfo,
+          taskInfo: taskInfo,
+          selectedDateTime: selectedDateTime,
+        ),
+      );
+    }
 
     return Column(
       children: [
@@ -47,41 +60,15 @@ class _RecordContainerItemState extends State<RecordContainerItem> {
                 child: InkWell(
                   onTap: onInfo,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    padding: const EdgeInsets.symmetric(vertical: 15),
                     child: Row(
                       children: [
-                        CommonVerticalBar(
-                          width: 3,
-                          right: 10,
-                          color: isLight ? color.s200 : color.s300,
-                        ),
+                        RecordItemBar(color: color),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            CommonText(
-                              text: '책 읽기',
-                              overflow: TextOverflow.clip,
-                              isBold: !isLight,
-                              initFontSize: fontSize,
-                              softWrap: false,
-                              textAlign: TextAlign.start,
-                              isNotTr: true,
-                            ),
-                            '' != null
-                                ? Padding(
-                                    padding: const EdgeInsets.only(top: 2),
-                                    child: CommonText(
-                                      text: '딱 30분만 읽음',
-                                      color:
-                                          isLight ? grey.original : grey.s400,
-                                      initFontSize: fontSize - 2,
-                                      overflow: TextOverflow.ellipsis,
-                                      textAlign: TextAlign.start,
-                                      isBold: !isLight,
-                                      isNotTr: true,
-                                    ),
-                                  )
-                                : const CommonNull()
+                            RecordItemName(name: taskInfo.name),
+                            RecordItemMemo(memo: recordInfo?.memo),
                           ],
                         ),
                       ],
@@ -89,10 +76,9 @@ class _RecordContainerItemState extends State<RecordContainerItem> {
                   ),
                 ),
               ),
-              RecordMarkButton(
-                svgName: 'mark-${'E'}',
-                width: 20,
-                color: color.s200,
+              RecordItemMaker(
+                mark: recordInfo?.mark,
+                color: color,
                 onTap: onMark,
               ),
             ],

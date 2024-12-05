@@ -2,60 +2,69 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_tracker_app/common/CommonContainer.dart';
-import 'package:todo_tracker_app/common/CommonDivider.dart';
 import 'package:todo_tracker_app/common/CommonModalItem.dart';
 import 'package:todo_tracker_app/common/CommonModalSheet.dart';
 import 'package:todo_tracker_app/common/CommonOutlineInputField.dart';
 import 'package:todo_tracker_app/common/CommonSpace.dart';
-import 'package:todo_tracker_app/common/CommonSvgText.dart';
 import 'package:todo_tracker_app/common/CommonTag.dart';
+import 'package:todo_tracker_app/common/CommonText.dart';
+import 'package:todo_tracker_app/method/UserMethod.dart';
+import 'package:todo_tracker_app/provider/FontSizeProvider.dart';
 import 'package:todo_tracker_app/provider/ThemeProvider.dart';
 import 'package:todo_tracker_app/util/class.dart';
-import 'package:todo_tracker_app/util/enum.dart';
 import 'package:todo_tracker_app/util/final.dart';
 import 'package:todo_tracker_app/util/func.dart';
 import 'package:todo_tracker_app/widget/bottomSheet/DateTimeBottomSheet.dart';
-import 'package:todo_tracker_app/widget/bottomSheet/GroupBottomSheet.dart';
+import 'package:todo_tracker_app/widget/bottomSheet/GroupListBottomSheet.dart';
 
 class TaskBottomSheet extends StatefulWidget {
-  const TaskBottomSheet({super.key});
+  TaskBottomSheet({
+    super.key,
+    required this.selectedDateTime,
+    required this.groupInfo,
+    this.taskInfo,
+  });
+
+  GroupInfoClass groupInfo;
+  TaskInfoClass? taskInfo;
+  DateTime selectedDateTime;
 
   @override
   State<TaskBottomSheet> createState() => _TaskBottomSheetState();
 }
 
 class _TaskBottomSheetState extends State<TaskBottomSheet> {
+  DateTimeInfoClass dateTimeInfo = DateTimeInfoClass(
+    type: dateTimeType.selection,
+    dateTimeList: [DateTime.now()],
+  );
+  GroupInfoClass selectedGroupInfo = GroupInfoClass(
+    gid: '할 일',
+    name: '할 일',
+    colorName: '남색',
+    createDateTime: DateTime.now(),
+    isOpen: true,
+    taskInfoList: [],
+  );
   TextEditingController controller = TextEditingController();
 
-  onDateTime() {
-    DateTime now = DateTime.now();
-    // String colorName = widget.groupInfo.colorName;
-    // ColorClass color = getColorClass(colorName);
-    String colorName = '남색';
-    ColorClass color = getColorClass(colorName);
+  @override
+  void initState() {
+    selectedGroupInfo = widget.groupInfo;
 
-    // 날짜
-    // DateTimeInfoClass dateTimeInfo = DateTimeInfoClass(
-    //   type: widget.taskInfo.dateTimeType,
-    //   dateTimeList: widget.taskInfo.dateTimeList,
-    // );
-
-    DateTimeInfoClass dateTimeInfo = DateTimeInfoClass(
-      type: dateTimeType.selection,
-      dateTimeList: [DateTime.now()],
-    );
-
-    onUpdate(DateTimeInfoClass dateTimeInfo) async {
-      // String groupId = widget.groupInfo.gid;
-
-      // widget.taskInfo.dateTimeType = taskDateTimeInfo.type;
-      // widget.taskInfo.dateTimeList = taskDateTimeInfo.dateTimeList;
-
-      // await groupMethod.updateGroup(gid: groupId, groupInfo: widget.groupInfo);
-
-      navigatorPop(context);
-      setState(() {});
+    if (widget.taskInfo != null) {
+      dateTimeInfo.type = widget.taskInfo!.dateTimeType;
+      dateTimeInfo.dateTimeList = widget.taskInfo!.dateTimeList;
+      controller.text = widget.taskInfo!.name;
+    } else {
+      dateTimeInfo.dateTimeList = [widget.selectedDateTime];
     }
+
+    super.initState();
+  }
+
+  onDateTime() {
+    ColorClass color = getColorClass(selectedGroupInfo.colorName);
 
     showModalBottomSheet(
       isScrollControlled: true,
@@ -63,45 +72,112 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
       builder: (context) => DateTimeBottomSheet(
         color: color,
         dateTimeInfo: dateTimeInfo,
-        onSelection: (selectionDays) {
-          dateTimeInfo.type = dateTimeType.selection;
-          dateTimeInfo.dateTimeList = selectionDays;
-
-          onUpdate(dateTimeInfo);
-        },
-        onWeek: (weekDays) {
-          dateTimeInfo.type = dateTimeType.everyWeek;
-          dateTimeInfo.dateTimeList = weekDays
-              .where((weekDay) => weekDay.isVisible)
-              .map((weekday) =>
-                  now.subtract(Duration(days: now.weekday - weekday.id)))
-              .toList();
-
-          onUpdate(dateTimeInfo);
-        },
-        onMonth: (monthDays) {
-          dateTimeInfo.type = dateTimeType.everyMonth;
-          dateTimeInfo.dateTimeList = monthDays
-              .where((monthDay) => monthDay.isVisible)
-              .map((monthDay) => DateTime(now.year, 1, monthDay.id))
-              .toList();
-
-          onUpdate(dateTimeInfo);
-        },
+        onSelection: onSelection,
+        onWeek: onWeek,
+        onMonth: onMonth,
       ),
     );
+  }
+
+  onSelection(List<DateTime> selectionDays) {
+    dateTimeInfo.type = dateTimeType.selection;
+    dateTimeInfo.dateTimeList = selectionDays;
+
+    navigatorPop(context);
+  }
+
+  onWeek(List<WeekDayClass> weekDays) {
+    DateTime now = DateTime.now();
+
+    dateTimeInfo.type = dateTimeType.everyWeek;
+    dateTimeInfo.dateTimeList = weekDays
+        .where((weekDay) => weekDay.isVisible)
+        .map(
+            (weekday) => now.subtract(Duration(days: now.weekday - weekday.id)))
+        .toList();
+
+    navigatorPop(context);
+  }
+
+  onMonth(List<MonthDayClass> monthDays) {
+    DateTime now = DateTime.now();
+
+    dateTimeInfo.type = dateTimeType.everyMonth;
+    dateTimeInfo.dateTimeList = monthDays
+        .where((monthDay) => monthDay.isVisible)
+        .map((monthDay) => DateTime(now.year, 1, monthDay.id))
+        .toList();
+
+    navigatorPop(context);
+  }
+
+  displayDateTime(String locale) {
+    if (dateTimeInfo.type == dateTimeType.selection) {
+      String result = ymdeFormatter(
+        locale: locale,
+        dateTime: dateTimeInfo.dateTimeList[0],
+      );
+
+      dateTimeInfo.dateTimeList
+          .sort((dtA, dtB) => ymdToInt(dtA).compareTo(ymdToInt(dtB)));
+
+      return '$result${dateTimeInfo.dateTimeList.length > 1 ? '....+${dateTimeInfo.dateTimeList.length - 1}' : ''}';
+    } else if (dateTimeInfo.type == dateTimeType.everyWeek) {
+      String join = dateTimeInfo.dateTimeList
+          .map((dateTime) => eFormatter(locale: locale, dateTime: dateTime))
+          .join(', ');
+
+      return '매주 - $join';
+    } else if (dateTimeInfo.type == dateTimeType.everyMonth) {
+      List<String> list = dateTimeInfo.dateTimeList
+          .map((dateTime) => dFormatter(locale: locale, dateTime: dateTime))
+          .toList();
+      String join = '';
+      join = list.length > 5
+          ? '${list.sublist(0, 5).join(', ')}...'
+          : list.join(', ');
+
+      return '매달 - $join';
+    }
   }
 
   onGroup() {
     showModalBottomSheet(
       isScrollControlled: true,
       context: context,
-      builder: (context) => GroupBottomSheet(),
+      builder: (context) => GroupListBottomSheet(
+        selectedGroupInfo: selectedGroupInfo,
+        onSelection: (groupInfo) {
+          navigatorPop(context);
+          setState(() => selectedGroupInfo = groupInfo);
+        },
+      ),
     );
   }
 
   onEditingComplete() async {
-    //
+    if (widget.taskInfo == null) {
+      TaskInfoClass newTaskInfo = TaskInfoClass(
+        createDateTime: widget.selectedDateTime,
+        tid: uuid(),
+        name: controller.text,
+        dateTimeType: dateTimeInfo.type,
+        dateTimeList: dateTimeInfo.dateTimeList,
+        recordInfoList: [],
+      );
+
+      widget.groupInfo.taskInfoList.add(newTaskInfo);
+      await groupMethod.updateGroup(
+        gid: widget.groupInfo.gid,
+        groupInfo: widget.groupInfo,
+      );
+    } else {
+      widget.taskInfo!.dateTimeType = dateTimeInfo.type;
+      widget.taskInfo!.dateTimeList = dateTimeInfo.dateTimeList;
+      widget.taskInfo!.name = controller.text;
+    }
+
+    navigatorPop(context);
   }
 
   @override
@@ -109,7 +185,8 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
     String locale = context.locale.toString();
     double bottom = MediaQuery.of(context).viewInsets.bottom;
     bool isLight = context.watch<ThemeProvider>().isLight;
-    ColorClass color = getColorClass('남색');
+    ColorClass groupColor = getColorClass(selectedGroupInfo.colorName);
+    double fontSize = context.watch<FontSizeProvider>().fintSize;
 
     return Padding(
       padding: EdgeInsets.only(bottom: bottom),
@@ -124,13 +201,9 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
               CommonModalItem(
                 title: '날짜',
                 onTap: onDateTime,
-                child: CommonSvgText(
-                  text: ymdeFormatter(locale: locale, dateTime: DateTime.now()),
-                  textColor: grey.original,
-                  svgName: 'dir-right-s',
-                  svgColor: Colors.grey,
-                  svgWidth: 5,
-                  svgDirection: SvgDirectionEnum.right,
+                child: CommonText(
+                  text: displayDateTime(locale),
+                  color: grey.original,
                 ),
               ),
               CommonModalItem(
@@ -138,9 +211,10 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                 vertical: 12.5,
                 onTap: onGroup,
                 child: CommonTag(
-                  text: '할 일',
-                  textColor: color.original,
-                  bgColor: color.s50,
+                  text: selectedGroupInfo.name,
+                  initFontSize: fontSize - 1,
+                  textColor: groupColor.s400,
+                  bgColor: groupColor.s50,
                   onTap: onGroup,
                 ),
               ),
@@ -148,7 +222,7 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
               CommonOutlineInputField(
                 controller: controller,
                 hintText: '할 일을 입력해주세요',
-                selectedColor: isLight ? color.s200 : color.s300,
+                selectedColor: isLight ? groupColor.s200 : groupColor.s300,
                 onSuffixIcon: onEditingComplete,
                 onEditingComplete: onEditingComplete,
                 onChanged: (_) => setState(() {}),

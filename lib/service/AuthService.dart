@@ -40,7 +40,6 @@ class AuthService {
           colorName: '남색',
           createDateTime: createDateTime,
           isOpen: true,
-          taskOrderList: [],
           taskInfoList: [],
         );
 
@@ -50,6 +49,7 @@ class AuthService {
           createDateTime: createDateTime,
           appStartIndex: 0,
           groupOrderList: [gid],
+          taskOrderList: [],
           fontFamily: initFontFamily,
           background: 'background-image',
           theme: 'light',

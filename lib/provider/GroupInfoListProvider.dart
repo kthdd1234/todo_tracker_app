@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:todo_tracker_app/util/class.dart';
 
 class GroupInfoListProvider extends ChangeNotifier {
-  // List<CategoryInfoClass> categoryInfoList = [];
+  List<GroupInfoClass> groupInfoList = [];
 
-  // List<CategoryInfoClass> get getCategoryInfoList => categoryInfoList;
+  List<GroupInfoClass> get getGroupInfoList => groupInfoList;
 
-  // void changeCategoryInfoList({
-  //   required List<CategoryInfoClass> newCategoryInfoList,
-  // }) {
-  //   categoryInfoList = newCategoryInfoList;
-  //   notifyListeners();
-  // }
+  void changeGroupInfoList({required newGroupInfoList}) {
+    groupInfoList = newGroupInfoList;
+    notifyListeners();
+  }
 }

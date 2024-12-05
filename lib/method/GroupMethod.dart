@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_tracker_app/method/UserMethod.dart';
@@ -54,6 +56,7 @@ class GroupMethod {
       return true;
     } catch (e) {
       errorMessage(msg: '알 수 없는 에러가 발생했어요');
+      log('addGroup => $e');
       return false;
     }
   }

@@ -8,11 +8,17 @@ import 'package:todo_tracker_app/body/SettingBody.dart';
 import 'package:todo_tracker_app/body/TableBody.dart';
 import 'package:todo_tracker_app/common/CommonBackground.dart';
 import 'package:todo_tracker_app/common/CommonScaffold.dart';
+import 'package:todo_tracker_app/method/UserMethod.dart';
+import 'package:todo_tracker_app/page/MemoInfoListProvider.dart';
 import 'package:todo_tracker_app/provider/BottomTabIndexProvider.dart';
+import 'package:todo_tracker_app/provider/FontSizeProvider.dart';
+import 'package:todo_tracker_app/provider/GroupInfoListProvider.dart';
 import 'package:todo_tracker_app/provider/SelectedDateTimeProvider.dart';
 import 'package:todo_tracker_app/provider/ThemeProvider.dart';
 import 'package:todo_tracker_app/provider/TitleDateTimeProvider.dart';
+import 'package:todo_tracker_app/provider/UserInfoProvider.dart';
 import 'package:todo_tracker_app/service/InterstitialAdService.dart';
+import 'package:todo_tracker_app/util/class.dart';
 import 'package:todo_tracker_app/util/func.dart';
 import 'package:todo_tracker_app/widget/button/FnbButton.dart';
 
@@ -39,59 +45,84 @@ class _HomePageState extends State<HomePage> {
   }
 
   initializeUserInfo() {
-    // userMethod.userSnapshots.listen(
-    //   (event) {
-    //     WidgetsBinding.instance.addPostFrameCallback(
-    //       (_) {
-    //         Map<String, dynamic>? json = event.data();
+    userMethod.userSnapshots.listen(
+      (event) {
+        WidgetsBinding.instance.addPostFrameCallback(
+          (_) {
+            Map<String, dynamic>? json = event.data();
 
-    //         if (json != null) {
-    //           UserInfoClass userInfo = UserInfoClass.fromJson(json);
+            if (json != null) {
+              UserInfoClass userInfo = UserInfoClass.fromJson(json);
 
-    //           if (mounted) {
-    //             context
-    //                 .read<UserInfoProvider>()
-    //                 .changeUserInfo(newuUserInfo: userInfo);
+              if (mounted) {
+                context
+                    .read<UserInfoProvider>()
+                    .changeUserInfo(newuUserInfo: userInfo);
 
-    //             context.read<FontSizeProvider>().setFontSize(userInfo.fontSize);
-    //             context.read<ThemeProvider>().setThemeValue(userInfo.theme);
+                context.read<FontSizeProvider>().setFontSize(userInfo.fontSize);
+                context.read<ThemeProvider>().setThemeValue(userInfo.theme);
 
-    //             int seletedIdx =
-    //                 Provider.of<BottomTabIndexProvider>(context, listen: false)
-    //                     .seletedIdx;
+                int seletedIdx =
+                    Provider.of<BottomTabIndexProvider>(context, listen: false)
+                        .seletedIdx;
 
-    //             if (seletedIdx != 3) {
-    //               context
-    //                   .read<BottomTabIndexProvider>()
-    //                   .changeSeletedIdx(newIndex: userInfo.appStartIndex);
-    //             }
-    //           }
-    //         }
-    //       },
-    //     );
-    //   },
-    // ).onError((err) => log('$err'));
+                if (seletedIdx != 3) {
+                  context
+                      .read<BottomTabIndexProvider>()
+                      .changeSeletedIdx(newIndex: userInfo.appStartIndex);
+                }
+              }
+            }
+          },
+        );
+      },
+    ).onError((err) => log('$err'));
   }
 
   initializeGroupInfo() {
-    // categoryMethod.categorySnapshots.listen((event) {
-    //   WidgetsBinding.instance.addPostFrameCallback((_) {
-    //     List<CategoryInfoClass> categoryInfoList = [];
+    groupMethod.groupSnapshots.listen((event) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        List<GroupInfoClass> groupInfoList = [];
 
-    //     for (final doc in event.docs) {
-    //       CategoryInfoClass categoryInfo = CategoryInfoClass.fromJson(
-    //         doc.data() as Map<String, dynamic>,
-    //       );
-    //       categoryInfoList.add(categoryInfo);
-    //     }
+        for (final doc in event.docs) {
+          GroupInfoClass groupInfo = GroupInfoClass.fromJson(
+            doc.data() as Map<String, dynamic>,
+          );
+          groupInfoList.add(groupInfo);
+        }
 
-    //     if (mounted) {
-    //       context
-    //           .read<CategoryInfoListProvider>()
-    //           .changeCategoryInfoList(newCategoryInfoList: categoryInfoList);
-    //     }
-    //   });
-    // });
+        if (mounted) {
+          context
+              .read<GroupInfoListProvider>()
+              .changeGroupInfoList(newGroupInfoList: groupInfoList);
+        }
+      });
+    });
+  }
+
+  initializeMemoInfo() {
+    memoMethod.memoSnapshots.listen(
+      (event) {
+        WidgetsBinding.instance.addPostFrameCallback(
+          (_) {
+            List<MemoInfoClass> memoInfoList = [];
+
+            for (final doc in event.docs) {
+              MemoInfoClass memoInfo = MemoInfoClass.fromJson(
+                doc.data() as Map<String, dynamic>,
+              );
+
+              memoInfoList.add(memoInfo);
+            }
+            if (mounted) {
+              context
+                  .read<MemoInfoListProvider>()
+                  .changeMemoInfoList(newMemoInfoList: memoInfoList);
+            }
+          },
+        );
+      },
+    ).onError((err) => log('$err'));
   }
 
   @override
@@ -99,6 +130,7 @@ class _HomePageState extends State<HomePage> {
     initializePremium();
     initializeUserInfo();
     initializeGroupInfo();
+    initializeMemoInfo();
 
     super.initState();
   }

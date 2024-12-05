@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_tracker_app/provider/GroupInfoListProvider.dart';
 import 'package:todo_tracker_app/provider/SelectedDateTimeProvider.dart';
 import 'package:todo_tracker_app/provider/ThemeProvider.dart';
+import 'package:todo_tracker_app/util/class.dart';
 import 'package:todo_tracker_app/util/constants.dart';
 import 'package:todo_tracker_app/util/final.dart';
 import 'package:todo_tracker_app/widget/bottomSheet/TaskBottomSheet.dart';
@@ -43,12 +45,17 @@ class _FnbButtonState extends State<FnbButton> {
     bool isLight = context.watch<ThemeProvider>().isLight;
     DateTime selectedDateTime =
         context.watch<SelectedDateTimeProvider>().seletedDateTime;
+    List<GroupInfoClass> groupInfoList =
+        context.watch<GroupInfoListProvider>().groupInfoList;
 
     onAddTodo() {
       showModalBottomSheet(
         isScrollControlled: true,
         context: context,
-        builder: (context) => const TaskBottomSheet(),
+        builder: (context) => TaskBottomSheet(
+          groupInfo: groupInfoList[0],
+          selectedDateTime: selectedDateTime,
+        ),
       );
     }
 

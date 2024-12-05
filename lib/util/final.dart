@@ -327,4 +327,26 @@ final initUserInfo = UserInfoClass(
   titleInfo: TitleInfoClass(title: '할 일 리스트', colorName: '남색'),
   fontSize: defaultFontSize,
   groupOrderList: [],
+  taskOrderList: [],
 );
+
+final markInfo = MarkClass(
+  E: 'E',
+  O: 'O',
+  X: 'X',
+  M: 'M',
+  T: 'T',
+);
+
+final selectionMarkList = [
+  {'mark': markInfo.O, 'name': markInfo.markName(markInfo.O)},
+  {'mark': markInfo.X, 'name': markInfo.markName(markInfo.X)},
+  {'mark': markInfo.M, 'name': markInfo.markName(markInfo.M)},
+  {'mark': markInfo.T, 'name': markInfo.markName(markInfo.T)},
+];
+
+final weekMonthMarkList = [
+  {'mark': markInfo.O, 'name': markInfo.markName(markInfo.O)},
+  {'mark': markInfo.X, 'name': markInfo.markName(markInfo.X)},
+  {'mark': markInfo.M, 'name': markInfo.markName(markInfo.M)},
+];

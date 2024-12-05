@@ -4,7 +4,9 @@ import 'package:todo_tracker_app/common/CommonButton.dart';
 import 'package:todo_tracker_app/common/CommonContainer.dart';
 import 'package:todo_tracker_app/common/CommonImageButton.dart';
 import 'package:todo_tracker_app/common/CommonModalSheet.dart';
+import 'package:todo_tracker_app/page/GroupPage.dart';
 import 'package:todo_tracker_app/provider/FontSizeProvider.dart';
+import 'package:todo_tracker_app/provider/GroupInfoListProvider.dart';
 import 'package:todo_tracker_app/provider/ReloadProvider.dart';
 import 'package:todo_tracker_app/provider/SelectedDateTimeProvider.dart';
 import 'package:todo_tracker_app/provider/ThemeProvider.dart';
@@ -15,51 +17,54 @@ import 'package:todo_tracker_app/util/final.dart';
 import 'package:todo_tracker_app/util/func.dart';
 import 'package:todo_tracker_app/widget/button/GroupButton.dart';
 
-class GroupBottomSheet extends StatefulWidget {
-  const GroupBottomSheet({super.key});
+class GroupListBottomSheet extends StatelessWidget {
+  GroupListBottomSheet({
+    super.key,
+    required this.selectedGroupInfo,
+    required this.onSelection,
+  });
 
-  @override
-  State<GroupBottomSheet> createState() => _GroupBottomSheetState();
-}
-
-class _GroupBottomSheetState extends State<GroupBottomSheet> {
-  String selectedGroupId = '';
-
-  onSelection() {
-    //
-  }
-
-  onManege() {
-    //
-  }
+  GroupInfoClass selectedGroupInfo;
+  Function(GroupInfoClass) onSelection;
 
   @override
   Widget build(BuildContext context) {
     context.watch<ReloadProvider>().isReload;
 
     bool isLight = context.watch<ThemeProvider>().isLight;
-    double fontSize = context.watch<FontSizeProvider>().fintSize;
     UserInfoClass userInfo = context.watch<UserInfoProvider>().userInfo;
-    DateTime selectedDateTime =
-        context.watch<SelectedDateTimeProvider>().seletedDateTime;
+    List<GroupInfoClass> groupInfoList =
+        context.watch<GroupInfoListProvider>().groupInfoList;
+
+    groupInfoList = getGroupInfoOrderList(
+      userInfo.groupOrderList,
+      groupInfoList,
+    );
+
+    onManege() {
+      movePage(context: context, page: GroupPage());
+    }
 
     return CommonModalSheet(
       title: '그룹을 선택해주세요',
-      height: 400,
+      height: 450,
       isBack: true,
       child: CommonContainer(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Wrap(
-              spacing: 10,
-              runSpacing: 10,
-              children: [
-                GroupButton(
-                  selectedGroupId: selectedGroupId,
-                  onSelection: onSelection,
-                )
-              ],
+              spacing: 7,
+              runSpacing: 7,
+              children: groupInfoList
+                  .map(
+                    (groupInfo) => GroupButton(
+                      selectedGroupId: selectedGroupInfo.gid,
+                      groupInfo: groupInfo,
+                      onSelection: onSelection,
+                    ),
+                  )
+                  .toList(),
             ),
             const Spacer(),
             CommonImageButton(
@@ -70,7 +75,14 @@ class _GroupBottomSheetState extends State<GroupBottomSheet> {
               padding: const EdgeInsets.symmetric(vertical: 12.5),
               onTap: onManege,
             )
-            // CommonButton(
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+        // CommonButton(
             //   text: '그룹 관리',
             //   textColor: Colors.white,
             //   buttonColor: textColor,
@@ -78,9 +90,3 @@ class _GroupBottomSheetState extends State<GroupBottomSheet> {
             //   borderRadius: 7,
             //   onTap: onManege,
             // )
-          ],
-        ),
-      ),
-    );
-  }
-}
