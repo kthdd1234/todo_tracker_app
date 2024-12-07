@@ -50,8 +50,8 @@ class _SelectionDayState extends State<SelectionDay> {
       return CalendarDateTimeMaker(
         size: 35,
         day: '${dateTime.day}',
-        isLight: isLight,
         color: widget.color,
+        height: 7,
       );
     }
 

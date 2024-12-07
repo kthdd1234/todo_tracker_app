@@ -76,7 +76,7 @@ class CommonScaffold extends StatelessWidget {
 //             valueListenables: valueListenables,
 //             builder: (context, values, child) {
 //               DateTime selectedDateTime =
-//                   context.watch<SelectedDateTimeProvider>().seletedDateTime;
+//                   context.watch<SelectedDateTimeProvider>().selectedDateTime;
 //               bool isToday =
 //                   dateTimeKey(DateTime.now()) == dateTimeKey(selectedDateTime);
 //               bool isNotMonth = userRepository.user.calendarFormat !=

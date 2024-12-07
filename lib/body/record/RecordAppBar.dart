@@ -90,10 +90,13 @@ class _RecordAppBarState extends State<RecordAppBar> {
           const Spacer(),
           InkWell(
             onTap: onGroupPage,
-            child: svgAsset(
-              name: 'list-add',
-              width: 17,
-              color: isLight ? darkButtonColor : Colors.white,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 5, bottom: 5, top: 5),
+              child: svgAsset(
+                name: 'list-add',
+                width: 17,
+                color: isLight ? darkButtonColor : Colors.white,
+              ),
             ),
           ),
           CommonSpace(width: 2)

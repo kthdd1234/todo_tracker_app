@@ -9,7 +9,7 @@ import 'package:todo_tracker_app/body/TableBody.dart';
 import 'package:todo_tracker_app/common/CommonBackground.dart';
 import 'package:todo_tracker_app/common/CommonScaffold.dart';
 import 'package:todo_tracker_app/method/UserMethod.dart';
-import 'package:todo_tracker_app/page/MemoInfoListProvider.dart';
+import 'package:todo_tracker_app/provider/MemoInfoListProvider.dart';
 import 'package:todo_tracker_app/provider/BottomTabIndexProvider.dart';
 import 'package:todo_tracker_app/provider/FontSizeProvider.dart';
 import 'package:todo_tracker_app/provider/GroupInfoListProvider.dart';
@@ -139,6 +139,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     bool isLight = context.watch<ThemeProvider>().isLight;
     int seletedIdx = context.watch<BottomTabIndexProvider>().seletedIdx;
+    Color lableColor = isLight ? const Color(0xffB0B9C2) : Colors.white;
 
     onBottomNavigation(int newIndex) {
       DateTime now = DateTime.now();
@@ -173,8 +174,7 @@ class _HomePageState extends State<HomePage> {
           child: BottomNavigationBar(
             items: getBnbiList(isLight, seletedIdx),
             elevation: 0,
-            showSelectedLabels: false,
-            showUnselectedLabels: false,
+            selectedItemColor: lableColor,
             currentIndex: seletedIdx,
             onTap: onBottomNavigation,
           ),

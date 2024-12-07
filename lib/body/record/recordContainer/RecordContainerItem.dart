@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_tracker_app/body/record/widget/item/RecordItemBar.dart';
-import 'package:todo_tracker_app/body/record/widget/item/RecordItemMemo.dart';
-import 'package:todo_tracker_app/body/record/widget/item/RecordItemName.dart';
-import 'package:todo_tracker_app/body/record/widget/item/RecordItemMarker.dart';
+import 'package:todo_tracker_app/body/record/recordContainer/item/RecordItemBar.dart';
+import 'package:todo_tracker_app/body/record/recordContainer/item/RecordItemMemo.dart';
+import 'package:todo_tracker_app/body/record/recordContainer/item/RecordItemName.dart';
+import 'package:todo_tracker_app/body/record/recordContainer/item/RecordItemMarker.dart';
 import 'package:todo_tracker_app/common/CommonDivider.dart';
 import 'package:todo_tracker_app/provider/FontSizeProvider.dart';
 import 'package:todo_tracker_app/provider/SelectedDateTimeProvider.dart';
@@ -21,7 +21,7 @@ class RecordContainerItem extends StatelessWidget {
   Widget build(BuildContext context) {
     double fontSize = context.watch<FontSizeProvider>().fintSize;
     DateTime selectedDateTime =
-        context.watch<SelectedDateTimeProvider>().seletedDateTime;
+        context.watch<SelectedDateTimeProvider>().selectedDateTime;
 
     GroupInfoClass groupInfo = recordItem.groupInfo;
     TaskInfoClass taskInfo = recordItem.taskInfo;
@@ -30,12 +30,16 @@ class RecordContainerItem extends StatelessWidget {
       recordInfoList: taskInfo.recordInfoList,
       targetDateTime: selectedDateTime,
     );
+    String? mark = recordInfo?.mark;
 
     onInfo() {
       showModalBottomSheet(
         isScrollControlled: true,
         context: context,
-        builder: (context) => TaskInfoBottomSheet(groupInfo: groupInfo),
+        builder: (context) => TaskInfoBottomSheet(
+          groupInfo: groupInfo,
+          taskInfo: taskInfo,
+        ),
       );
     }
 
@@ -57,30 +61,33 @@ class RecordContainerItem extends StatelessWidget {
           child: Row(
             children: [
               Expanded(
+                flex: 1,
                 child: InkWell(
                   onTap: onInfo,
-                  child: Padding(
+                  child: Container(
                     padding: const EdgeInsets.symmetric(vertical: 15),
                     child: Row(
                       children: [
                         RecordItemBar(color: color),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            RecordItemName(name: taskInfo.name),
-                            RecordItemMemo(memo: recordInfo?.memo),
-                          ],
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              RecordItemName(
+                                name: taskInfo.name,
+                                color: color,
+                                mark: mark,
+                              ),
+                              RecordItemMemo(memo: recordInfo?.memo),
+                            ],
+                          ),
                         ),
                       ],
                     ),
                   ),
                 ),
               ),
-              RecordItemMaker(
-                mark: recordInfo?.mark,
-                color: color,
-                onTap: onMark,
-              ),
+              RecordItemMaker(mark: mark, color: color, onTap: onMark),
             ],
           ),
         ),

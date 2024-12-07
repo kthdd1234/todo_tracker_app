@@ -422,3 +422,10 @@ class MemoInfoClass {
         'textAlign': textAlignToString(textAlign)
       };
 }
+
+class StickerClass {
+  StickerClass({required this.mark, required this.color});
+
+  String? mark;
+  ColorClass color;
+}

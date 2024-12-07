@@ -157,8 +157,20 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
 
   onEditingComplete() async {
     if (widget.taskInfo == null) {
+      DateTime now = DateTime.now();
+      DateTime createDateTime = DateTime(
+        widget.selectedDateTime.year,
+        widget.selectedDateTime.month,
+        widget.selectedDateTime.day,
+        now.hour,
+        now.minute,
+        now.second,
+        now.millisecond,
+        now.microsecond,
+      );
+
       TaskInfoClass newTaskInfo = TaskInfoClass(
-        createDateTime: widget.selectedDateTime,
+        createDateTime: createDateTime,
         tid: uuid(),
         name: controller.text,
         dateTimeType: dateTimeInfo.type,
@@ -166,16 +178,17 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
         recordInfoList: [],
       );
 
-      widget.groupInfo.taskInfoList.add(newTaskInfo);
-      await groupMethod.updateGroup(
-        gid: widget.groupInfo.gid,
-        groupInfo: widget.groupInfo,
-      );
+      selectedGroupInfo.taskInfoList.add(newTaskInfo);
     } else {
       widget.taskInfo!.dateTimeType = dateTimeInfo.type;
       widget.taskInfo!.dateTimeList = dateTimeInfo.dateTimeList;
       widget.taskInfo!.name = controller.text;
     }
+
+    await groupMethod.updateGroup(
+      gid: selectedGroupInfo.gid,
+      groupInfo: selectedGroupInfo,
+    );
 
     navigatorPop(context);
   }

@@ -96,7 +96,7 @@ class _ImageAddModalSheetState extends State<ImageAddModalSheet> {
 
     return CommonModalSheet(
       title: '사진 추가',
-      height: 185,
+      height: 187,
       child: Row(
         children: [
           CommonModalButton(

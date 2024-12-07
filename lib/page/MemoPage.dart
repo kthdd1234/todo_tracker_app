@@ -27,8 +27,8 @@ import 'package:todo_tracker_app/widget/memo/MemoBackground.dart';
 import 'package:todo_tracker_app/widget/memo/MemoField.dart';
 import 'package:todo_tracker_app/widget/popup/AlertPopup.dart';
 
-class MemoSettingPage extends StatefulWidget {
-  MemoSettingPage({
+class MemoPage extends StatefulWidget {
+  MemoPage({
     super.key,
     required this.isPremium,
     required this.initDateTime,
@@ -42,10 +42,10 @@ class MemoSettingPage extends StatefulWidget {
   MemoInfoClass? memoInfo;
 
   @override
-  State<MemoSettingPage> createState() => _MemoSettingPageState();
+  State<MemoPage> createState() => _MemoPageState();
 }
 
-class _MemoSettingPageState extends State<MemoSettingPage> {
+class _MemoPageState extends State<MemoPage> {
   Uint8List? uint8List;
   TextEditingController memoContoller = TextEditingController();
   TextAlign textAlign = TextAlign.left;

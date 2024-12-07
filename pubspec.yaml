@@ -152,6 +152,12 @@ flutter:
     - assets/svgs/expand.svg
     - assets/svgs/highlighter.svg
     - assets/svgs/remove.svg
+    - assets/svgs/gallery.svg
+    - assets/svgs/clock.svg
+    - assets/svgs/align-left.svg
+    - assets/svgs/align-right.svg
+    - assets/svgs/align-center.svg
+    - assets/svgs/camera.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

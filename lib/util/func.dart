@@ -431,7 +431,7 @@ List<BNClass> getBnClassList(bool isLight, int seletedIdx) {
   List<BNClass> bnClassList = [
     BNClass(
       index: 0,
-      name: '기록',
+      name: '홈',
       icon: svg(
         0,
         seletedIdx == 0
@@ -492,7 +492,7 @@ List<BottomNavigationBarItem> getBnbiList(bool isLight, int seletedIdx) {
 }
 
 String getBnName(int appStartIndex) {
-  return ['기록', '캘린더', '체크표'][appStartIndex];
+  return ['홈', '캘린더', '체크표'][appStartIndex];
 }
 
 errorMessage({required String msg}) {
@@ -642,7 +642,7 @@ String getGroupName(String locale) {
   }[locale]!;
 }
 
-getGroupInfoOrderList(
+List<GroupInfoClass> getGroupInfoOrderList(
   List<String> groupOrderList,
   List<GroupInfoClass> groupInfoList,
 ) {
@@ -656,7 +656,7 @@ getGroupInfoOrderList(
   return groupInfoList;
 }
 
-List<RecordItemClass> getTaskInfoList({
+List<RecordItemClass> getRecordItemList({
   required String locale,
   required DateTime targetDateTime,
   required List<GroupInfoClass> groupInfoList,
@@ -698,15 +698,27 @@ List<RecordItemClass> getTaskInfoList({
     );
     List<String> taskOrderIdList = index != -1 ? taskOrderList[index].list : [];
 
-    taskFilterList.sort((taskA, taskB) {
-      int indexA = taskOrderIdList.indexOf(taskA.tid);
-      int indexB = taskOrderIdList.indexOf(taskB.tid);
+    if (taskOrderIdList.isNotEmpty) {
+      recordItemList.sort((itemA, itemB) {
+        int indexA = taskOrderIdList.indexOf(itemA.taskInfo.tid);
+        int indexB = taskOrderIdList.indexOf(itemB.taskInfo.tid);
 
-      indexA = indexA == -1 ? 999999 : indexA;
-      indexB = indexB == -1 ? 999999 : indexB;
+        indexA = indexA == -1 ? 999999 : indexA;
+        indexB = indexB == -1 ? 999999 : indexB;
 
-      return indexA.compareTo(indexB);
-    });
+        return indexA.compareTo(indexB);
+      });
+    } else {
+      recordItemList.sort((itemA, itemB) {
+        int ts1 = itemA.taskInfo.createDateTime.microsecondsSinceEpoch;
+        int ts2 = itemB.taskInfo.createDateTime.microsecondsSinceEpoch;
+
+        ts1 = ts1 == -1 ? 999999 : ts1;
+        ts2 = ts2 == -1 ? 999999 : ts2;
+
+        return ts1.compareTo(ts2);
+      });
+    }
   }
 
   return recordItemList;

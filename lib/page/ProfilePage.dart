@@ -9,7 +9,7 @@ import 'package:todo_tracker_app/common/CommonSvgText.dart';
 import 'package:todo_tracker_app/common/CommonText.dart';
 import 'package:todo_tracker_app/method/UserMethod.dart';
 import 'package:todo_tracker_app/page/IntroPage.dart';
-import 'package:todo_tracker_app/page/MemoInfoListProvider.dart';
+import 'package:todo_tracker_app/provider/MemoInfoListProvider.dart';
 import 'package:todo_tracker_app/provider/FontSizeProvider.dart';
 import 'package:todo_tracker_app/provider/GroupInfoListProvider.dart';
 import 'package:todo_tracker_app/provider/ThemeProvider.dart';

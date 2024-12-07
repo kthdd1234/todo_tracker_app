@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -6,13 +7,14 @@ import 'package:todo_tracker_app/common/CommonCloseButton.dart';
 import 'package:todo_tracker_app/common/CommonContainer.dart';
 import 'package:todo_tracker_app/common/CommonModalButton.dart';
 import 'package:todo_tracker_app/common/CommonModalSheet.dart';
-import 'package:todo_tracker_app/common/CommonNull.dart';
 import 'package:todo_tracker_app/common/CommonSpace.dart';
 import 'package:todo_tracker_app/common/CommonTag.dart';
 import 'package:todo_tracker_app/common/CommonText.dart';
+import 'package:todo_tracker_app/method/UserMethod.dart';
 import 'package:todo_tracker_app/provider/FontSizeProvider.dart';
 import 'package:todo_tracker_app/provider/SelectedDateTimeProvider.dart';
 import 'package:todo_tracker_app/provider/ThemeProvider.dart';
+import 'package:todo_tracker_app/provider/UserInfoProvider.dart';
 import 'package:todo_tracker_app/util/class.dart';
 import 'package:todo_tracker_app/util/constants.dart';
 import 'package:todo_tracker_app/util/final.dart';
@@ -21,9 +23,14 @@ import 'package:todo_tracker_app/widget/bottomSheet/TaskBottomSheet.dart';
 import 'package:todo_tracker_app/widget/dateTime/CalendarDateTimeMaker.dart';
 
 class TaskInfoBottomSheet extends StatefulWidget {
-  TaskInfoBottomSheet({super.key, required this.groupInfo});
+  TaskInfoBottomSheet({
+    super.key,
+    required this.groupInfo,
+    required this.taskInfo,
+  });
 
   GroupInfoClass groupInfo;
+  TaskInfoClass taskInfo;
 
   @override
   State<TaskInfoBottomSheet> createState() => _TaskInfoBottomSheetState();
@@ -33,151 +40,164 @@ class _TaskInfoBottomSheetState extends State<TaskInfoBottomSheet> {
   DateTime titleDateTime = DateTime.now();
   DateTime focusedDay = DateTime.now();
 
-  Widget? markerBuilder(
-    bool isLight,
-    DateTime dateTime,
-    String locale,
-  ) {
-    int idx = isContainIdxDateTime(
-      locale: locale,
-      selectionList: [DateTime.now()],
-      targetDateTime: dateTime,
-      curDateTimeType: dateTimeType.selection,
-    );
-    String colorName = '남색'; // widget.groupInfo.colorName;
-    ColorClass color = getColorClass(colorName);
-    String? mark = null;
-    // String? mark = getRecordInfo(
-    //   recordInfoList: widget.taskInfo.recordInfoList,
-    //   targetDateTime: dateTime,
-    // )?.mark;
+  @override
+  Widget build(BuildContext context) {
+    String locale = context.locale.toString();
 
-    if (idx != -1) {
-      return Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 20, bottom: 3),
-            child: CalendarDateTimeMaker(
-              size: 25,
-              day: '${dateTime.day}',
-              isLight: isLight,
-              color: color,
-              borderRadius: 5,
-            ),
-          ),
-          mark != null
-              ? svgAsset(name: 'mark-$mark', width: 15, color: color.s300)
-              : const CommonNull()
-        ],
+    bool isLight = context.watch<ThemeProvider>().isLight;
+    ColorClass color = getColorClass(widget.groupInfo.colorName);
+    List<TaskOrderClass> taskOrderList =
+        context.watch<UserInfoProvider>().userInfo.taskOrderList;
+    double fontSize = context.watch<FontSizeProvider>().fintSize;
+    DateTime selectedDateTime =
+        context.watch<SelectedDateTimeProvider>().selectedDateTime;
+
+    Widget onTag({required String text}) {
+      return CommonTag(
+        text: text,
+        isBold: true,
+        textColor: isLight ? color.original : Colors.white,
+        bgColor: isLight ? color.s50 : color.s400,
+        initFontSize: fontSize - 3,
+        onTap: () {},
       );
     }
 
-    return null;
-  }
+    Widget? todayBuilder(DateTime dateTime) {
+      Color color = dateTime.weekday == 6
+          ? blue.original
+          : dateTime.weekday == 7
+              ? red.original
+              : isLight
+                  ? Colors.black
+                  : Colors.white;
 
-  Widget? defaultBuilder(bool isLight, DateTime dateTime) {
-    Color color = dateTime.weekday == 6
-        ? blue.original
-        : dateTime.weekday == 7
-            ? red.original
-            : isLight
-                ? Colors.black
-                : Colors.white;
-
-    return Column(
-      children: [
-        CommonSpace(height: 22),
-        CommonText(text: '${dateTime.day}', color: color, isNotTr: true),
-      ],
-    );
-  }
-
-  Widget? dowBuilder(bool isLight, DateTime dateTime, double fontSize) {
-    String locale = context.locale.toString();
-    Color color = dateTime.weekday == 6
-        ? blue.original
-        : dateTime.weekday == 7
-            ? red.original
-            : isLight
-                ? Colors.black
-                : Colors.white;
-
-    return CommonText(
-      text: eFormatter(locale: locale, dateTime: dateTime),
-      color: color,
-      initFontSize: fontSize - 1, // 13
-      isNotTr: true,
-    );
-  }
-
-  Widget? todayBuilder(bool isLight, DateTime dateTime) {
-    Color color = dateTime.weekday == 6
-        ? blue.original
-        : dateTime.weekday == 7
-            ? red.original
-            : isLight
-                ? Colors.black
-                : Colors.white;
-
-    return Padding(
-      padding: const EdgeInsets.only(top: 21),
-      child: Column(
-        children: [
-          CommonText(
-            text: '${dateTime.day}',
-            color: color,
-            isNotTr: true,
-          )
-        ],
-      ),
-    );
-  }
-
-  onPageChanged(DateTime dateTime) {
-    setState(() => titleDateTime = dateTime);
-  }
-
-  onRemove() {
-    //
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    bool isLight = context.watch<ThemeProvider>().isLight;
-    String locale = context.locale.toString();
-    ColorClass color = getColorClass('남색');
-    double fontSize = context.watch<FontSizeProvider>().fintSize;
-    DateTime selectedDateTime =
-        context.watch<SelectedDateTimeProvider>().seletedDateTime;
-
-    onEdit() {
-      navigatorPop(context);
-      showModalBottomSheet(
-        isScrollControlled: true,
-        context: context,
-        builder: (context) => TaskBottomSheet(
-          groupInfo: widget.groupInfo,
-          selectedDateTime: selectedDateTime,
+      return Padding(
+        padding: const EdgeInsets.only(top: 21),
+        child: Column(
+          children: [
+            CommonText(
+              text: '${dateTime.day}',
+              color: color,
+              isNotTr: true,
+            )
+          ],
         ),
       );
     }
 
+    Widget? defaultBuilder(DateTime dateTime) {
+      Color color = dateTime.weekday == 6
+          ? blue.original
+          : dateTime.weekday == 7
+              ? red.original
+              : isLight
+                  ? Colors.black
+                  : Colors.white;
+
+      return Column(
+        children: [
+          CommonSpace(height: 22),
+          CommonText(text: '${dateTime.day}', color: color, isNotTr: true),
+        ],
+      );
+    }
+
+    Widget? dowBuilder(DateTime dateTime) {
+      String locale = context.locale.toString();
+      Color color = dateTime.weekday == 6
+          ? blue.original
+          : dateTime.weekday == 7
+              ? red.original
+              : isLight
+                  ? Colors.black
+                  : Colors.white;
+
+      return CommonText(
+        text: eFormatter(locale: locale, dateTime: dateTime),
+        color: color,
+        initFontSize: fontSize - 1, // 13
+        isNotTr: true,
+      );
+    }
+
+    Widget? markerBuilder(DateTime dateTime) {
+      int idx = isContainIdxDateTime(
+        locale: locale,
+        targetDateTime: dateTime,
+        curDateTimeType: widget.taskInfo.dateTimeType,
+        selectionList: widget.taskInfo.dateTimeList,
+      );
+      String? mark = getRecordInfo(
+        recordInfoList: widget.taskInfo.recordInfoList,
+        targetDateTime: dateTime,
+      )?.mark;
+
+      if (idx != -1) {
+        return CalendarDateTimeMaker(
+          size: 25,
+          day: '${dateTime.day}',
+          color: color,
+          borderRadius: 5,
+          mark: mark,
+        );
+      }
+
+      return null;
+    }
+
+    onPageChanged(DateTime dateTime) {
+      setState(() => titleDateTime = dateTime);
+    }
+
+    onEdit() {
+      navigatorPop(context);
+
+      showModalBottomSheet(
+        isScrollControlled: true,
+        context: context,
+        builder: (context) => TaskBottomSheet(
+          selectedDateTime: selectedDateTime,
+          groupInfo: widget.groupInfo,
+          taskInfo: widget.taskInfo,
+        ),
+      );
+    }
+
+    onRemove() async {
+      /// task order id 삭제
+      for (final taskOrder in taskOrderList) {
+        taskOrder.list.removeWhere((taskId) => taskId == widget.taskInfo.tid);
+      }
+
+      // task 삭제
+      widget.groupInfo.taskInfoList
+          .removeWhere((taskInfo) => taskInfo.tid == widget.taskInfo.tid);
+
+      // group data 업데이트
+      await groupMethod.updateGroup(
+        gid: widget.groupInfo.gid,
+        groupInfo: widget.groupInfo,
+      );
+
+      navigatorPop(context);
+    }
+
     return CommonModalSheet(
-      title: '테스트용',
-      height: 680,
+      title: widget.taskInfo.name,
+      height: 597,
       isNotTr: true,
       actionButton: const ModalCloseButton(),
       child: Column(
         children: [
           CommonContainer(
             innerPadding: const EdgeInsets.all(5),
-            height: 480,
+            height: 400,
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(15, 20, 15, 10),
+                  padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       CommonText(
                         text: yMFormatter(
@@ -188,39 +208,28 @@ class _TaskInfoBottomSheetState extends State<TaskInfoBottomSheet> {
                         isNotTr: true,
                         isBold: !isLight,
                       ),
-                      CommonTag(
-                        text: dateTimeLabel['selection']!,
-                        isBold: true,
-                        textColor: Colors.white,
-                        bgColor: isLight ? color.s300 : color.s400,
-                        initFontSize: fontSize - 3,
-                        onTap: () {},
-                      )
+                      const Spacer(),
+                      onTag(text: widget.groupInfo.name),
                     ],
                   ),
                 ),
                 TableCalendar(
                   locale: locale,
-                  rowHeight: 64,
                   headerVisible: false,
-                  sixWeekMonthsEnforced: true,
                   focusedDay: titleDateTime,
                   firstDay: DateTime(2000, 1, 1),
                   lastDay: DateTime(3000, 1, 1),
-                  calendarStyle:
-                      const CalendarStyle(cellAlignment: Alignment.center),
+                  calendarStyle: const CalendarStyle(
+                    cellAlignment: Alignment.center,
+                    outsideDaysVisible: false,
+                  ),
                   calendarBuilders: CalendarBuilders(
-                    markerBuilder: (btx, dateTime, _) => markerBuilder(
-                      isLight,
-                      dateTime,
-                      locale,
-                    ),
+                    markerBuilder: (btx, dateTime, _) =>
+                        markerBuilder(dateTime),
                     defaultBuilder: (cx, dateTime, _) =>
-                        defaultBuilder(isLight, dateTime),
-                    dowBuilder: (cx, dateTime) =>
-                        dowBuilder(isLight, dateTime, fontSize),
-                    todayBuilder: (cx, dateTime, __) =>
-                        todayBuilder(isLight, dateTime),
+                        defaultBuilder(dateTime),
+                    dowBuilder: (cx, dateTime) => dowBuilder(dateTime),
+                    todayBuilder: (cx, dateTime, __) => todayBuilder(dateTime),
                   ),
                   onPageChanged: onPageChanged,
                 ),
@@ -232,7 +241,7 @@ class _TaskInfoBottomSheetState extends State<TaskInfoBottomSheet> {
             children: [
               CommonModalButton(
                 svgName: 'highlighter',
-                actionText: '수정',
+                actionText: '수정하기',
                 isBold: !isLight,
                 color: isLight ? textColor : darkTextColor,
                 onTap: onEdit,
@@ -240,7 +249,7 @@ class _TaskInfoBottomSheetState extends State<TaskInfoBottomSheet> {
               CommonSpace(width: 5),
               CommonModalButton(
                 svgName: 'remove',
-                actionText: '삭제',
+                actionText: '삭제하기',
                 isBold: !isLight,
                 color: red.s200,
                 onTap: onRemove,

@@ -6,6 +6,7 @@ import 'package:todo_tracker_app/common/CommonModalItem.dart';
 import 'package:todo_tracker_app/common/CommonModalSheet.dart';
 import 'package:todo_tracker_app/common/CommonOutlineInputField.dart';
 import 'package:todo_tracker_app/common/CommonSpace.dart';
+import 'package:todo_tracker_app/method/UserMethod.dart';
 import 'package:todo_tracker_app/provider/ThemeProvider.dart';
 import 'package:todo_tracker_app/util/class.dart';
 import 'package:todo_tracker_app/util/func.dart';
@@ -47,8 +48,8 @@ class _TitleBottomSheetState extends State<TitleBottomSheet> {
       titleInfo.title = controller.text;
       titleInfo.colorName = selectedColorName;
 
-      // await userMethod.updateUser(userInfo: widget.userInfo);
-      // navigatorPop(context);
+      await userMethod.updateUser(userInfo: widget.userInfo);
+      navigatorPop(context);
     }
 
     return Padding(
