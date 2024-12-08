@@ -1,16 +1,14 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:todo_tracker_app/body/record/RecordAppBar.dart';
 import 'package:todo_tracker_app/body/record/RecordCalendar.dart';
 import 'package:todo_tracker_app/body/record/RecordContainer.dart';
+import 'package:todo_tracker_app/body/record/RecordMemo.dart';
 import 'package:todo_tracker_app/provider/GroupInfoListProvider.dart';
-import 'package:todo_tracker_app/provider/SelectedDateTimeProvider.dart';
 import 'package:todo_tracker_app/provider/UserInfoProvider.dart';
 import 'package:todo_tracker_app/util/class.dart';
 import 'package:todo_tracker_app/util/final.dart';
-import 'package:todo_tracker_app/util/func.dart';
 
 class RecordBody extends StatefulWidget {
   const RecordBody({super.key});
@@ -51,6 +49,7 @@ class _RecordBodyState extends State<RecordBody> {
                     calendarFormat: calendarFormat,
                     onFormatChanged: onFormatChanged,
                   ),
+                  RecordMemo(),
                   const RecordContainer()
                 ],
               ),

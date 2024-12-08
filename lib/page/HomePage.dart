@@ -13,6 +13,7 @@ import 'package:todo_tracker_app/provider/MemoInfoListProvider.dart';
 import 'package:todo_tracker_app/provider/BottomTabIndexProvider.dart';
 import 'package:todo_tracker_app/provider/FontSizeProvider.dart';
 import 'package:todo_tracker_app/provider/GroupInfoListProvider.dart';
+import 'package:todo_tracker_app/provider/PremiumProvider.dart';
 import 'package:todo_tracker_app/provider/SelectedDateTimeProvider.dart';
 import 'package:todo_tracker_app/provider/ThemeProvider.dart';
 import 'package:todo_tracker_app/provider/TitleDateTimeProvider.dart';
@@ -37,11 +38,11 @@ class _HomePageState extends State<HomePage> {
   initializePremium() async {
     // bool isPremium = await isPurchasePremium();
 
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   if (mounted) {
-    //     context.read<PremiumProvider>().setPremiumValue(isPremium);
-    //   }
-    // });
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        context.read<PremiumProvider>().setPremiumValue(true);
+      }
+    });
   }
 
   initializeUserInfo() {

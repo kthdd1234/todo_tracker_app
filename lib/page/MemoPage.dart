@@ -3,6 +3,7 @@
 import 'dart:developer';
 import 'dart:typed_data';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_tracker_app/common/CommonBackground.dart';
@@ -11,6 +12,8 @@ import 'package:todo_tracker_app/common/CommonHorizentalBar.dart';
 import 'package:todo_tracker_app/common/CommonImage.dart';
 import 'package:todo_tracker_app/common/CommonNull.dart';
 import 'package:todo_tracker_app/common/CommonScaffold.dart';
+import 'package:todo_tracker_app/main.dart';
+import 'package:todo_tracker_app/method/UserMethod.dart';
 import 'package:todo_tracker_app/page/HomePage.dart';
 import 'package:todo_tracker_app/page/ImageSlidePage.dart';
 import 'package:todo_tracker_app/provider/FontSizeProvider.dart';
@@ -127,14 +130,14 @@ class _MemoPageState extends State<MemoPage> {
 
   onImgUrl(String mid) async {
     if (uint8List != null) {
-      // String path = getImagePath(mid);
-      // TaskSnapshot result = await storageRef.child(path).putData(uint8List!);
-      // String? imgUrl = await getDownloadUrl(path);
+      String path = getImagePath(mid);
+      TaskSnapshot result = await storageRef.child(path).putData(uint8List!);
+      String? imgUrl = await getDownloadUrl(path);
 
-      // bool isSuccess = result.state == TaskState.success;
-      // bool isImgUrl = imgUrl != null;
+      bool isSuccess = result.state == TaskState.success;
+      bool isImgUrl = imgUrl != null;
 
-      // return isSuccess && isImgUrl ? imgUrl : null;
+      return isSuccess && isImgUrl ? imgUrl : null;
     }
 
     return null;
@@ -163,16 +166,16 @@ class _MemoPageState extends State<MemoPage> {
         String? imgUrl = await onImgUrl(mid);
 
         if (widget.memoInfo == null) {
-          // await memoMethod.addMemo(
-          //   mid: mid,
-          //   memoInfo: MemoInfoClass(
-          //     dateTimeKey: dateTimeKey(widget.initDateTime),
-          //     path: path,
-          //     imgUrl: imgUrl,
-          //     text: text,
-          //     textAlign: textAlign,
-          //   ),
-          // );
+          await memoMethod.addMemo(
+            mid: mid,
+            memoInfo: MemoInfoClass(
+              dateTimeKey: dateTimeKey(widget.initDateTime),
+              path: path,
+              imgUrl: imgUrl,
+              text: text,
+              textAlign: textAlign,
+            ),
+          );
         } else {
           bool isUrl =
               widget.memoInfo!.imgUrl != null && widget.memoInfo!.path != null;
@@ -189,8 +192,7 @@ class _MemoPageState extends State<MemoPage> {
           widget.memoInfo!.imgUrl = imgUrl;
           widget.memoInfo!.textAlign = textAlign;
 
-          // await memoMethod.updateMemo(mid: mid, memoInfo: widget.memoInfo!);
-
+          await memoMethod.updateMemo(mid: mid, memoInfo: widget.memoInfo!);
           onLoading(false);
         }
       } catch (e) {

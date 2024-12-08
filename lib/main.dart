@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -33,6 +34,7 @@ import 'firebase_options.dart';
 
 // PurchasesConfiguration _configuration =
 //     PurchasesConfiguration(Platform.isIOS ? appleApiKey : googleApiKey);
+Reference storageRef = FirebaseStorage.instance.ref();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
