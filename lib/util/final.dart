@@ -168,8 +168,14 @@ final colorList = [
 
 final calendarFormatInfo = {
   CalendarFormat.week.toString(): CalendarFormat.week,
-  CalendarFormat.twoWeeks.toString(): CalendarFormat.month,
+  CalendarFormat.twoWeeks.toString(): CalendarFormat.twoWeeks,
   CalendarFormat.month.toString(): CalendarFormat.month,
+};
+
+final calendarFormatSvg = {
+  CalendarFormat.week.toString(): 'one-week',
+  CalendarFormat.twoWeeks.toString(): 'two-week',
+  CalendarFormat.month.toString(): 'one-month',
 };
 
 final availableCalendarFormats = {
@@ -328,6 +334,7 @@ final initUserInfo = UserInfoClass(
   fontSize: defaultFontSize,
   groupOrderList: [],
   taskOrderList: [],
+  calendarFormat: CalendarFormat.week.toString(),
 );
 
 final markInfo = MarkClass(

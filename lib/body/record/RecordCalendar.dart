@@ -7,80 +7,24 @@ import 'package:todo_tracker_app/body/record/recordCalendar/RecordCalendarMemo.d
 import 'package:todo_tracker_app/body/record/recordCalendar/RecordCalendarStickerList.dart';
 import 'package:todo_tracker_app/common/CommonCalendar.dart';
 import 'package:todo_tracker_app/common/CommonSpace.dart';
+import 'package:todo_tracker_app/method/UserMethod.dart';
 import 'package:todo_tracker_app/provider/FontSizeProvider.dart';
+import 'package:todo_tracker_app/provider/GroupInfoListProvider.dart';
 import 'package:todo_tracker_app/provider/SelectedDateTimeProvider.dart';
 import 'package:todo_tracker_app/provider/TitleDateTimeProvider.dart';
+import 'package:todo_tracker_app/provider/UserInfoProvider.dart';
 import 'package:todo_tracker_app/util/class.dart';
 import 'package:todo_tracker_app/util/final.dart';
 import 'package:todo_tracker_app/util/func.dart';
 
 class RecordCalendar extends StatefulWidget {
-  RecordCalendar({
-    super.key,
-    required this.groupInfoList,
-    required this.taskOrderList,
-    required this.calendarFormat,
-    required this.onFormatChanged,
-  });
-
-  List<GroupInfoClass> groupInfoList;
-  List<TaskOrderClass> taskOrderList;
-  CalendarFormat calendarFormat;
-  Function() onFormatChanged;
+  RecordCalendar({super.key});
 
   @override
   State<RecordCalendar> createState() => _RecordCalendarState();
 }
 
 class _RecordCalendarState extends State<RecordCalendar> {
-  Widget? stickerBuilder(bool isLight, DateTime dateTime) {
-    String locale = context.locale.toString();
-    List<StickerClass> stickerList = [];
-
-    List<RecordItemClass> recordItemList = getRecordItemList(
-      locale: locale,
-      targetDateTime: dateTime,
-      groupInfoList: widget.groupInfoList,
-      taskOrderList: widget.taskOrderList,
-    );
-
-    for (final recordItem in recordItemList) {
-      List<RecordInfoClass> recordInfoList = recordItem.taskInfo.recordInfoList;
-      RecordInfoClass? recordInfo = getRecordInfo(
-        recordInfoList: recordInfoList,
-        targetDateTime: dateTime,
-      );
-      String? mark = recordInfo?.mark;
-      ColorClass color = getColorClass(recordItem.groupInfo.colorName);
-      StickerClass sticker = StickerClass(mark: mark, color: color);
-
-      if (stickerList.length < 6) stickerList.add(sticker);
-    }
-
-    return Column(
-      children: [
-        CommonSpace(height: 37),
-        const RecordCalendarMemo(),
-        CommonSpace(height: 3),
-        Column(
-          children: [
-            RecordCalendarStickerList(
-              start: 0,
-              end: 2,
-              stickerList: stickerList,
-            ),
-            CommonSpace(height: 2),
-            RecordCalendarStickerList(
-              start: 3,
-              end: 5,
-              stickerList: stickerList,
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-
   onPageChanged(DateTime dateTime) {
     context
         .read<TitleDateTimeProvider>()
@@ -102,16 +46,74 @@ class _RecordCalendarState extends State<RecordCalendar> {
     double fontSize = context.watch<FontSizeProvider>().fintSize;
     DateTime selectedDateTime =
         context.watch<SelectedDateTimeProvider>().selectedDateTime;
+    UserInfoClass userInfo = context.watch<UserInfoProvider>().userInfo;
+    List<GroupInfoClass> groupInfoList =
+        context.watch<GroupInfoListProvider>().groupInfoList;
+    List<GroupInfoClass> groupInfoOrderList =
+        getGroupInfoOrderList(userInfo.groupOrderList, groupInfoList);
+
+    CalendarFormat calendarFormat =
+        calendarFormatInfo[userInfo.calendarFormat]!;
+
+    Widget? stickerBuilder(bool isLight, DateTime dateTime) {
+      String locale = context.locale.toString();
+      List<StickerClass> stickerList = [];
+
+      List<RecordItemClass> recordItemList = getRecordItemList(
+        locale: locale,
+        targetDateTime: dateTime,
+        groupInfoList: groupInfoOrderList,
+        taskOrderList: userInfo.taskOrderList,
+      );
+
+      for (final recordItem in recordItemList) {
+        List<RecordInfoClass> recordInfoList =
+            recordItem.taskInfo.recordInfoList;
+        RecordInfoClass? recordInfo = getRecordInfo(
+          recordInfoList: recordInfoList,
+          targetDateTime: dateTime,
+        );
+        String? mark = recordInfo?.mark;
+        ColorClass color = getColorClass(recordItem.groupInfo.colorName);
+        StickerClass sticker = StickerClass(mark: mark, color: color);
+
+        if (stickerList.length < 6) stickerList.add(sticker);
+      }
+
+      return Column(
+        children: [
+          CommonSpace(height: 37),
+          RecordCalendarMemo(dateTime: dateTime),
+          CommonSpace(height: 3),
+          Column(
+            children: [
+              RecordCalendarStickerList(
+                start: 0,
+                end: 2,
+                stickerList: stickerList,
+              ),
+              CommonSpace(height: 2),
+              RecordCalendarStickerList(
+                start: 3,
+                end: 5,
+                stickerList: stickerList,
+              ),
+            ],
+          ),
+        ],
+      );
+    }
 
     return CommonCalendar(
+      rowHeight: 55,
       initFontSize: fontSize,
       selectedDateTime: selectedDateTime,
-      calendarFormat: isTablet ? CalendarFormat.month : widget.calendarFormat,
+      calendarFormat: isTablet ? CalendarFormat.month : calendarFormat,
       shouldFillViewport: false,
       markerBuilder: stickerBuilder,
       onPageChanged: onPageChanged,
       onDaySelected: onDaySelected,
-      onFormatChanged: (_) => widget.onFormatChanged(),
+      onFormatChanged: (_) {},
     );
   }
 }

@@ -39,6 +39,7 @@ class RecordContainerItem extends StatelessWidget {
         builder: (context) => TaskInfoBottomSheet(
           groupInfo: groupInfo,
           taskInfo: taskInfo,
+          initDateTime: selectedDateTime,
         ),
       );
     }

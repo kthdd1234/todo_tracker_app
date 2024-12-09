@@ -158,6 +158,9 @@ flutter:
     - assets/svgs/align-right.svg
     - assets/svgs/align-center.svg
     - assets/svgs/camera.svg
+    - assets/svgs/one-week.svg
+    - assets/svgs/two-week.svg
+    - assets/svgs/one-month.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

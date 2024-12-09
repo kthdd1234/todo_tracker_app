@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:todo_tracker_app/common/CommonNull.dart';
 import 'package:todo_tracker_app/common/CommonSpace.dart';
 import 'package:todo_tracker_app/common/CommonText.dart';
+import 'package:todo_tracker_app/page/MemoPage.dart';
 import 'package:todo_tracker_app/provider/FontSizeProvider.dart';
 import 'package:todo_tracker_app/provider/MemoInfoListProvider.dart';
 import 'package:todo_tracker_app/provider/PremiumProvider.dart';
@@ -32,41 +33,50 @@ class RecordMemo extends StatelessWidget {
       (memoInfo) => memoInfo.dateTimeKey == dateTimeKey(selectedDateTime),
     );
     MemoInfoClass? memoInfo = index != -1 ? memoInfoList[index] : null;
+    bool isMemo = (memoInfo?.imgUrl != null) || (memoInfo?.text != null);
 
     onMemo() {
-      //
+      movePage(
+        context: context,
+        page: MemoPage(
+          isPremium: isPremium,
+          initDateTime: selectedDateTime,
+          memoInfoList: memoInfoList,
+          memoInfo: memoInfo,
+        ),
+      );
     }
 
-    log('${memoInfo?.imgUrl}');
-
-    return MemoContainer(
-      onTap: onMemo,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          memoInfo?.imgUrl != null
-              ? MemoImage(
-                  imageUrl: memoInfo?.imgUrl,
-                  onTap: onMemo,
-                )
-              : const CommonNull(),
-          memoInfo?.imgUrl != null && memoInfo?.text != null
-              ? CommonSpace(height: 10)
-              : const CommonNull(),
-          memoInfo?.text != null
-              ? SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  child: CommonText(
-                    text: memoInfo!.text!,
-                    initFontSize: fontSize,
-                    textAlign: memoInfo.textAlign ?? TextAlign.left,
-                    isBold: !isLight,
-                    isNotTr: true,
-                  ),
-                )
-              : const CommonNull()
-        ],
-      ),
-    );
+    return isMemo
+        ? MemoContainer(
+            onTap: onMemo,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                memoInfo?.imgUrl != null
+                    ? MemoImage(
+                        imageUrl: memoInfo?.imgUrl,
+                        onTap: onMemo,
+                      )
+                    : const CommonNull(),
+                memoInfo?.imgUrl != null && memoInfo?.text != null
+                    ? CommonSpace(height: 10)
+                    : const CommonNull(),
+                memoInfo?.text != null
+                    ? SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        child: CommonText(
+                          text: memoInfo!.text!,
+                          initFontSize: fontSize,
+                          textAlign: memoInfo.textAlign ?? TextAlign.left,
+                          isBold: !isLight,
+                          isNotTr: true,
+                        ),
+                      )
+                    : const CommonNull()
+              ],
+            ),
+          )
+        : const CommonNull();
   }
 }

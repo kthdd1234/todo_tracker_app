@@ -10,17 +10,17 @@ import 'package:todo_tracker_app/util/final.dart';
 import 'package:todo_tracker_app/util/func.dart';
 
 class RecordCalendarMemo extends StatelessWidget {
-  const RecordCalendarMemo({super.key});
+  RecordCalendarMemo({super.key, required this.dateTime});
+
+  DateTime dateTime;
 
   @override
   Widget build(BuildContext context) {
     bool isLight = context.watch<ThemeProvider>().isLight;
     List<MemoInfoClass> memoInfoList =
         context.watch<MemoInfoListProvider>().memoInfoList;
-    DateTime selectedDateTime =
-        context.watch<SelectedDateTimeProvider>().selectedDateTime;
     int index = memoInfoList.indexWhere(
-      (memoInfo) => memoInfo.dateTimeKey == dateTimeKey(selectedDateTime),
+      (memoInfo) => memoInfo.dateTimeKey == dateTimeKey(dateTime),
     );
     MemoInfoClass? memoInfo = index != -1 ? memoInfoList[index] : null;
     bool isMemo = (memoInfo?.imgUrl != null) || (memoInfo?.text != null);

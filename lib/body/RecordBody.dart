@@ -9,6 +9,7 @@ import 'package:todo_tracker_app/provider/GroupInfoListProvider.dart';
 import 'package:todo_tracker_app/provider/UserInfoProvider.dart';
 import 'package:todo_tracker_app/util/class.dart';
 import 'package:todo_tracker_app/util/final.dart';
+import 'package:todo_tracker_app/util/func.dart';
 
 class RecordBody extends StatefulWidget {
   const RecordBody({super.key});
@@ -18,38 +19,18 @@ class RecordBody extends StatefulWidget {
 }
 
 class _RecordBodyState extends State<RecordBody> {
-  CalendarFormat calendarFormat = CalendarFormat.week;
-
-  onFormatChanged() {
-    setState(() => calendarFormat = nextCalendarFormats[calendarFormat]!);
-  }
-
   @override
   Widget build(BuildContext context) {
-    UserInfoClass userInfo = context.watch<UserInfoProvider>().userInfo;
-    List<GroupInfoClass> groupInfoList =
-        context.watch<GroupInfoListProvider>().groupInfoList;
-
-    List<TaskOrderClass> taskOrderList = userInfo.taskOrderList;
-
     return GestureDetector(
       child: Column(
         children: [
-          RecordAppBar(
-            calendarFormat: calendarFormat,
-            onFormatChanged: onFormatChanged,
-          ),
+          RecordAppBar(),
           Expanded(
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  RecordCalendar(
-                    groupInfoList: groupInfoList,
-                    taskOrderList: taskOrderList,
-                    calendarFormat: calendarFormat,
-                    onFormatChanged: onFormatChanged,
-                  ),
-                  RecordMemo(),
+                  RecordCalendar(),
+                  const RecordMemo(),
                   const RecordContainer()
                 ],
               ),

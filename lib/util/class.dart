@@ -253,6 +253,7 @@ class UserInfoClass {
     required this.groupOrderList,
     required this.taskOrderList,
     required this.fontSize,
+    required this.calendarFormat,
     this.passwords,
   });
 
@@ -263,6 +264,7 @@ class UserInfoClass {
   List<String> groupOrderList;
   List<TaskOrderClass> taskOrderList;
   double fontSize;
+  String calendarFormat;
   String? passwords;
 
   UserInfoClass.fromJson(Map<String, dynamic> json)
@@ -278,6 +280,7 @@ class UserInfoClass {
         groupOrderList = dynamicToIdList(json['groupOrderList']),
         taskOrderList = taskOrderFromJson(json['taskOrderList']),
         fontSize = json['fontSize'] as double,
+        calendarFormat = json['calendarFormat'] as String,
         passwords = json['passwords'] as String?;
 
   Map<String, dynamic> toJson() => {
@@ -293,6 +296,7 @@ class UserInfoClass {
         'groupOrderList': groupOrderList,
         'taskOrderList': taskOrderToJson(taskOrderList),
         'fontSize': fontSize,
+        'calendarFormat': calendarFormat,
         'passwords': passwords,
       };
 }

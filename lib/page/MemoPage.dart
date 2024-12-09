@@ -165,6 +165,8 @@ class _MemoPageState extends State<MemoPage> {
         String? path = uint8List != null ? getImagePath(mid) : null;
         String? imgUrl = await onImgUrl(mid);
 
+        log('imgUrl => $imgUrl');
+
         if (widget.memoInfo == null) {
           await memoMethod.addMemo(
             mid: mid,

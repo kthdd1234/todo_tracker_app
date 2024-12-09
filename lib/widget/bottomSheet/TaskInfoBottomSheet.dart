@@ -27,10 +27,12 @@ class TaskInfoBottomSheet extends StatefulWidget {
     super.key,
     required this.groupInfo,
     required this.taskInfo,
+    required this.initDateTime,
   });
 
   GroupInfoClass groupInfo;
   TaskInfoClass taskInfo;
+  DateTime initDateTime;
 
   @override
   State<TaskInfoBottomSheet> createState() => _TaskInfoBottomSheetState();
@@ -41,6 +43,14 @@ class _TaskInfoBottomSheetState extends State<TaskInfoBottomSheet> {
   DateTime focusedDay = DateTime.now();
 
   @override
+  void initState() {
+    titleDateTime = widget.initDateTime;
+    focusedDay = widget.initDateTime;
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     String locale = context.locale.toString();
 
@@ -49,8 +59,8 @@ class _TaskInfoBottomSheetState extends State<TaskInfoBottomSheet> {
     List<TaskOrderClass> taskOrderList =
         context.watch<UserInfoProvider>().userInfo.taskOrderList;
     double fontSize = context.watch<FontSizeProvider>().fintSize;
-    DateTime selectedDateTime =
-        context.watch<SelectedDateTimeProvider>().selectedDateTime;
+    // DateTime selectedDateTime =
+    //     context.watch<SelectedDateTimeProvider>().selectedDateTime;
 
     Widget onTag({required String text}) {
       return CommonTag(
@@ -157,7 +167,7 @@ class _TaskInfoBottomSheetState extends State<TaskInfoBottomSheet> {
         isScrollControlled: true,
         context: context,
         builder: (context) => TaskBottomSheet(
-          selectedDateTime: selectedDateTime,
+          selectedDateTime: widget.initDateTime,
           groupInfo: widget.groupInfo,
           taskInfo: widget.taskInfo,
         ),

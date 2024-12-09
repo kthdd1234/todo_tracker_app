@@ -3,6 +3,7 @@
 import 'dart:developer';
 import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:todo_tracker_app/main.dart';
+import 'package:todo_tracker_app/method/UserMethod.dart';
 import 'package:todo_tracker_app/util/class.dart';
 import 'package:todo_tracker_app/util/constants.dart';
 import 'package:todo_tracker_app/util/enum.dart';
@@ -614,23 +617,21 @@ Future<Uint8List> getCacheData(String url) async {
 
 Future<void> removeImage({required String imgUrl, required String path}) async {
   await DefaultCacheManager().removeFile(imgUrl);
-  // await storageRef.child(path).delete();
+  await storageRef.child(path).delete();
 }
 
 Future<String?> getDownloadUrl(String imgUrl) async {
-  // try {
-  //   Reference imgRef = storageRef.child(imgUrl);
-  //   return await imgRef.getDownloadURL();
-  // } catch (e) {
-  //   log('$e');
-  //   return null;
-  // }
+  try {
+    Reference imgRef = storageRef.child(imgUrl);
+    return await imgRef.getDownloadURL();
+  } catch (e) {
+    log('$e');
+    return null;
+  }
 }
 
 String getImagePath(String mid) {
-  // String uid = auth.currentUser!.uid;
-  String uid = '';
-
+  String uid = auth.currentUser!.uid;
   return '$uid/$mid/img.jpg';
 }
 

@@ -4,6 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:table_calendar/table_calendar.dart';
 import 'package:todo_tracker_app/method/UserMethod.dart';
 import 'package:todo_tracker_app/page/HomePage.dart';
 import 'package:todo_tracker_app/util/class.dart';
@@ -56,6 +57,7 @@ class AuthService {
           osType: Platform.isIOS ? 'AppStore' : 'GooglePlay',
           titleInfo: TitleInfoClass(title: '할 일 리스트', colorName: '남색'),
           fontSize: defaultFontSize,
+          calendarFormat: CalendarFormat.week.toString(),
         );
 
         await userMethod.addUser(userInfo: userInfo);

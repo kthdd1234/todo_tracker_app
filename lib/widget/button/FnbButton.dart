@@ -6,6 +6,7 @@ import 'package:todo_tracker_app/provider/MemoInfoListProvider.dart';
 import 'package:todo_tracker_app/provider/PremiumProvider.dart';
 import 'package:todo_tracker_app/provider/SelectedDateTimeProvider.dart';
 import 'package:todo_tracker_app/provider/ThemeProvider.dart';
+import 'package:todo_tracker_app/provider/UserInfoProvider.dart';
 import 'package:todo_tracker_app/util/class.dart';
 import 'package:todo_tracker_app/util/constants.dart';
 import 'package:todo_tracker_app/util/final.dart';
@@ -26,6 +27,7 @@ class _FnbButtonState extends State<FnbButton> {
   Widget build(BuildContext context) {
     bool isPremium = context.watch<PremiumProvider>().isPremium;
     bool isLight = context.watch<ThemeProvider>().isLight;
+    UserInfoClass userInfo = context.watch<UserInfoProvider>().userInfo;
     DateTime selectedDateTime =
         context.watch<SelectedDateTimeProvider>().selectedDateTime;
     List<GroupInfoClass> groupInfoList =
@@ -34,11 +36,14 @@ class _FnbButtonState extends State<FnbButton> {
         context.watch<MemoInfoListProvider>().memoInfoList;
 
     onAddTodo() {
+      List<GroupInfoClass> groupInfoOrderList =
+          getGroupInfoOrderList(userInfo.groupOrderList, groupInfoList);
+
       showModalBottomSheet(
         isScrollControlled: true,
         context: context,
         builder: (context) => TaskBottomSheet(
-          groupInfo: groupInfoList[0],
+          groupInfo: groupInfoOrderList[0],
           selectedDateTime: selectedDateTime,
         ),
       );
