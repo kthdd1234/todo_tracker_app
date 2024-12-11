@@ -12,6 +12,7 @@ import 'package:todo_tracker_app/common/CommonTag.dart';
 import 'package:todo_tracker_app/common/CommonText.dart';
 import 'package:todo_tracker_app/method/UserMethod.dart';
 import 'package:todo_tracker_app/provider/FontSizeProvider.dart';
+import 'package:todo_tracker_app/provider/PremiumProvider.dart';
 import 'package:todo_tracker_app/provider/SelectedDateTimeProvider.dart';
 import 'package:todo_tracker_app/provider/ThemeProvider.dart';
 import 'package:todo_tracker_app/provider/UserInfoProvider.dart';
@@ -54,13 +55,12 @@ class _TaskInfoBottomSheetState extends State<TaskInfoBottomSheet> {
   Widget build(BuildContext context) {
     String locale = context.locale.toString();
 
+    bool isPremium = context.watch<PremiumProvider>().isPremium;
     bool isLight = context.watch<ThemeProvider>().isLight;
     ColorClass color = getColorClass(widget.groupInfo.colorName);
     List<TaskOrderClass> taskOrderList =
         context.watch<UserInfoProvider>().userInfo.taskOrderList;
     double fontSize = context.watch<FontSizeProvider>().fintSize;
-    // DateTime selectedDateTime =
-    //     context.watch<SelectedDateTimeProvider>().selectedDateTime;
 
     Widget onTag({required String text}) {
       return CommonTag(
@@ -167,6 +167,7 @@ class _TaskInfoBottomSheetState extends State<TaskInfoBottomSheet> {
         isScrollControlled: true,
         context: context,
         builder: (context) => TaskBottomSheet(
+          isPremium: isPremium,
           selectedDateTime: widget.initDateTime,
           groupInfo: widget.groupInfo,
           taskInfo: widget.taskInfo,

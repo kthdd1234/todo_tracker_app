@@ -1,9 +1,8 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_tracker_app/common/CommonText.dart';
 import 'package:todo_tracker_app/provider/GroupInfoListProvider.dart';
+import 'package:todo_tracker_app/provider/PremiumProvider.dart';
 import 'package:todo_tracker_app/provider/SelectedDateTimeProvider.dart';
 import 'package:todo_tracker_app/provider/ThemeProvider.dart';
 import 'package:todo_tracker_app/provider/UserInfoProvider.dart';
@@ -17,7 +16,8 @@ class RecordItemEmpty extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // bool isLight = context.watch<ThemeProvider>().isLight;
+    bool isPremium = context.watch<PremiumProvider>().isPremium;
+    bool isLight = context.watch<ThemeProvider>().isLight;
     DateTime selectedDateTime =
         context.watch<SelectedDateTimeProvider>().selectedDateTime;
     UserInfoClass userInfo = context.watch<UserInfoProvider>().userInfo;
@@ -32,6 +32,7 @@ class RecordItemEmpty extends StatelessWidget {
         isScrollControlled: true,
         context: context,
         builder: (context) => TaskBottomSheet(
+          isPremium: isPremium,
           selectedDateTime: selectedDateTime,
           groupInfo: groupInfoOrderList[0],
         ),
@@ -45,7 +46,7 @@ class RecordItemEmpty extends StatelessWidget {
         child: Center(
           child: CommonText(
             text: '추가한 할 일이 없어요.',
-            color: grey.s400,
+            color: isLight ? grey.s400 : grey.s300,
           ),
         ),
       ),

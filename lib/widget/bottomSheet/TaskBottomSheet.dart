@@ -8,7 +8,9 @@ import 'package:todo_tracker_app/common/CommonOutlineInputField.dart';
 import 'package:todo_tracker_app/common/CommonSpace.dart';
 import 'package:todo_tracker_app/common/CommonTag.dart';
 import 'package:todo_tracker_app/common/CommonText.dart';
+import 'package:todo_tracker_app/main.dart';
 import 'package:todo_tracker_app/method/UserMethod.dart';
+import 'package:todo_tracker_app/page/HomePage.dart';
 import 'package:todo_tracker_app/provider/FontSizeProvider.dart';
 import 'package:todo_tracker_app/provider/ThemeProvider.dart';
 import 'package:todo_tracker_app/util/class.dart';
@@ -20,11 +22,13 @@ import 'package:todo_tracker_app/widget/bottomSheet/GroupListBottomSheet.dart';
 class TaskBottomSheet extends StatefulWidget {
   TaskBottomSheet({
     super.key,
+    required this.isPremium,
     required this.selectedDateTime,
     required this.groupInfo,
     this.taskInfo,
   });
 
+  bool isPremium;
   GroupInfoClass groupInfo;
   TaskInfoClass? taskInfo;
   DateTime selectedDateTime;
@@ -58,6 +62,10 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
       controller.text = widget.taskInfo!.name;
     } else {
       dateTimeInfo.dateTimeList = [widget.selectedDateTime];
+    }
+
+    if (widget.isPremium == false) {
+      interstitialAdService.loadAd();
     }
 
     super.initState();
@@ -191,6 +199,10 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
     );
 
     navigatorPop(context);
+
+    if (widget.isPremium == false) {
+      interstitialAdService.showAd();
+    }
   }
 
   @override

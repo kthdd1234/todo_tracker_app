@@ -23,8 +23,6 @@ import 'package:todo_tracker_app/util/class.dart';
 import 'package:todo_tracker_app/util/func.dart';
 import 'package:todo_tracker_app/widget/button/FnbButton.dart';
 
-InterstitialAdService interstitialAdService = InterstitialAdService();
-
 class HomePage extends StatefulWidget {
   HomePage({super.key, required this.locale});
 

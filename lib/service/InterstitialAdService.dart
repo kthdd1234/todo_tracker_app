@@ -10,36 +10,31 @@ class InterstitialAdService {
   String adUnitId = getAdId('interstitial');
 
   void loadAd() async {
-    // bool isPremium = await isPurchasePremium();
-    bool isPremium = true;
+    InterstitialAd.load(
+      adUnitId: adUnitId,
+      request: const AdRequest(),
+      adLoadCallback: InterstitialAdLoadCallback(
+        onAdLoaded: (ad) {
+          ad.fullScreenContentCallback = FullScreenContentCallback(
+            onAdFailedToShowFullScreenContent: (ad, err) {
+              ad.dispose();
+              _interstitialAd = null;
+            },
+            onAdDismissedFullScreenContent: (ad) {
+              ad.dispose();
+              _interstitialAd = null;
+              loadAd();
+            },
+          );
 
-    if (isPremium == false) {
-      InterstitialAd.load(
-        adUnitId: adUnitId,
-        request: const AdRequest(),
-        adLoadCallback: InterstitialAdLoadCallback(
-          onAdLoaded: (ad) {
-            ad.fullScreenContentCallback = FullScreenContentCallback(
-              onAdFailedToShowFullScreenContent: (ad, err) {
-                ad.dispose();
-                _interstitialAd = null;
-              },
-              onAdDismissedFullScreenContent: (ad) {
-                ad.dispose();
-                _interstitialAd = null;
-                loadAd();
-              },
-            );
-
-            _interstitialAd = ad;
-            showLog();
-          },
-          onAdFailedToLoad: (LoadAdError error) {
-            debugPrint('InterstitialAd failed to load: $error');
-          },
-        ),
-      );
-    }
+          _interstitialAd = ad;
+          showLog();
+        },
+        onAdFailedToLoad: (LoadAdError error) {
+          debugPrint('InterstitialAd failed to load: $error');
+        },
+      ),
+    );
   }
 
   void showAd() async {

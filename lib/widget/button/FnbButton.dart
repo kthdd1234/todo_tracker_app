@@ -43,6 +43,7 @@ class _FnbButtonState extends State<FnbButton> {
         isScrollControlled: true,
         context: context,
         builder: (context) => TaskBottomSheet(
+          isPremium: isPremium,
           groupInfo: groupInfoOrderList[0],
           selectedDateTime: selectedDateTime,
         ),

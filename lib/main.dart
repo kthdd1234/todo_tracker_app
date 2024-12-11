@@ -21,6 +21,7 @@ import 'package:todo_tracker_app/provider/SelectedDateTimeProvider.dart';
 import 'package:todo_tracker_app/provider/ThemeProvider.dart';
 import 'package:todo_tracker_app/provider/TitleDateTimeProvider.dart';
 import 'package:todo_tracker_app/provider/UserInfoProvider.dart';
+import 'package:todo_tracker_app/service/InterstitialAdService.dart';
 import 'package:todo_tracker_app/util/class.dart';
 import 'package:todo_tracker_app/util/constants.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -37,6 +38,7 @@ PurchasesConfiguration _configuration =
     PurchasesConfiguration(Platform.isIOS ? appleApiKey : googleApiKey);
 
 Reference storageRef = FirebaseStorage.instance.ref();
+InterstitialAdService interstitialAdService = InterstitialAdService();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
