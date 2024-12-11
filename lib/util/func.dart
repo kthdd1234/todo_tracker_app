@@ -750,7 +750,7 @@ onSegmentedWidget({
           ? selectedColor.s400
           : grey.original
       : selected == type
-          ? selectedColor.s300
+          ? selectedColor.s100
           : grey.s400;
 
   return CommonText(

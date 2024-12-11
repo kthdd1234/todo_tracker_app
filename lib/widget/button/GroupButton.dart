@@ -30,13 +30,14 @@ class GroupButton extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
         decoration: BoxDecoration(
-          color: isLight ? color.s50 : darkBgColor,
+          color: isLight ? color.s50 : color.s300,
           borderRadius: const BorderRadius.all(Radius.circular(5)),
         ),
         child: CommonText(
           text: groupInfo.name,
-          color: isLight ? color.original : darkTextColor,
+          color: isLight ? color.original : Colors.white,
           isNotTr: true,
+          isBold: !isLight,
           initFontSize: fontSize - 1,
         ),
       ),

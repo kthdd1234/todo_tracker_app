@@ -216,7 +216,7 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                 onTap: onDateTime,
                 child: CommonText(
                   text: displayDateTime(locale),
-                  color: grey.original,
+                  color: isLight ? grey.original : grey.s50,
                 ),
               ),
               CommonModalItem(
@@ -226,8 +226,8 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                 child: CommonTag(
                   text: selectedGroupInfo.name,
                   initFontSize: fontSize - 1,
-                  textColor: groupColor.s400,
-                  bgColor: groupColor.s50,
+                  textColor: isLight ? groupColor.s400 : Colors.white, //
+                  bgColor: isLight ? groupColor.s50 : groupColor.s300, //
                   onTap: onGroup,
                 ),
               ),

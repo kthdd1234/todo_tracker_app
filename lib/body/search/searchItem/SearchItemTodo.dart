@@ -7,6 +7,7 @@ import 'package:todo_tracker_app/common/CommonNull.dart';
 import 'package:todo_tracker_app/common/CommonSpace.dart';
 import 'package:todo_tracker_app/common/CommonText.dart';
 import 'package:todo_tracker_app/provider/FontSizeProvider.dart';
+import 'package:todo_tracker_app/provider/ThemeProvider.dart';
 import 'package:todo_tracker_app/util/class.dart';
 import 'package:todo_tracker_app/util/constants.dart';
 import 'package:todo_tracker_app/util/final.dart';
@@ -19,6 +20,7 @@ class SearchItemTodo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isLight = context.watch<ThemeProvider>().isLight;
     String locale = context.locale.toString();
     double fontSize = context.watch<FontSizeProvider>().fintSize;
     DateTime dateTime = searchItemTodo.dateTime;
@@ -31,7 +33,7 @@ class SearchItemTodo extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CommonText(text: mde, color: const Color.fromRGBO(64, 71, 99, 1)),
+          CommonText(text: mde, color: isLight ? textColor : grey.s50),
           CommonSpace(height: 10),
           CommonDivider(),
           Column(
@@ -58,20 +60,26 @@ class SearchItemTodo extends StatelessWidget {
                           svgAsset(
                             name: 'mark-${mark ?? 'E'}',
                             width: 12,
-                            color: color.s400,
+                            color: isLight ? color.s400 : color.s200,
                           ),
                           CommonSpace(width: 10),
-                          Container(
-                            padding: mark != null
-                                ? const EdgeInsets.symmetric(horizontal: 5)
-                                : null,
-                            decoration: mark != null
-                                ? BoxDecoration(
-                                    color: color.s50,
-                                    borderRadius: BorderRadius.circular(3),
-                                  )
-                                : null,
-                            child: CommonText(text: taskInfo.name),
+                          Expanded(
+                            child: Container(
+                              padding: mark != null
+                                  ? const EdgeInsets.symmetric(horizontal: 5)
+                                  : null,
+                              decoration: mark != null
+                                  ? BoxDecoration(
+                                      color: isLight ? color.s50 : color.s400,
+                                      borderRadius: BorderRadius.circular(3),
+                                    )
+                                  : null,
+                              child: CommonText(
+                                text: taskInfo.name,
+                                isBold: !isLight,
+                                textAlign: TextAlign.left,
+                              ),
+                            ),
                           )
                         ],
                       ),

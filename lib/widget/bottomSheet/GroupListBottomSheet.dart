@@ -5,15 +5,12 @@ import 'package:todo_tracker_app/common/CommonContainer.dart';
 import 'package:todo_tracker_app/common/CommonImageButton.dart';
 import 'package:todo_tracker_app/common/CommonModalSheet.dart';
 import 'package:todo_tracker_app/page/GroupPage.dart';
-import 'package:todo_tracker_app/provider/FontSizeProvider.dart';
 import 'package:todo_tracker_app/provider/GroupInfoListProvider.dart';
 import 'package:todo_tracker_app/provider/ReloadProvider.dart';
-import 'package:todo_tracker_app/provider/SelectedDateTimeProvider.dart';
 import 'package:todo_tracker_app/provider/ThemeProvider.dart';
 import 'package:todo_tracker_app/provider/UserInfoProvider.dart';
 import 'package:todo_tracker_app/util/class.dart';
 import 'package:todo_tracker_app/util/constants.dart';
-import 'package:todo_tracker_app/util/final.dart';
 import 'package:todo_tracker_app/util/func.dart';
 import 'package:todo_tracker_app/widget/button/GroupButton.dart';
 
@@ -67,12 +64,12 @@ class GroupListBottomSheet extends StatelessWidget {
                   .toList(),
             ),
             const Spacer(),
-            CommonImageButton(
-              path: 'deep-blue',
+            CommonButton(
               text: '그룹 관리',
-              isBold: true,
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(vertical: 12.5),
+              textColor: Colors.white,
+              buttonColor: isLight ? textColor : darkButtonColor,
+              verticalPadding: 12.5,
+              borderRadius: 7,
               onTap: onManege,
             )
           ],
@@ -82,11 +79,13 @@ class GroupListBottomSheet extends StatelessWidget {
   }
 }
 
-        // CommonButton(
+      
+
+            //  CommonImageButton(
+            //   path: 'deep-blue',
             //   text: '그룹 관리',
-            //   textColor: Colors.white,
-            //   buttonColor: textColor,
-            //   verticalPadding: 12.5,
-            //   borderRadius: 7,
+            //   isBold: true,
+            //   width: double.infinity,
+            //   padding: const EdgeInsets.symmetric(vertical: 12.5),
             //   onTap: onManege,
             // )

@@ -155,16 +155,20 @@ class CalendarView extends StatelessWidget {
       );
     }
 
-    return CommonCalendar(
-      selectedDateTime: selectedDateTime,
-      calendarFormat: CalendarFormat.month,
-      shouldFillViewport: true,
-      markerBuilder: isTodo ? barBuilder : memoBuilder,
-      todayBuilder: todayBuilder,
-      initFontSize: fontSize,
-      onPageChanged: onPageChanged,
-      onDaySelected: onDaySelected,
-      onFormatChanged: (_) {},
+    return Expanded(
+      child: SingleChildScrollView(
+        child: CommonCalendar(
+          selectedDateTime: selectedDateTime,
+          calendarFormat: CalendarFormat.month,
+          shouldFillViewport: true,
+          markerBuilder: isTodo ? barBuilder : memoBuilder,
+          todayBuilder: todayBuilder,
+          initFontSize: fontSize,
+          onPageChanged: onPageChanged,
+          onDaySelected: onDaySelected,
+          onFormatChanged: (_) {},
+        ),
+      ),
     );
   }
 }

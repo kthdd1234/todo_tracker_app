@@ -140,12 +140,10 @@ class _CommonCalendarState extends State<CommonCalendar> {
       );
     }
 
-    if (!isLight) return tableCalendar();
-
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
       child: CommonContainer(
-        color: isLight ? Colors.white : darkBgColor,
+        color: isLight ? Colors.white : darkContainerColor,
         innerPadding: const EdgeInsets.symmetric(vertical: 15),
         height: widget.height ??
             (widget.shouldFillViewport

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:todo_tracker_app/body/search/SearchAppBar.dart';
 import 'package:todo_tracker_app/body/search/SearchInputBar.dart';
 import 'package:todo_tracker_app/body/search/SearchItemContainer.dart';
+import 'package:todo_tracker_app/provider/ThemeProvider.dart';
 import 'package:todo_tracker_app/util/enum.dart';
 import 'package:todo_tracker_app/util/final.dart';
 import 'package:todo_tracker_app/util/func.dart';
@@ -51,7 +53,11 @@ class _SearchBodyState extends State<SearchBody> {
 
   @override
   Widget build(BuildContext context) {
+    bool isLight = context.watch<ThemeProvider>().isLight;
     bool isTodo = selectedSegment == SegmentedTypeEnum.todo;
+
+    Color lightColor = isTodo ? indigo.s200 : orange.s200;
+    Color darkColor = isTodo ? indigo.s300 : orange.s300;
 
     return Column(
       children: [
@@ -65,7 +71,7 @@ class _SearchBodyState extends State<SearchBody> {
           focusNode: focusNode,
           controller: controller,
           hintText: '${isTodo ? '할 일' : '메모'} 검색',
-          prefixColor: isTodo ? indigo.s200 : orange.s200,
+          prefixColor: isLight ? lightColor : darkColor,
           onSuffixIcon: onClear,
           onEditingComplete: onEditingComplete,
         ),

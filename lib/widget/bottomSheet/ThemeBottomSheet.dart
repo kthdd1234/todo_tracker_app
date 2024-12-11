@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:todo_tracker_app/common/CommonModalButton.dart';
 import 'package:todo_tracker_app/common/CommonModalSheet.dart';
 import 'package:todo_tracker_app/common/CommonSpace.dart';
+import 'package:todo_tracker_app/method/UserMethod.dart';
 import 'package:todo_tracker_app/provider/ThemeProvider.dart';
 import 'package:todo_tracker_app/provider/UserInfoProvider.dart';
 import 'package:todo_tracker_app/util/class.dart';
@@ -47,7 +48,7 @@ class ThemeBottomSheet extends StatelessWidget {
           userInfo.theme = id;
 
           context.read<ThemeProvider>().setThemeValue(id);
-          // await userMethod.updateUser(userInfo: userInfo);
+          await userMethod.updateUser(userInfo: userInfo);
 
           navigatorPop(context);
         },
