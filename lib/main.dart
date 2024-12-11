@@ -5,8 +5,9 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:todo_tracker_app/method/UserMethod.dart';
-// import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:todo_tracker_app/page/EnterPasswordPage.dart';
 import 'package:todo_tracker_app/page/HomePage.dart';
 import 'package:todo_tracker_app/page/IntroPage.dart';
 import 'package:todo_tracker_app/page/LoadingPage.dart';
@@ -32,8 +33,9 @@ import 'package:privacy_screen/privacy_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
-// PurchasesConfiguration _configuration =
-//     PurchasesConfiguration(Platform.isIOS ? appleApiKey : googleApiKey);
+PurchasesConfiguration _configuration =
+    PurchasesConfiguration(Platform.isIOS ? appleApiKey : googleApiKey);
+
 Reference storageRef = FirebaseStorage.instance.ref();
 
 void main() async {
@@ -41,7 +43,7 @@ void main() async {
 
   await initializeDateFormatting();
   await EasyLocalization.ensureInitialized();
-  // await Purchases.configure(_configuration);
+  await Purchases.configure(_configuration);
   await MobileAds.instance.initialize();
   await dotenv.load(fileName: ".env");
   await Firebase.initializeApp(
@@ -87,7 +89,15 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     auth.authStateChanges().listen((user) async {
       if (mounted) {
         if (user != null) {
-          loginStatus = await userMethod.isUser ? 'succeed' : "start";
+          bool isUser = await userMethod.isUser;
+          UserInfoClass? userInfo = await userMethod.getUserInfo;
+          bool isPasswords = userInfo?.passwords != null;
+
+          loginStatus = isUser
+              ? isPasswords
+                  ? 'locked'
+                  : 'succeed'
+              : "start";
         } else {
           loginStatus = 'start';
         }
@@ -199,7 +209,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       home: {
         'loading': const LoadingPage(),
         'start': const IntroPage(),
-        'succeed': HomePage(locale: locale)
+        'succeed': HomePage(locale: locale),
+        'locked': EnterPasswordPage(),
       }[loginStatus],
     );
   }

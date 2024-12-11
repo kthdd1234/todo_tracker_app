@@ -88,16 +88,16 @@ const iOSAppOpeningRealId = '';
 const iOSInterstitialRealId = '';
 
 /// appleApiKey
-const appleApiKey = '';
+const appleApiKey = 'appl_jxkFerfyHWCOhHlmnaZPFWEuCrE';
 
 /// googleApiKey
 const googleApiKey = '';
 
 /// offeringIdentifier
-const offeringIdentifier = '';
+const offeringIdentifier = 'todo tracker - remove ads';
 
 /// entitlementIdentifier
-const entitlementIdentifier = '';
+const entitlementIdentifier = 'todo tracker identifier';
 
 /// APP_STORE_LINK
 const APP_STORE_LINK = "https://apps.apple.com/app";

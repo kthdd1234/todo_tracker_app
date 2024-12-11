@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_tracker_app/provider/ThemeProvider.dart';
+import 'package:todo_tracker_app/provider/UserInfoProvider.dart';
+import 'package:todo_tracker_app/util/class.dart';
 import 'package:todo_tracker_app/util/constants.dart';
 
 class CommonBackground extends StatelessWidget {
@@ -22,9 +24,9 @@ class CommonBackground extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // UserInfoClass userInfo = context.watch<UserInfoProvider>().userInfo;
+    UserInfoClass userInfo = context.watch<UserInfoProvider>().userInfo;
     bool isLight = context.watch<ThemeProvider>().isLight;
-    String path = background ?? 'background-image';
+    String path = background ?? userInfo.background;
 
     return Container(
       width: width,

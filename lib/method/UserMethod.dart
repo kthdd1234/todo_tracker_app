@@ -21,6 +21,10 @@ MemoMethod memoMethod = MemoMethod();
 class UserMethod {
   String get uid => auth.currentUser!.uid;
 
+  DocumentReference<Map<String, dynamic>> get user {
+    return firestore.collection(usersCollection).doc(uid);
+  }
+
   Future<bool> get isUser async {
     try {
       DocumentSnapshot<Map<String, dynamic>> user =
@@ -31,6 +35,14 @@ class UserMethod {
       errorMessage(msg: '알 수 없는 에러가 발생했어요');
       return false;
     }
+  }
+
+  Future<UserInfoClass?> get getUserInfo async {
+    DocumentSnapshot<Map<String, dynamic>> snapshot = await user.get();
+    Map<String, dynamic>? data = snapshot.data();
+
+    if (data == null) null;
+    return UserInfoClass.fromJson(data!);
   }
 
   Stream<DocumentSnapshot<Map<String, dynamic>>> get userSnapshots {

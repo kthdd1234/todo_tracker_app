@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_tracker_app/body/CalendarBody.dart';
 import 'package:todo_tracker_app/body/RecordBody.dart';
+import 'package:todo_tracker_app/body/SearchBody.dart';
 import 'package:todo_tracker_app/body/SettingBody.dart';
-import 'package:todo_tracker_app/body/TableBody.dart';
 import 'package:todo_tracker_app/common/CommonBackground.dart';
 import 'package:todo_tracker_app/common/CommonScaffold.dart';
 import 'package:todo_tracker_app/method/UserMethod.dart';
@@ -36,11 +36,11 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   initializePremium() async {
-    // bool isPremium = await isPurchasePremium();
+    bool isPremium = await isPurchasePremium();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
-        context.read<PremiumProvider>().setPremiumValue(true);
+        context.read<PremiumProvider>().setPremiumValue(isPremium);
       }
     });
   }
@@ -62,16 +62,6 @@ class _HomePageState extends State<HomePage> {
 
                 context.read<FontSizeProvider>().setFontSize(userInfo.fontSize);
                 context.read<ThemeProvider>().setThemeValue(userInfo.theme);
-
-                int seletedIdx =
-                    Provider.of<BottomTabIndexProvider>(context, listen: false)
-                        .seletedIdx;
-
-                if (seletedIdx != 3) {
-                  context
-                      .read<BottomTabIndexProvider>()
-                      .changeSeletedIdx(newIndex: userInfo.appStartIndex);
-                }
               }
             }
           },
@@ -166,7 +156,7 @@ class _HomePageState extends State<HomePage> {
           child: [
             const RecordBody(),
             const CalendarBody(),
-            const TableBody(),
+            const SearchBody(),
             const SettingBody()
           ][seletedIdx],
         ),

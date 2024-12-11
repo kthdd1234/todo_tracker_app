@@ -145,7 +145,7 @@ class SettingItemClass {
   });
 
   String name, svg;
-  Widget? value;
+  String? value;
   Function() onTap;
 }
 
@@ -235,6 +235,20 @@ class MarkClass {
   }
 
   String E, O, X, M, T;
+}
+
+class SearchItemTodoClass {
+  SearchItemTodoClass({required this.dateTime, required this.recordItemList});
+
+  DateTime dateTime;
+  List<RecordItemClass> recordItemList;
+}
+
+class SearchItemMemoClass {
+  SearchItemMemoClass({required this.dateTime, required this.memoInfo});
+
+  DateTime dateTime;
+  MemoInfoClass memoInfo;
 }
 
 //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ firestore data modeling ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ//

@@ -52,7 +52,7 @@ class AuthService {
           groupOrderList: [gid],
           taskOrderList: [],
           fontFamily: initFontFamily,
-          background: 'background-image',
+          background: '0',
           theme: 'light',
           osType: Platform.isIOS ? 'AppStore' : 'GooglePlay',
           titleInfo: TitleInfoClass(title: '할 일 리스트', colorName: '남색'),

@@ -209,20 +209,20 @@ final daysInfo = {
 
 final backroundClassList = [
   [
-    BackgroundClass(path: '0', name: 'Defalut'),
-    BackgroundClass(path: '05', name: 'Paper Texture'),
+    BackgroundClass(path: '0', name: 'Default'),
+    BackgroundClass(path: '1', name: 'Paper Texture'),
   ],
   [
-    BackgroundClass(path: '1', name: 'Cloudy Apple'),
-    BackgroundClass(path: '2', name: 'Snow Again'),
+    BackgroundClass(path: '2', name: 'Cloudy Apple'),
+    BackgroundClass(path: '3', name: 'Snow Again'),
   ],
   [
-    BackgroundClass(path: '3', name: 'Pastel Sky'),
-    BackgroundClass(path: '4', name: 'Winter Sky'),
+    BackgroundClass(path: '4', name: 'Pastel Sky'),
+    BackgroundClass(path: '5', name: 'Winter Sky'),
   ],
   [
-    BackgroundClass(path: '5', name: 'Perfect White'),
-    BackgroundClass(path: '6', name: 'Kind Steel'),
+    BackgroundClass(path: '6', name: 'Perfect White'),
+    BackgroundClass(path: '7', name: 'Kind Steel'),
   ],
 ];
 
@@ -304,8 +304,16 @@ List<Map<String, String>> fontFamilyList = [
     "name": "OpenSans",
   },
   {
-    "fontFamily": "Hyemin",
-    "name": "IM 혜민",
+    "fontFamily": "BasicSans",
+    "name": "눈누 기초고딕",
+  },
+  {
+    "fontFamily": "Sejong",
+    "name": "세종글꽃체",
+  },
+  {
+    "fontFamily": "WaterMelon",
+    "name": "수박양체",
   },
   {
     "fontFamily": "Kyobo",

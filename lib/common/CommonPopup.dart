@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_tracker_app/provider/ThemeProvider.dart';
+import 'package:todo_tracker_app/provider/UserInfoProvider.dart';
+import 'package:todo_tracker_app/util/class.dart';
 import 'package:todo_tracker_app/util/constants.dart';
 
 class CommonPopup extends StatelessWidget {
@@ -16,7 +18,9 @@ class CommonPopup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    UserInfoClass userInfo = context.watch<UserInfoProvider>().userInfo;
     bool isLight = context.watch<ThemeProvider>().isLight;
+    String background = userInfo.background;
 
     return AlertDialog(
       contentPadding: const EdgeInsets.all(0),
@@ -26,8 +30,8 @@ class CommonPopup extends StatelessWidget {
         decoration: BoxDecoration(
           color: isLight ? Colors.white : darkBgColor,
           image: isLight
-              ? const DecorationImage(
-                  image: AssetImage('assets/images/background-image.png'),
+              ? DecorationImage(
+                  image: AssetImage('assets/images/$background.png'),
                   fit: BoxFit.cover,
                 )
               : null,

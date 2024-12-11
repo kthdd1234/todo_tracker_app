@@ -69,7 +69,7 @@ dependencies:
   firebase_auth: ^5.3.3
   firebase_storage: ^12.3.6
   cloud_firestore: ^5.5.0
-  # cloud_firestore
+  flutter_email_sender: ^6.0.3
 
 dev_dependencies:
   flutter_test:
@@ -98,7 +98,14 @@ flutter:
     - assets/translations/ko.json
     - assets/translations/en.json
     - assets/translations/ja.json
-    - assets/images/background-image.png
+    - assets/images/0.png
+    - assets/images/1.png
+    - assets/images/2.png
+    - assets/images/3.png
+    - assets/images/4.png
+    - assets/images/5.png
+    - assets/images/6.png
+    - assets/images/7.png
     - assets/images/deep-red.png
     - assets/images/deep-blue.png
     - assets/svgs/Korea.svg
@@ -113,6 +120,9 @@ flutter:
     - assets/svgs/bnb-tracker.svg
     - assets/svgs/bnb-tracker-filled-light.svg
     - assets/svgs/bnb-tracker-filled-dark.svg
+    - assets/svgs/bnb-search.svg
+    - assets/svgs/bnb-search-filled-light.svg
+    - assets/svgs/bnb-search-filled-dark.svg
     - assets/svgs/bnb-setting.svg
     - assets/svgs/bnb-setting-filled-light.svg
     - assets/svgs/bnb-setting-filled-dark.svg
@@ -130,6 +140,7 @@ flutter:
     - assets/svgs/language.svg
     - assets/svgs/user.svg
     - assets/svgs/private.svg
+    - assets/svgs/background.svg
     - assets/svgs/version.svg
     - assets/svgs/list-add.svg
     - assets/svgs/google-logo.svg
@@ -161,6 +172,9 @@ flutter:
     - assets/svgs/one-week.svg
     - assets/svgs/two-week.svg
     - assets/svgs/one-month.svg
+    - assets/svgs/premium-no-ads.svg
+    - assets/svgs/premium-badge.svg
+    - assets/svgs/inquire.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
@@ -184,11 +198,6 @@ flutter:
         - asset: assets/fonts/OpenSans.ttf
           weight: 400
 
-    - family: Hyemin
-      fonts:
-        - asset: assets/fonts/Hyemin.ttf
-          weight: 400
-
     - family: Kyobo
       fonts:
         - asset: assets/fonts/Kyobo.ttf
@@ -202,6 +211,21 @@ flutter:
     - family: Dongdong
       fonts:
         - asset: assets/fonts/Dongdong.ttf
+          weight: 400
+
+    - family: BasicSans
+      fonts:
+        - asset: assets/fonts/BasicSans.ttf
+          weight: 400
+
+    - family: Sejong
+      fonts:
+        - asset: assets/fonts/Sejong.ttf
+          weight: 400
+
+    - family: WaterMelon
+      fonts:
+        - asset: assets/fonts/WaterMelon.ttf
           weight: 400
   #
   # For details regarding fonts from package dependencies,

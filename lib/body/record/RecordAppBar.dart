@@ -124,7 +124,7 @@ class _RecordAppBarState extends State<RecordAppBar> {
           onAction(
             svg: calendarFormatSvg[userInfo.calendarFormat]!,
             width: 18.5,
-            right: 7,
+            right: 10,
             onTap: onFormatChanged,
           ),
           onAction(

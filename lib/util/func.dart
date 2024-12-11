@@ -14,6 +14,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:todo_tracker_app/common/CommonText.dart';
 import 'package:todo_tracker_app/main.dart';
 import 'package:todo_tracker_app/method/UserMethod.dart';
 import 'package:todo_tracker_app/util/class.dart';
@@ -215,40 +216,29 @@ Future<bool> setPurchasePremium(Package package) async {
   }
 }
 
-// Future<bool> isPurchasePremium() async {
-//   try {
-//     CustomerInfo customerInfo = await Purchases.getCustomerInfo();
-//     bool isActive =
-//         customerInfo.entitlements.all[entitlementIdentifier]?.isActive == true;
-//     return isActive;
-//     // return true;
-//   } on PlatformException catch (e) {
-//     log('e =>> ${e.toString()}');
-//     return false;
-//   }
-// }
+Future<bool> isPurchasePremium() async {
+  try {
+    CustomerInfo customerInfo = await Purchases.getCustomerInfo();
+    bool isActive =
+        customerInfo.entitlements.all[entitlementIdentifier]?.isActive == true;
+    return isActive;
+  } on PlatformException catch (e) {
+    log('e =>> ${e.toString()}');
+    return false;
+  }
+}
 
-// Future<bool> isPurchaseRestore() async {
-//   try {
-//     CustomerInfo customerInfo = await Purchases.restorePurchases();
-//     bool isActive =
-//         customerInfo.entitlements.all[entitlementIdentifier]?.isActive == true;
-//     return isActive;
-//   } on PlatformException catch (e) {
-//     log('e =>> ${e.toString()}');
-//     return false;
-//   }
-// }
-
-// //
-// bool isSearchCategory(String? id) {
-//   if (id == null) return false;
-
-//   UserBox? user = userRepository.user;
-//   List<String> filterList = user.filterIdList ?? [];
-
-//   return filterList.contains(id) == true;
-// }
+Future<bool> isPurchaseRestore() async {
+  try {
+    CustomerInfo customerInfo = await Purchases.restorePurchases();
+    bool isActive =
+        customerInfo.entitlements.all[entitlementIdentifier]?.isActive == true;
+    return isActive;
+  } on PlatformException catch (e) {
+    log('e =>> ${e.toString()}');
+    return false;
+  }
+}
 
 DateTime weeklyStartDateTime(DateTime dateTime) {
   if (dateTime.weekday == 7) {
@@ -456,14 +446,14 @@ List<BNClass> getBnClassList(bool isLight, int seletedIdx) {
     ),
     BNClass(
       index: 2,
-      name: '표',
+      name: '검색',
       icon: svg(
         2,
         seletedIdx == 2
-            ? 'bnb-tracker-filled-${isLight ? 'light' : 'dark'}'
-            : 'bnb-tracker',
+            ? 'bnb-search-filled-${isLight ? 'light' : 'dark'}'
+            : 'bnb-search',
       ),
-      svgName: 'bnb-tracker',
+      svgName: 'bnb-search',
     ),
     BNClass(
       index: 3,
@@ -744,4 +734,54 @@ RecordInfoClass? getRecordInfo({
   );
 
   return index != -1 ? recordInfoList[index] : null;
+}
+
+onSegmentedWidget({
+  required String title,
+  required SegmentedTypeEnum type,
+  required SegmentedTypeEnum selected,
+  required bool isLight,
+  required ColorClass selectedColor,
+  required double fontSize,
+  Map<String, String>? nameArgs,
+}) {
+  Color color = isLight
+      ? selected == type
+          ? selectedColor.s400
+          : grey.original
+      : selected == type
+          ? selectedColor.s300
+          : grey.s400;
+
+  return CommonText(
+    text: title,
+    nameArgs: nameArgs,
+    initFontSize: fontSize - 1,
+    color: color,
+    isBold: !isLight,
+  );
+}
+
+Map<SegmentedTypeEnum, Widget> segmentedChildren(
+  SegmentedTypeEnum segmented,
+  bool isLight,
+  ColorClass selectedColor,
+  double fontSize,
+) {
+  return {
+    SegmentedTypeEnum.todo: onSegmentedWidget(
+        title: '할 일',
+        isLight: isLight,
+        type: SegmentedTypeEnum.todo,
+        selected: segmented,
+        selectedColor: selectedColor,
+        fontSize: fontSize),
+    SegmentedTypeEnum.memo: onSegmentedWidget(
+        title: '메모',
+        isLight: isLight,
+        type: SegmentedTypeEnum.memo,
+        selected: segmented,
+        selectedColor: selectedColor,
+        fontSize: fontSize),
+  };
 }
