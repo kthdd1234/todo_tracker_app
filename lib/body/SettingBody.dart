@@ -200,7 +200,7 @@ class _SettingBodyState extends State<SettingBody> {
 
     List<SettingItemClass> settingItemList = [
       SettingItemClass(
-        name: '광고 제거',
+        name: '광고 제거 + 사진 추가',
         svg: 'crown',
         onTap: onPremium,
         value: isPremium ? '구매 완료' : '미구매',

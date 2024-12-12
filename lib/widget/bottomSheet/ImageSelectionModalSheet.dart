@@ -28,13 +28,13 @@ class ImageSelectionModalSheet extends StatelessWidget {
 
     return CommonModalSheet(
       title: '사진',
-      height: 530,
+      height: 500,
       child: Column(
         children: [
           CommonImage(
             uint8List: uint8List,
             width: double.infinity,
-            height: 335,
+            height: 300,
             onTap: (_) => onSlide(),
           ),
           CommonSpace(height: 10),

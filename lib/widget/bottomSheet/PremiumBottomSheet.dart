@@ -86,7 +86,7 @@ class _PremiumBottomSheetState extends State<PremiumBottomSheet> {
     double fontSize = context.watch<FontSizeProvider>().fintSize;
 
     return CommonModalSheet(
-      title: '광고 제거',
+      title: '광고 제거 + 사진 추가',
       actionButton: const ModalCloseButton(),
       height: 500,
       child: Column(
@@ -99,9 +99,9 @@ class _PremiumBottomSheetState extends State<PremiumBottomSheet> {
                 children: [
                   svgAsset(name: 'premium-no-ads', width: 100),
                   CommonSpace(height: 20),
-                  CommonText(text: '앱 내의 전면 광고가 제거 됩니다.'),
                   CommonText(text: '커피 한잔의 가격으로'),
-                  CommonText(text: '광고 없이 쾌적하게 이용해보세요!')
+                  CommonText(text: '광고를 제거하고'),
+                  CommonText(text: '사진을 추가해보세요!')
                 ],
               ),
             ),

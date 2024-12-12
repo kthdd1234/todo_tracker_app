@@ -79,29 +79,64 @@ class WidgetHeaderClass {
 }
 
 class WidgetItemClass {
-  // final String id, category, amount;
-  // final List<int> amountRGB;
+  final String id, name, mark;
+  final List<int> barRGB, lineRGB, markRGB;
+  final List<int>? highlightRGB;
 
-  // WidgetItemClass(
-  //   this.id,
-  //   this.category,
-  //   this.amount,
-  //   this.amountRGB,
-  // );
+  WidgetItemClass(
+    this.id,
+    this.name,
+    this.mark,
+    this.barRGB,
+    this.lineRGB,
+    this.markRGB,
+    this.highlightRGB,
+  );
 
-  // WidgetItemClass.fromJson(Map<String, dynamic> json)
-  //     : id = json['id'] as String,
-  //       category = json['category'] as String,
-  //       amount = json['amount'] as String,
-  //       amountRGB = json['amountRGB'] as List<int>;
+  WidgetItemClass.fromJson(Map<String, dynamic> json)
+      : id = json['id'] as String,
+        name = json['name'] as String,
+        mark = json['mark'] as String,
+        barRGB = json['barRGB'] as List<int>,
+        lineRGB = json['lineRGB'] as List<int>,
+        markRGB = json['markRGB'] as List<int>,
+        highlightRGB = json['highlightRGB'] as List<int>?;
 
-  // Map<String, dynamic> toJson() => {
-  //       'id': id,
-  //       'category': category,
-  //       'amount': amount,
-  //       'amountRGB': amountRGB,
-  //     };
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'name': name,
+        'mark': mark,
+        'barRGB': barRGB,
+        'lineRGB': lineRGB,
+        'markRGB': markRGB,
+        'highlightRGB': highlightRGB
+      };
 }
+
+// class WidgetItemClass {
+// final String id, category, amount;
+// final List<int> amountRGB;
+
+// WidgetItemClass(
+//   this.id,
+//   this.category,
+//   this.amount,
+//   this.amountRGB,
+// );
+
+// WidgetItemClass.fromJson(Map<String, dynamic> json)
+//     : id = json['id'] as String,
+//       category = json['category'] as String,
+//       amount = json['amount'] as String,
+//       amountRGB = json['amountRGB'] as List<int>;
+
+// Map<String, dynamic> toJson() => {
+//       'id': id,
+//       'category': category,
+//       'amount': amount,
+//       'amountRGB': amountRGB,
+//     };
+// }
 
 class BackgroundClass {
   BackgroundClass({

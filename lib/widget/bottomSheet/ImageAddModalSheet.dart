@@ -9,6 +9,7 @@ import 'package:todo_tracker_app/common/CommonModalSheet.dart';
 import 'package:todo_tracker_app/common/CommonSpace.dart';
 import 'package:todo_tracker_app/provider/ThemeProvider.dart';
 import 'package:todo_tracker_app/util/constants.dart';
+import 'package:todo_tracker_app/widget/bottomSheet/PremiumBottomSheet.dart';
 import 'package:todo_tracker_app/widget/popup/AlertPopup.dart';
 
 ImagePicker picker = ImagePicker();
@@ -29,11 +30,11 @@ class ImageAddModalSheet extends StatefulWidget {
 
 class _ImageAddModalSheetState extends State<ImageAddModalSheet> {
   onPremium() {
-    // showModalBottomSheet(
-    //   isScrollControlled: true,
-    //   context: context,
-    //   builder: (context) => const PremiumBottomSheet(),
-    // );
+    showModalBottomSheet(
+      isScrollControlled: true,
+      context: context,
+      builder: (context) => const PremiumBottomSheet(),
+    );
   }
 
   onCamera() async {

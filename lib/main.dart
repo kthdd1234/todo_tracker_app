@@ -5,6 +5,8 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_windowmanager/flutter_windowmanager.dart';
+import 'package:home_widget/home_widget.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:todo_tracker_app/method/UserMethod.dart';
 import 'package:todo_tracker_app/page/EnterPasswordPage.dart';
@@ -21,6 +23,7 @@ import 'package:todo_tracker_app/provider/SelectedDateTimeProvider.dart';
 import 'package:todo_tracker_app/provider/ThemeProvider.dart';
 import 'package:todo_tracker_app/provider/TitleDateTimeProvider.dart';
 import 'package:todo_tracker_app/provider/UserInfoProvider.dart';
+import 'package:todo_tracker_app/service/HomeWidgetService.dart';
 import 'package:todo_tracker_app/service/InterstitialAdService.dart';
 import 'package:todo_tracker_app/util/class.dart';
 import 'package:todo_tracker_app/util/constants.dart';
@@ -39,6 +42,7 @@ PurchasesConfiguration _configuration =
 
 Reference storageRef = FirebaseStorage.instance.ref();
 InterstitialAdService interstitialAdService = InterstitialAdService();
+HomeWidgetService homeWidgetService = HomeWidgetService();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -51,6 +55,9 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  if (Platform.isIOS) {
+    await HomeWidget.setAppGroupId('group.todo-tracker-widget');
+  }
 
   runApp(
     MultiProvider(
@@ -139,6 +146,23 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     );
   }
 
+  initializeWidget(Uri? uri) async {
+    DateTime now = DateTime.now();
+
+    if (uri != null) {
+      context
+          .read<SelectedDateTimeProvider>()
+          .changeSelectedDateTime(dateTime: now);
+      context.read<TitleDateTimeProvider>().changeTitleDateTime(dateTime: now);
+    }
+  }
+
+  initializeWindowManager() async {
+    if (Platform.isAndroid) {
+      await FlutterWindowManager.clearFlags(FlutterWindowManager.FLAG_SECURE);
+    }
+  }
+
   @override
   void initState() {
     initializeLogin();
@@ -151,24 +175,24 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
-    String locale = context.locale.toString();
     bool isBackground = state == AppLifecycleState.paused ||
         state == AppLifecycleState.detached;
     bool isHomeWidget =
         isBackground && loginStatus != 'start' && Platform.isIOS;
 
     if (isHomeWidget) {
-      // UserInfoClass userInfo =
-      //     Provider.of<UserInfoProvider>(context, listen: false).getUserInfo;
-      // List<CategoryInfoClass> categoryInfoList =
-      //     Provider.of<CategoryInfoListProvider>(context, listen: false)
-      //         .categoryInfoList;
+      String locale = context.locale.toString();
+      UserInfoClass userInfo =
+          Provider.of<UserInfoProvider>(context, listen: false).getUserInfo;
+      List<GroupInfoClass> groupInfoList =
+          Provider.of<GroupInfoListProvider>(context, listen: false)
+              .getGroupInfoList;
 
-      // await HomeWidgetService().update(
-      //   locale: locale,
-      //   userInfo: userInfo,
-      //   categoryInfoList: categoryInfoList,
-      // );
+      await homeWidgetService.updateData(
+        locale: locale,
+        userInfo: userInfo,
+        groupInfoList: groupInfoList,
+      );
     }
   }
 
@@ -177,8 +201,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     super.didChangeDependencies();
 
     if (Platform.isIOS) {
-      // HomeWidget.initiallyLaunchedFromHomeWidget().then(initializeWidget);
-      // HomeWidget.widgetClicked.listen(initializeWidget);
+      HomeWidget.initiallyLaunchedFromHomeWidget().then(initializeWidget);
+      HomeWidget.widgetClicked.listen(initializeWidget);
     }
   }
 
