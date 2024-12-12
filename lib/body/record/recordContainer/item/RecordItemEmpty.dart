@@ -45,8 +45,8 @@ class RecordItemEmpty extends StatelessWidget {
         height: 150,
         child: Center(
           child: CommonText(
-            text: '추가한 할 일이 없어요.',
-            color: isLight ? grey.s400 : grey.s300,
+            text: '+ 할 일 추가하기',
+            color: isLight ? Colors.grey : grey.s300,
           ),
         ),
       ),

@@ -65,7 +65,7 @@ class _TaskInfoBottomSheetState extends State<TaskInfoBottomSheet> {
     Widget onTag({required String text}) {
       return CommonTag(
         text: text,
-        isBold: true,
+        isBold: !isLight,
         textColor: isLight ? color.original : Colors.white,
         bgColor: isLight ? color.s50 : color.s400,
         initFontSize: fontSize - 3,
@@ -196,7 +196,7 @@ class _TaskInfoBottomSheetState extends State<TaskInfoBottomSheet> {
 
     return CommonModalSheet(
       title: widget.taskInfo.name,
-      height: 597,
+      height: 600,
       isNotTr: true,
       actionButton: const ModalCloseButton(),
       child: Column(
@@ -225,6 +225,7 @@ class _TaskInfoBottomSheetState extends State<TaskInfoBottomSheet> {
                   ),
                 ),
                 TableCalendar(
+                  daysOfWeekHeight: 22,
                   locale: locale,
                   headerVisible: false,
                   focusedDay: titleDateTime,

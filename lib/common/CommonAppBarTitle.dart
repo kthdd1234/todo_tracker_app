@@ -1,15 +1,10 @@
-import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_tracker_app/common/CommonSvgText.dart';
-import 'package:todo_tracker_app/common/CommonText.dart';
 import 'package:todo_tracker_app/provider/FontSizeProvider.dart';
 import 'package:todo_tracker_app/provider/ThemeProvider.dart';
-import 'package:todo_tracker_app/provider/TitleDateTimeProvider.dart';
 import 'package:todo_tracker_app/util/constants.dart';
 import 'package:todo_tracker_app/util/enum.dart';
-import 'package:todo_tracker_app/util/func.dart';
 
 class CommonAppBarTitle extends StatelessWidget {
   CommonAppBarTitle({

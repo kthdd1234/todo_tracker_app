@@ -14,7 +14,7 @@ import 'package:todo_tracker_app/util/class.dart';
 import 'package:todo_tracker_app/util/func.dart';
 
 class RecordContainer extends StatelessWidget {
-  const RecordContainer({super.key});
+  RecordContainer({super.key});
 
   @override
   Widget build(BuildContext context) {

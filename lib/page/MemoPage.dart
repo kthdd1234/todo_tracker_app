@@ -268,7 +268,7 @@ class _MemoPageState extends State<MemoPage> {
                                   controller: memoContoller,
                                   cursorColor: cursorColor,
                                   textAlign: textAlign,
-                                  fontSize: 15,
+                                  fontSize: fontSize,
                                   onChanged: (_) {},
                                 ),
                               ],

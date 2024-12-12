@@ -12,12 +12,13 @@ import 'package:todo_tracker_app/provider/PremiumProvider.dart';
 import 'package:todo_tracker_app/provider/SelectedDateTimeProvider.dart';
 import 'package:todo_tracker_app/provider/ThemeProvider.dart';
 import 'package:todo_tracker_app/util/class.dart';
+import 'package:todo_tracker_app/util/final.dart';
 import 'package:todo_tracker_app/util/func.dart';
 import 'package:todo_tracker_app/widget/memo/MemoContainer.dart';
 import 'package:todo_tracker_app/widget/memo/MemoImage.dart';
 
 class RecordMemo extends StatelessWidget {
-  const RecordMemo({super.key});
+  RecordMemo({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -77,6 +78,21 @@ class RecordMemo extends StatelessWidget {
               ],
             ),
           )
-        : const CommonNull();
+        : isTablet
+            ? MemoContainer(
+                height: 350,
+                onTap: onMemo,
+                child: SizedBox(
+                  height: 325,
+                  child: Center(
+                    child: CommonText(
+                      text: '+ 메모 추가하기',
+                      color: grey.original,
+                      initFontSize: fontSize,
+                    ),
+                  ),
+                ),
+              )
+            : const CommonNull();
   }
 }

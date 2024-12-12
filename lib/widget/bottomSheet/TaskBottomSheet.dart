@@ -217,7 +217,7 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
       padding: EdgeInsets.only(bottom: bottom),
       child: CommonModalSheet(
         title: '할 일 추가',
-        height: 257.5,
+        height: isTablet ? 275 : 257.5,
         child: CommonContainer(
           innerPadding: const EdgeInsets.symmetric(horizontal: 15),
           child: ListView(

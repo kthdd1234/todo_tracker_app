@@ -108,7 +108,7 @@ class _CommonCalendarState extends State<CommonCalendar> {
           todayTextStyle: TextStyle(
             color: isLight ? Colors.white : calendarSelectedDateTimeTextColor,
             fontWeight: isLight ? FontWeight.bold : null,
-            fontSize: 13,
+            fontSize: widget.initFontSize - 2,
           ),
         ),
         availableGestures: widget.shouldFillViewport
@@ -128,6 +128,7 @@ class _CommonCalendarState extends State<CommonCalendar> {
               : null,
         ),
         headerVisible: false,
+        daysOfWeekHeight: 22,
         firstDay: DateTime.utc(2000, 1, 1),
         lastDay: DateTime.utc(3000, 1, 1),
         currentDay: widget.selectedDateTime,
