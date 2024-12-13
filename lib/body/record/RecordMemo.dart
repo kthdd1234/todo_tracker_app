@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_tracker_app/common/CommonNull.dart';
@@ -12,16 +13,20 @@ import 'package:todo_tracker_app/provider/PremiumProvider.dart';
 import 'package:todo_tracker_app/provider/SelectedDateTimeProvider.dart';
 import 'package:todo_tracker_app/provider/ThemeProvider.dart';
 import 'package:todo_tracker_app/util/class.dart';
+import 'package:todo_tracker_app/util/constants.dart';
 import 'package:todo_tracker_app/util/final.dart';
 import 'package:todo_tracker_app/util/func.dart';
 import 'package:todo_tracker_app/widget/memo/MemoContainer.dart';
 import 'package:todo_tracker_app/widget/memo/MemoImage.dart';
 
 class RecordMemo extends StatelessWidget {
-  RecordMemo({super.key});
+  RecordMemo({super.key, this.isCalendar});
+
+  bool? isCalendar;
 
   @override
   Widget build(BuildContext context) {
+    String locale = context.locale.toString();
     DateTime selectedDateTime =
         context.watch<SelectedDateTimeProvider>().selectedDateTime;
     bool isLight = context.watch<ThemeProvider>().isLight;
@@ -35,6 +40,11 @@ class RecordMemo extends StatelessWidget {
     );
     MemoInfoClass? memoInfo = index != -1 ? memoInfoList[index] : null;
     bool isMemo = (memoInfo?.imgUrl != null) || (memoInfo?.text != null);
+
+    String mde = mdeFormatter(
+      locale: locale,
+      dateTime: selectedDateTime,
+    );
 
     onMemo() {
       movePage(
@@ -54,6 +64,16 @@ class RecordMemo extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                isCalendar == true
+                    ? Padding(
+                        padding: const EdgeInsets.only(bottom: 5),
+                        child: CommonText(
+                          text: mde,
+                          color: isLight ? textColor : grey.s300,
+                          initFontSize: fontSize - 1,
+                        ),
+                      )
+                    : const CommonNull(),
                 memoInfo?.imgUrl != null
                     ? MemoImage(
                         imageUrl: memoInfo?.imgUrl,
@@ -78,7 +98,7 @@ class RecordMemo extends StatelessWidget {
               ],
             ),
           )
-        : isTablet
+        : isTablet || isCalendar == true
             ? MemoContainer(
                 height: 350,
                 onTap: onMemo,

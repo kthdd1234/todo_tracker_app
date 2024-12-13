@@ -121,14 +121,14 @@ class _RecordAppBarState extends State<RecordAppBar> {
             onTitle: onTitleDateTime,
           ),
           const Spacer(),
-          onAction(
-            svg: isTablet
-                ? 'one-month'
-                : calendarFormatSvg[userInfo.calendarFormat]!,
-            width: 18.5,
-            right: 10,
-            onTap: isTablet ? () {} : onFormatChanged,
-          ),
+          // onAction(
+          //   svg: isTablet
+          //       ? 'one-month'
+          //       : calendarFormatSvg[userInfo.calendarFormat]!,
+          //   width: 18.5,
+          //   right: 10,
+          //   onTap: isTablet ? () {} : onFormatChanged,
+          // ),
           onAction(
             svg: 'list-add',
             right: 5,

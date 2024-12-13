@@ -7,6 +7,7 @@ import 'package:todo_tracker_app/body/record/recordCalendar/RecordCalendarMemo.d
 import 'package:todo_tracker_app/body/record/recordCalendar/RecordCalendarStickerList.dart';
 import 'package:todo_tracker_app/common/CommonCalendar.dart';
 import 'package:todo_tracker_app/common/CommonSpace.dart';
+import 'package:todo_tracker_app/common/CommonText.dart';
 import 'package:todo_tracker_app/method/UserMethod.dart';
 import 'package:todo_tracker_app/provider/FontSizeProvider.dart';
 import 'package:todo_tracker_app/provider/GroupInfoListProvider.dart';
@@ -14,6 +15,7 @@ import 'package:todo_tracker_app/provider/SelectedDateTimeProvider.dart';
 import 'package:todo_tracker_app/provider/TitleDateTimeProvider.dart';
 import 'package:todo_tracker_app/provider/UserInfoProvider.dart';
 import 'package:todo_tracker_app/util/class.dart';
+import 'package:todo_tracker_app/util/constants.dart';
 import 'package:todo_tracker_app/util/final.dart';
 import 'package:todo_tracker_app/util/func.dart';
 
@@ -51,9 +53,6 @@ class _RecordCalendarState extends State<RecordCalendar> {
         context.watch<GroupInfoListProvider>().groupInfoList;
     List<GroupInfoClass> groupInfoOrderList =
         getGroupInfoOrderList(userInfo.groupOrderList, groupInfoList);
-
-    CalendarFormat calendarFormat =
-        calendarFormatInfo[userInfo.calendarFormat]!;
 
     Widget? stickerBuilder(bool isLight, DateTime dateTime) {
       String locale = context.locale.toString();
@@ -104,13 +103,32 @@ class _RecordCalendarState extends State<RecordCalendar> {
       );
     }
 
+    Widget? todayBuilder(isLight, dateTime) {
+      return Column(
+        children: [
+          CommonSpace(height: 12),
+          CircleAvatar(
+            radius: 13,
+            backgroundColor: isLight ? indigo.s300 : Colors.white,
+            child: CommonText(
+              text: '${dateTime.day}',
+              color: isLight ? Colors.white : darkButtonColor,
+              isNotTr: true,
+            ),
+          ),
+        ],
+      );
+    }
+
     return CommonCalendar(
       rowHeight: 55,
       initFontSize: fontSize,
       selectedDateTime: selectedDateTime,
-      calendarFormat: isTablet ? CalendarFormat.month : calendarFormat,
+      calendarFormat: CalendarFormat.month,
       shouldFillViewport: false,
+      outsideDaysVisible: false,
       markerBuilder: stickerBuilder,
+      todayBuilder: todayBuilder,
       onPageChanged: onPageChanged,
       onDaySelected: onDaySelected,
       onFormatChanged: (_) {},

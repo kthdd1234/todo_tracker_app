@@ -11,7 +11,8 @@ import 'package:todo_tracker_app/common/CommonText.dart';
 import 'package:todo_tracker_app/provider/FontSizeProvider.dart';
 import 'package:todo_tracker_app/provider/GroupInfoListProvider.dart';
 import 'package:todo_tracker_app/provider/MemoInfoListProvider.dart';
-import 'package:todo_tracker_app/provider/ThemeProvider.dart';
+import 'package:todo_tracker_app/provider/SelectedDateTimeProvider.dart';
+import 'package:todo_tracker_app/provider/TitleDateTimeProvider.dart';
 import 'package:todo_tracker_app/provider/UserInfoProvider.dart';
 import 'package:todo_tracker_app/util/class.dart';
 import 'package:todo_tracker_app/util/constants.dart';
@@ -20,17 +21,9 @@ import 'package:todo_tracker_app/util/final.dart';
 import 'package:todo_tracker_app/util/func.dart';
 
 class CalendarView extends StatelessWidget {
-  CalendarView({
-    super.key,
-    required this.selectedDateTime,
-    required this.selectedSegment,
-    required this.onPageChanged,
-    required this.onDaySelected,
-  });
+  CalendarView({super.key, required this.selectedSegment});
 
   SegmentedTypeEnum selectedSegment;
-  DateTime selectedDateTime;
-  Function(DateTime) onPageChanged, onDaySelected;
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +34,8 @@ class CalendarView extends StatelessWidget {
         context.watch<GroupInfoListProvider>().groupInfoList;
     List<MemoInfoClass> memoInfoList =
         context.watch<MemoInfoListProvider>().memoInfoList;
+    DateTime selectedDateTime =
+        context.watch<SelectedDateTimeProvider>().selectedDateTime;
 
     bool isTodo = selectedSegment == SegmentedTypeEnum.todo;
 
@@ -134,41 +129,52 @@ class CalendarView extends StatelessWidget {
     }
 
     Widget? todayBuilder(isLight, dateTime) {
-      Color color = dateTime.weekday == 6
-          ? blue.original
-          : dateTime.weekday == 7
-              ? red.original
-              : isLight
-                  ? textColor
-                  : Colors.white;
+      Color bgColor = isLight ? indigo.s300 : Colors.white;
+      Color textColor = isLight ? Colors.white : darkButtonColor;
 
       return Column(
         children: [
-          CommonSpace(height: 13.5),
-          CommonText(
-            text: '${dateTime.day}',
-            color: color,
-            isBold: !isLight,
-            isNotTr: true,
+          CommonSpace(height: 12),
+          CircleAvatar(
+            radius: 13,
+            backgroundColor: bgColor,
+            child: CommonText(
+              color: textColor,
+              text: '${dateTime.day}',
+              isNotTr: true,
+            ),
           ),
         ],
       );
     }
 
-    return Expanded(
-      child: SingleChildScrollView(
-        child: CommonCalendar(
-          selectedDateTime: selectedDateTime,
-          calendarFormat: CalendarFormat.month,
-          shouldFillViewport: true,
-          markerBuilder: isTodo ? barBuilder : memoBuilder,
-          todayBuilder: todayBuilder,
-          initFontSize: fontSize,
-          onPageChanged: onPageChanged,
-          onDaySelected: onDaySelected,
-          onFormatChanged: (_) {},
-        ),
-      ),
+    onPageChanged(DateTime dateTime) {
+      context
+          .read<TitleDateTimeProvider>()
+          .changeTitleDateTime(dateTime: dateTime);
+    }
+
+    onDaySelected(DateTime dateTime) {
+      context
+          .read<TitleDateTimeProvider>()
+          .changeTitleDateTime(dateTime: dateTime);
+
+      context
+          .read<SelectedDateTimeProvider>()
+          .changeSelectedDateTime(dateTime: dateTime);
+    }
+
+    return CommonCalendar(
+      selectedDateTime: selectedDateTime,
+      calendarFormat: CalendarFormat.month,
+      shouldFillViewport: true,
+      markerBuilder: isTodo ? barBuilder : memoBuilder,
+      todayBuilder: todayBuilder,
+      outsideDaysVisible: false,
+      initFontSize: fontSize,
+      onPageChanged: onPageChanged,
+      onDaySelected: onDaySelected,
+      onFormatChanged: (_) {},
     );
   }
 }

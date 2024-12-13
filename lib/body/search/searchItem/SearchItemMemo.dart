@@ -37,7 +37,11 @@ class SearchItemMemo extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CommonText(text: mde, color: textColor, initFontSize: fontSize - 1),
+          CommonText(
+            text: mde,
+            color: isLight ? textColor : grey.s300,
+            initFontSize: fontSize - 1,
+          ),
           CommonSpace(height: 5),
           imgUrl != null
               ? MemoImage(imageUrl: imgUrl, onTap: () {})

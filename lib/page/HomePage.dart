@@ -133,7 +133,7 @@ class _HomePageState extends State<HomePage> {
     onBottomNavigation(int newIndex) {
       DateTime now = DateTime.now();
 
-      if (newIndex == 0) {
+      if (newIndex == 0 || newIndex == 1) {
         context
             .read<SelectedDateTimeProvider>()
             .changeSelectedDateTime(dateTime: now);
