@@ -3,7 +3,10 @@ import 'package:todo_tracker_app/body/calendar/CalendarAppBar.dart';
 import 'package:todo_tracker_app/body/calendar/CalendarMemo.dart';
 import 'package:todo_tracker_app/body/calendar/CalendarTodo.dart';
 import 'package:todo_tracker_app/body/calendar/CalendarView.dart';
+import 'package:todo_tracker_app/body/calendar/calendarScreen/CalendarScreenPhone.dart';
+import 'package:todo_tracker_app/body/calendar/calendarScreen/CalendarScreenTablet.dart';
 import 'package:todo_tracker_app/util/enum.dart';
+import 'package:todo_tracker_app/util/final.dart';
 
 class CalendarBody extends StatefulWidget {
   const CalendarBody({super.key});
@@ -21,8 +24,6 @@ class _CalendarBodyState extends State<CalendarBody> {
 
   @override
   Widget build(BuildContext context) {
-    bool isTodo = selectedSegment == SegmentedTypeEnum.todo;
-
     return Column(
       children: [
         CalendarAppBar(
@@ -31,14 +32,11 @@ class _CalendarBodyState extends State<CalendarBody> {
         ),
         Expanded(
           child: SingleChildScrollView(
-            child: Column(
-              children: [
-                CalendarView(selectedSegment: selectedSegment),
-                isTodo ? CalendarTodo() : CalendarMemo()
-              ],
-            ),
+            child: isTablet
+                ? CalendarScreenTablet(selectedSegment: selectedSegment)
+                : CalendarScreenPhone(selectedSegment: selectedSegment),
           ),
-        ),
+        )
       ],
     );
   }

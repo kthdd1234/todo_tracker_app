@@ -69,6 +69,7 @@ class _TaskInfoBottomSheetState extends State<TaskInfoBottomSheet> {
         textColor: isLight ? color.original : Colors.white,
         bgColor: isLight ? color.s50 : color.s400,
         initFontSize: fontSize - 3,
+        isNotTr: true,
         onTap: () {},
       );
     }

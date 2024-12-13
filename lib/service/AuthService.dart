@@ -55,7 +55,7 @@ class AuthService {
           background: '0',
           theme: 'light',
           osType: Platform.isIOS ? 'AppStore' : 'GooglePlay',
-          titleInfo: TitleInfoClass(title: '할 일 리스트', colorName: '남색'),
+          titleInfo: TitleInfoClass(title: '할 일 리스트'.tr(), colorName: '남색'),
           fontSize: defaultFontSize,
           calendarFormat: CalendarFormat.week.toString(),
         );

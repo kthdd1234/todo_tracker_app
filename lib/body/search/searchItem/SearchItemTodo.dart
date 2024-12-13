@@ -33,7 +33,11 @@ class SearchItemTodo extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CommonText(text: mde, color: isLight ? textColor : grey.s50),
+          CommonText(
+            text: mde,
+            color: isLight ? textColor : grey.s50,
+            isNotTr: true,
+          ),
           CommonSpace(height: 10),
           CommonDivider(),
           Column(
@@ -78,6 +82,7 @@ class SearchItemTodo extends StatelessWidget {
                                 text: taskInfo.name,
                                 isBold: !isLight,
                                 textAlign: TextAlign.left,
+                                isNotTr: true,
                               ),
                             ),
                           )
@@ -90,6 +95,7 @@ class SearchItemTodo extends StatelessWidget {
                                 text: memo,
                                 color: Colors.grey,
                                 initFontSize: fontSize - 2,
+                                isNotTr: true,
                               ),
                             )
                           : const CommonNull()

@@ -41,6 +41,7 @@ class SearchItemMemo extends StatelessWidget {
             text: mde,
             color: isLight ? textColor : grey.s300,
             initFontSize: fontSize - 1,
+            isNotTr: true,
           ),
           CommonSpace(height: 5),
           imgUrl != null

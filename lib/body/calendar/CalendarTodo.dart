@@ -33,7 +33,11 @@ class CalendarTodo extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              CommonText(text: mde, color: isLight ? textColor : grey.s50),
+              CommonText(
+                text: mde,
+                color: isLight ? textColor : grey.s50,
+                isNotTr: true,
+              ),
               const Spacer(),
               const ReocrdItemLength()
             ],

@@ -216,8 +216,8 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
     return Padding(
       padding: EdgeInsets.only(bottom: bottom),
       child: CommonModalSheet(
-        title: '할 일 추가',
-        height: isTablet ? 275 : 257.5,
+        title: '할 일 ${widget.taskInfo == null ? '추가' : '편집'}',
+        height: isTablet ? 255 : 257.5,
         child: CommonContainer(
           innerPadding: const EdgeInsets.symmetric(horizontal: 15),
           child: ListView(
@@ -229,6 +229,7 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                 child: CommonText(
                   text: displayDateTime(locale),
                   color: isLight ? grey.original : grey.s50,
+                  isNotTr: true,
                 ),
               ),
               CommonModalItem(
@@ -240,6 +241,7 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                   initFontSize: fontSize - 1,
                   textColor: isLight ? groupColor.s400 : Colors.white, //
                   bgColor: isLight ? groupColor.s50 : groupColor.s300, //
+                  isNotTr: true,
                   onTap: onGroup,
                 ),
               ),
@@ -248,8 +250,9 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                 controller: controller,
                 hintText: '할 일을 입력해주세요',
                 selectedColor: isLight ? groupColor.s200 : groupColor.s300,
-                onSuffixIcon: onEditingComplete,
-                onEditingComplete: onEditingComplete,
+                onSuffixIcon: controller.text != '' ? onEditingComplete : () {},
+                onEditingComplete:
+                    controller.text != '' ? onEditingComplete : () {},
                 onChanged: (_) => setState(() {}),
               )
             ],

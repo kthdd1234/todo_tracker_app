@@ -21,14 +21,14 @@ class DateTimeAlertInfo extends StatelessWidget {
       children: [
         Icon(
           Icons.info_outline,
-          size: fontSize - 4,
-          color: isLight ? grey.s400 : Colors.white,
+          size: fontSize - 3,
+          color: isLight ? grey.s300 : Colors.white,
         ),
         CommonSpace(width: 5),
         CommonText(
           text: text,
           color: isLight ? grey.original : Colors.white,
-          initFontSize: fontSize - 4,
+          initFontSize: fontSize - 3,
         ),
       ],
     );

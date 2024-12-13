@@ -41,7 +41,7 @@ class SearchAppBar extends StatelessWidget {
           CommonAppBarTitle(title: title, onTitle: onTitleDateTime),
           const Spacer(),
           SizedBox(
-            width: 120,
+            width: locale == 'ko' ? 120 : 150,
             child: CommonSegmented(
               selectedSegment: selectedSegment,
               thumbColor: color.s50,

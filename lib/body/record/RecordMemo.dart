@@ -66,11 +66,12 @@ class RecordMemo extends StatelessWidget {
               children: [
                 isCalendar == true
                     ? Padding(
-                        padding: const EdgeInsets.only(bottom: 5),
+                        padding: const EdgeInsets.only(bottom: 10),
                         child: CommonText(
                           text: mde,
                           color: isLight ? textColor : grey.s300,
                           initFontSize: fontSize - 1,
+                          isNotTr: true,
                         ),
                       )
                     : const CommonNull(),

@@ -66,6 +66,7 @@ class GroupListBottomSheet extends StatelessWidget {
             const Spacer(),
             CommonButton(
               text: '그룹 관리',
+              isBold: true,
               textColor: Colors.white,
               buttonColor: isLight ? textColor : darkButtonColor,
               verticalPadding: 12.5,

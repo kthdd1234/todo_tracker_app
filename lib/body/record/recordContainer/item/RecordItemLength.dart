@@ -45,6 +45,7 @@ class ReocrdItemLength extends StatelessWidget {
         text: '${recordMarkList.length}/${recordItemList.length}',
         color: Colors.grey,
         initFontSize: fontSize - 2,
+        isNotTr: true,
       ),
     );
   }
