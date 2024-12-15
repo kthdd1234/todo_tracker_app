@@ -88,7 +88,7 @@ class _PremiumBottomSheetState extends State<PremiumBottomSheet> {
     return CommonModalSheet(
       title: '광고 제거 + 사진 추가',
       actionButton: const ModalCloseButton(),
-      height: 500,
+      height: 450,
       child: Column(
         children: [
           Expanded(
@@ -99,9 +99,8 @@ class _PremiumBottomSheetState extends State<PremiumBottomSheet> {
                 children: [
                   svgAsset(name: 'premium-no-ads', width: 100),
                   CommonSpace(height: 20),
-                  CommonText(text: '커피 한잔의 가격으로'),
-                  CommonText(text: '광고를 제거하고'),
-                  CommonText(text: '사진을 추가해보세요!')
+                  CommonText(text: '단 한 번의 결제로 사진을 추가하고'),
+                  CommonText(text: '평생 광고 없이 앱을 이용해보세요.')
                 ],
               ),
             ),

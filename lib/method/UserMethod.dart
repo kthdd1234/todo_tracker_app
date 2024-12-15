@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:todo_tracker_app/main.dart';
 import 'package:todo_tracker_app/method/GroupMethod.dart';
 import 'package:todo_tracker_app/method/MemoMethod.dart';
 import 'package:todo_tracker_app/page/IntroPage.dart';
@@ -91,12 +92,15 @@ class UserMethod {
         await groupMethod.removeAllGroup(
           groupIdList: groupInfoList.map((groupInfo) => groupInfo.gid).toList(),
         );
+
+        await removeAllImage(memoInfoList: memoInfoList);
         await memoMethod.removeAllMemo(
           memoIdList: memoInfoList
               .map((memoInfo) => memoInfo.dateTimeKey.toString())
               .toList(),
         );
         await auth.currentUser!.delete();
+
         navigatorRemoveUntil(context: context, page: const IntroPage());
       }
 

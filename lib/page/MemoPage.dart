@@ -27,6 +27,7 @@ import 'package:todo_tracker_app/widget/bottomSheet/ImageAddModalSheet.dart';
 import 'package:todo_tracker_app/widget/bottomSheet/ImageSelectionModalSheet.dart';
 import 'package:todo_tracker_app/widget/memo/MemoActionBar.dart';
 import 'package:todo_tracker_app/widget/memo/MemoBackground.dart';
+import 'package:todo_tracker_app/widget/memo/MemoDelete.dart';
 import 'package:todo_tracker_app/widget/memo/MemoField.dart';
 import 'package:todo_tracker_app/widget/popup/AlertPopup.dart';
 
@@ -227,6 +228,7 @@ class _MemoPageState extends State<MemoPage> {
           isBold: !isLight,
           isNotTr: true,
           initFontSize: fontSize,
+          actions: [MemoDelete(memoInfo: widget.memoInfo)],
         ),
         body: Column(
           children: [

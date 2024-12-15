@@ -34,7 +34,7 @@ class RecordItemName extends StatelessWidget {
         ),
         child: CommonText(
           text: name,
-          overflow: TextOverflow.clip,
+          overflow: TextOverflow.ellipsis,
           isBold: !isLight,
           initFontSize: fontSize,
           softWrap: false,

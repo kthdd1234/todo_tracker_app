@@ -90,7 +90,7 @@ class SearchItemTodo extends StatelessWidget {
                       ),
                       memo != null
                           ? Padding(
-                              padding: const EdgeInsets.only(top: 2),
+                              padding: const EdgeInsets.only(top: 2, left: 22),
                               child: CommonText(
                                 text: memo,
                                 color: Colors.grey,

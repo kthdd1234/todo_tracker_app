@@ -610,6 +610,14 @@ Future<void> removeImage({required String imgUrl, required String path}) async {
   await storageRef.child(path).delete();
 }
 
+Future<void> removeAllImage({required List<MemoInfoClass> memoInfoList}) async {
+  for (var memoInfo in memoInfoList) {
+    if (memoInfo.path != null && memoInfo.imgUrl != null) {
+      await removeImage(path: memoInfo.path!, imgUrl: memoInfo.imgUrl!);
+    }
+  }
+}
+
 Future<String?> getDownloadUrl(String imgUrl) async {
   try {
     Reference imgRef = storageRef.child(imgUrl);

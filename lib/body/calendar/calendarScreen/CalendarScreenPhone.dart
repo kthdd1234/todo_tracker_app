@@ -13,15 +13,11 @@ class CalendarScreenPhone extends StatelessWidget {
   Widget build(BuildContext context) {
     bool isTodo = selectedSegment == SegmentedTypeEnum.todo;
 
-    return Expanded(
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            CalendarView(selectedSegment: selectedSegment),
-            isTodo ? CalendarTodo() : CalendarMemo()
-          ],
-        ),
-      ),
+    return Column(
+      children: [
+        CalendarView(selectedSegment: selectedSegment),
+        isTodo ? CalendarTodo() : CalendarMemo()
+      ],
     );
   }
 }
