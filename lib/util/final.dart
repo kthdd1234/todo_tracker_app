@@ -263,6 +263,12 @@ Map<String, Map<String, dynamic>> authButtonInfo = {
     'textColor': Colors.white,
     'bgColor': darkButtonColor,
   },
+  'guest': {
+    'svg': 'guest',
+    'name': '없음',
+    'textColor': Colors.white,
+    'bgColor': darkButtonColor,
+  },
 };
 
 bool get isTablet {

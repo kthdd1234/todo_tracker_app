@@ -177,6 +177,7 @@ flutter:
     - assets/svgs/premium-badge.svg
     - assets/svgs/inquire.svg
     - assets/svgs/image.svg
+    - assets/svgs/guest.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

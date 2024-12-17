@@ -133,9 +133,11 @@ class UserMethod {
         );
 
         await auth.currentUser!.reauthenticateWithCredential(credential);
-      } else {
+      } else if (loginType == 'apple') {
         AppleAuthProvider appleProvider = AppleAuthProvider();
         await auth.currentUser!.reauthenticateWithProvider(appleProvider);
+      } else {
+        //
       }
 
       return true;

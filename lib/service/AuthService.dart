@@ -72,6 +72,19 @@ class AuthService {
     }
   }
 
+  signInWithGuest(BuildContext context) async {
+    try {
+      FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+
+      UserCredential result = await firebaseAuth.signInAnonymously();
+      final userDetails = result.user;
+
+      if (userDetails != null) commonSignIn(context, userDetails, 'guest');
+    } catch (e) {
+      log('error => $e');
+    }
+  }
+
   signInWithGoogle(BuildContext context) async {
     try {
       FirebaseAuth firebaseAuth = FirebaseAuth.instance;
@@ -109,6 +122,7 @@ class AuthService {
       log('error => $e');
     }
   }
+}
 
   // signInWithKakao(BuildContext context) async {
   //   try {
@@ -128,4 +142,3 @@ class AuthService {
   //     log('error => $e');
   //   }
   // }
-}

@@ -10,6 +10,7 @@ import 'package:todo_tracker_app/common/CommonText.dart';
 import 'package:todo_tracker_app/service/AuthService.dart';
 import 'package:todo_tracker_app/util/class.dart';
 import 'package:todo_tracker_app/util/constants.dart';
+import 'package:todo_tracker_app/util/final.dart';
 
 class IntroPage extends StatefulWidget {
   const IntroPage({super.key});
@@ -20,6 +21,10 @@ class IntroPage extends StatefulWidget {
 
 class _IntroPageState extends State<IntroPage> {
   AuthService authService = AuthService();
+
+  onGuestLogin() {
+    authService.signInWithGuest(context);
+  }
 
   onGoogleLogin() {
     authService.signInWithGoogle(context);
@@ -42,6 +47,17 @@ class _IntroPageState extends State<IntroPage> {
             CommonSpace(height: 2),
             CommonText(text: '보다 효율적으로 할 일을 관리해봐요 :D'),
             const Spacer(),
+            CommonButton(
+              svg: 'guest',
+              outerPadding: const EdgeInsets.symmetric(horizontal: 10),
+              text: '계정 없이 그냥 앱 둘러보기',
+              textColor: Colors.white,
+              buttonColor: blue.original,
+              verticalPadding: 15,
+              borderRadius: 7,
+              onTap: onGuestLogin,
+            ),
+            CommonSpace(height: 10),
             CommonButton(
               svg: 'google-logo',
               outerPadding: const EdgeInsets.symmetric(horizontal: 10),
