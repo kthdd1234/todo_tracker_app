@@ -18,7 +18,6 @@ import 'package:todo_tracker_app/provider/SelectedDateTimeProvider.dart';
 import 'package:todo_tracker_app/provider/ThemeProvider.dart';
 import 'package:todo_tracker_app/provider/TitleDateTimeProvider.dart';
 import 'package:todo_tracker_app/provider/UserInfoProvider.dart';
-import 'package:todo_tracker_app/service/InterstitialAdService.dart';
 import 'package:todo_tracker_app/util/class.dart';
 import 'package:todo_tracker_app/util/func.dart';
 import 'package:todo_tracker_app/widget/button/FnbButton.dart';
@@ -168,7 +167,7 @@ class _HomePageState extends State<HomePage> {
             onTap: onBottomNavigation,
           ),
         ),
-        floatingActionButton: seletedIdx == 0 ? FnbButton() : null,
+        floatingActionButton: seletedIdx == 0 ? const FnbButton() : null,
       ),
     );
   }

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:todo_tracker_app/body/record/recordCalendar/RecordCalendarStickerItem.dart';
 import 'package:todo_tracker_app/util/class.dart';

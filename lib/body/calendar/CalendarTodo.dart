@@ -15,7 +15,7 @@ import 'package:todo_tracker_app/util/final.dart';
 import 'package:todo_tracker_app/util/func.dart';
 
 class CalendarTodo extends StatelessWidget {
-  CalendarTodo({super.key});
+  const CalendarTodo({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +44,7 @@ class CalendarTodo extends StatelessWidget {
           ),
           CommonSpace(height: 10),
           CommonDivider(),
-          RecordContainerItemList()
+          const RecordContainerItemList()
         ],
       ),
     );

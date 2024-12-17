@@ -14,18 +14,20 @@ class RecordScreenTablet extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        RecordAppBar(),
+        const RecordAppBar(),
         Expanded(
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
                 child: SingleChildScrollView(
-                  child: Column(children: [RecordCalendar(), RecordMemo()]),
+                  child:
+                      Column(children: [const RecordCalendar(), RecordMemo()]),
                 ),
               ),
               CommonSpace(width: 15),
-              Expanded(child: SingleChildScrollView(child: RecordContainer()))
+              const Expanded(
+                  child: SingleChildScrollView(child: RecordContainer()))
             ],
           ),
         ),

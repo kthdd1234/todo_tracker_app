@@ -77,7 +77,7 @@ class CommonModalSheet extends StatelessWidget {
                                   right: 5,
                                 ),
                               )
-                            : CommonNull(),
+                            : const CommonNull(),
                         Expanded(
                           child: Padding(
                             padding: const EdgeInsets.only(bottom: 15),

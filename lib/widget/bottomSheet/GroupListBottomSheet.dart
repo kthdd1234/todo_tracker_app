@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_tracker_app/common/CommonButton.dart';
 import 'package:todo_tracker_app/common/CommonContainer.dart';
-import 'package:todo_tracker_app/common/CommonImageButton.dart';
 import 'package:todo_tracker_app/common/CommonModalSheet.dart';
 import 'package:todo_tracker_app/page/GroupPage.dart';
 import 'package:todo_tracker_app/provider/GroupInfoListProvider.dart';
@@ -39,7 +38,7 @@ class GroupListBottomSheet extends StatelessWidget {
     );
 
     onManege() {
-      movePage(context: context, page: GroupPage());
+      movePage(context: context, page: const GroupPage());
     }
 
     return CommonModalSheet(

@@ -5,13 +5,13 @@ import 'package:todo_tracker_app/body/record/recordContainer/RecordContainerTitl
 import 'package:todo_tracker_app/common/CommonContainer.dart';
 
 class RecordContainer extends StatelessWidget {
-  RecordContainer({super.key});
+  const RecordContainer({super.key});
 
   @override
   Widget build(BuildContext context) {
     return CommonContainer(
       outerPadding: const EdgeInsets.only(bottom: 10),
-      child: Column(
+      child: const Column(
         children: [RecordContainerTitle(), RecordContainerItemList()],
       ),
     );

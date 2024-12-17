@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:todo_tracker_app/common/CommonNull.dart';
 import 'package:todo_tracker_app/common/CommonText.dart';
 import 'package:todo_tracker_app/provider/ThemeProvider.dart';
-import 'package:todo_tracker_app/util/final.dart';
 
 class SettingValue extends StatelessWidget {
   SettingValue({super.key, this.text, required this.isVersion});

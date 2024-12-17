@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:todo_tracker_app/body/calendar/CalendarAppBar.dart';
-import 'package:todo_tracker_app/body/calendar/CalendarMemo.dart';
-import 'package:todo_tracker_app/body/calendar/CalendarTodo.dart';
-import 'package:todo_tracker_app/body/calendar/CalendarView.dart';
 import 'package:todo_tracker_app/body/calendar/calendarScreen/CalendarScreenPhone.dart';
 import 'package:todo_tracker_app/body/calendar/calendarScreen/CalendarScreenTablet.dart';
 import 'package:todo_tracker_app/util/enum.dart';

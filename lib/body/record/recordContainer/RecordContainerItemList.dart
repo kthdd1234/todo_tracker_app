@@ -1,5 +1,4 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_tracker_app/body/record/recordContainer/RecordContainerItem.dart';
@@ -12,7 +11,7 @@ import 'package:todo_tracker_app/util/class.dart';
 import 'package:todo_tracker_app/util/func.dart';
 
 class RecordContainerItemList extends StatelessWidget {
-  RecordContainerItemList({super.key});
+  const RecordContainerItemList({super.key});
 
   @override
   Widget build(BuildContext context) {

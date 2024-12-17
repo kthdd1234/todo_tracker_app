@@ -71,19 +71,19 @@ class _SettingBodyState extends State<SettingBody> {
       showModalBottomSheet(
         isScrollControlled: true,
         context: context,
-        builder: (context) => PremiumBottomSheet(),
+        builder: (context) => const PremiumBottomSheet(),
       );
     }
 
     onUser() {
-      movePage(context: context, page: ProfilePage());
+      movePage(context: context, page: const ProfilePage());
     }
 
     onTheme() {
       showModalBottomSheet(
         isScrollControlled: true,
         context: context,
-        builder: (context) => ThemeBottomSheet(),
+        builder: (context) => const ThemeBottomSheet(),
       );
     }
 

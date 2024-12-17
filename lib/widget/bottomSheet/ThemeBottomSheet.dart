@@ -12,7 +12,7 @@ import 'package:todo_tracker_app/util/final.dart';
 import 'package:todo_tracker_app/util/func.dart';
 
 class ThemeBottomSheet extends StatelessWidget {
-  ThemeBottomSheet({super.key});
+  const ThemeBottomSheet({super.key});
 
   @override
   Widget build(BuildContext context) {

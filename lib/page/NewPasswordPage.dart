@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:todo_tracker_app/common/CommonBackground.dart';
 import 'package:todo_tracker_app/common/CommonScaffold.dart';
 import 'package:todo_tracker_app/page/ConfirmNewPasswordPage.dart';

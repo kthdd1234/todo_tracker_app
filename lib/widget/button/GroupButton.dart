@@ -4,7 +4,6 @@ import 'package:todo_tracker_app/common/CommonText.dart';
 import 'package:todo_tracker_app/provider/FontSizeProvider.dart';
 import 'package:todo_tracker_app/provider/ThemeProvider.dart';
 import 'package:todo_tracker_app/util/class.dart';
-import 'package:todo_tracker_app/util/constants.dart';
 import 'package:todo_tracker_app/util/func.dart';
 
 class GroupButton extends StatelessWidget {

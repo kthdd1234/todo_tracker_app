@@ -16,7 +16,7 @@ import 'package:todo_tracker_app/widget/button/SpeedDialButton.dart';
 import 'package:todo_tracker_app/widget/button/SpeedDialChildButton.dart';
 
 class FnbButton extends StatefulWidget {
-  FnbButton({super.key});
+  const FnbButton({super.key});
 
   @override
   State<FnbButton> createState() => _FnbButtonState();

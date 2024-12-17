@@ -60,12 +60,13 @@ class _DateTimeBottomSheetState extends State<DateTimeBottomSheet> {
       selectionDays = dateTimeList;
       focusedDay = selectionDays[0];
     } else if (selectedType == dateTimeType.everyWeek) {
-      dateTimeList.forEach(
-        (dateTime) => weekDays[dateTime.weekday - 1].isVisible = true,
-      );
+      for (var dateTime in dateTimeList) {
+        weekDays[dateTime.weekday - 1].isVisible = true;
+      }
     } else if (selectedType == dateTimeType.everyMonth) {
-      dateTimeList
-          .forEach((dateTime) => monthDays[dateTime.day - 1].isVisible = true);
+      for (var dateTime in dateTimeList) {
+        monthDays[dateTime.day - 1].isVisible = true;
+      }
     }
 
     super.initState();

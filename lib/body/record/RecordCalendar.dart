@@ -1,5 +1,4 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -8,7 +7,6 @@ import 'package:todo_tracker_app/body/record/recordCalendar/RecordCalendarSticke
 import 'package:todo_tracker_app/common/CommonCalendar.dart';
 import 'package:todo_tracker_app/common/CommonSpace.dart';
 import 'package:todo_tracker_app/common/CommonText.dart';
-import 'package:todo_tracker_app/method/UserMethod.dart';
 import 'package:todo_tracker_app/provider/FontSizeProvider.dart';
 import 'package:todo_tracker_app/provider/GroupInfoListProvider.dart';
 import 'package:todo_tracker_app/provider/SelectedDateTimeProvider.dart';
@@ -20,7 +18,7 @@ import 'package:todo_tracker_app/util/final.dart';
 import 'package:todo_tracker_app/util/func.dart';
 
 class RecordCalendar extends StatefulWidget {
-  RecordCalendar({super.key});
+  const RecordCalendar({super.key});
 
   @override
   State<RecordCalendar> createState() => _RecordCalendarState();

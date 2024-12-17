@@ -12,7 +12,7 @@ import 'package:todo_tracker_app/util/func.dart';
 import 'package:todo_tracker_app/widget/bottomSheet/TitleSettingModalSheet.dart';
 
 class RecordContainerTitle extends StatefulWidget {
-  RecordContainerTitle({super.key});
+  const RecordContainerTitle({super.key});
 
   @override
   State<RecordContainerTitle> createState() => _RecordContainerTitleState();

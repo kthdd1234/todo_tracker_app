@@ -16,14 +16,14 @@ class RecordScreenPhone extends StatelessWidget {
       onHorizontalDragEnd: onHorizontalDragEnd,
       child: Column(
         children: [
-          RecordAppBar(),
+          const RecordAppBar(),
           Expanded(
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  RecordCalendar(),
+                  const RecordCalendar(),
                   RecordMemo(),
-                  RecordContainer(),
+                  const RecordContainer(),
                   CommonSpace(height: 60)
                 ],
               ),

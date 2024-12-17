@@ -236,7 +236,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         'loading': const LoadingPage(),
         'start': const IntroPage(),
         'succeed': HomePage(locale: locale),
-        'locked': EnterPasswordPage(),
+        'locked': const EnterPasswordPage(),
       }[loginStatus],
     );
   }

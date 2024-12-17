@@ -91,7 +91,7 @@ const iOSInterstitialRealId = 'ca-app-pub-6804308271128440/4321292538';
 const appleApiKey = 'appl_jxkFerfyHWCOhHlmnaZPFWEuCrE';
 
 /// googleApiKey
-const googleApiKey = '';
+const googleApiKey = 'goog_meWVbYnwEcufqKBiRtiZDNGkTuH';
 
 /// offeringIdentifier
 const offeringIdentifier = 'todo tracker - remove ads';

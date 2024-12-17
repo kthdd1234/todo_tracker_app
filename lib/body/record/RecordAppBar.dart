@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +17,7 @@ import 'package:todo_tracker_app/util/func.dart';
 import 'package:todo_tracker_app/widget/popup/CalendarPopup.dart';
 
 class RecordAppBar extends StatefulWidget {
-  RecordAppBar({super.key});
+  const RecordAppBar({super.key});
 
   @override
   State<RecordAppBar> createState() => _RecordAppBarState();

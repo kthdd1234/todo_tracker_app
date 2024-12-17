@@ -10,7 +10,6 @@ import 'package:todo_tracker_app/common/CommonTag.dart';
 import 'package:todo_tracker_app/common/CommonText.dart';
 import 'package:todo_tracker_app/main.dart';
 import 'package:todo_tracker_app/method/UserMethod.dart';
-import 'package:todo_tracker_app/page/HomePage.dart';
 import 'package:todo_tracker_app/provider/FontSizeProvider.dart';
 import 'package:todo_tracker_app/provider/ThemeProvider.dart';
 import 'package:todo_tracker_app/util/class.dart';

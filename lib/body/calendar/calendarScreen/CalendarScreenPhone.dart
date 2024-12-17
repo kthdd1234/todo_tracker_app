@@ -16,7 +16,7 @@ class CalendarScreenPhone extends StatelessWidget {
     return Column(
       children: [
         CalendarView(selectedSegment: selectedSegment),
-        isTodo ? CalendarTodo() : CalendarMemo()
+        isTodo ? const CalendarTodo() : const CalendarMemo()
       ],
     );
   }

@@ -25,7 +25,7 @@ class CalendarScreenTablet extends StatelessWidget {
         CommonSpace(width: 15),
         Expanded(
           child: SingleChildScrollView(
-            child: isTodo ? CalendarTodo() : CalendarMemo(),
+            child: isTodo ? const CalendarTodo() : const CalendarMemo(),
           ),
         )
       ],

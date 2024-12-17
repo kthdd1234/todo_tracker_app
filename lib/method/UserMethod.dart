@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:todo_tracker_app/main.dart';
 import 'package:todo_tracker_app/method/GroupMethod.dart';
 import 'package:todo_tracker_app/method/MemoMethod.dart';
 import 'package:todo_tracker_app/page/IntroPage.dart';

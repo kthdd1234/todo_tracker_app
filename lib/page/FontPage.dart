@@ -25,8 +25,8 @@ class FontPage extends StatelessWidget {
     return CommonBackground(
       child: CommonScaffold(
         appBarInfo: AppBarInfoClass(title: '글꼴'),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
+        body: const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,7 +40,7 @@ class FontPage extends StatelessWidget {
 }
 
 class FontPreview extends StatelessWidget {
-  FontPreview({super.key});
+  const FontPreview({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +65,7 @@ class FontPreview extends StatelessWidget {
 }
 
 class FontSize extends StatelessWidget {
-  FontSize({super.key});
+  const FontSize({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -132,7 +132,7 @@ class FontSize extends StatelessWidget {
 }
 
 class FontList extends StatelessWidget {
-  FontList({super.key});
+  const FontList({super.key});
 
   @override
   Widget build(BuildContext context) {

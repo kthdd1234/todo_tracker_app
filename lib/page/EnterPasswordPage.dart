@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -7,7 +5,6 @@ import 'package:todo_tracker_app/common/CommonBackground.dart';
 import 'package:todo_tracker_app/common/CommonScaffold.dart';
 import 'package:todo_tracker_app/method/UserMethod.dart';
 import 'package:todo_tracker_app/page/HomePage.dart';
-import 'package:todo_tracker_app/page/NewPasswordPage.dart';
 import 'package:todo_tracker_app/provider/FontSizeProvider.dart';
 import 'package:todo_tracker_app/provider/ThemeProvider.dart';
 import 'package:todo_tracker_app/provider/UserInfoProvider.dart';
@@ -16,7 +13,7 @@ import 'package:todo_tracker_app/util/func.dart';
 import 'package:todo_tracker_app/widget/password/PasswordContainer.dart';
 
 class EnterPasswordPage extends StatefulWidget {
-  EnterPasswordPage({super.key});
+  const EnterPasswordPage({super.key});
 
   @override
   State<EnterPasswordPage> createState() => _EnterPasswordPageState();

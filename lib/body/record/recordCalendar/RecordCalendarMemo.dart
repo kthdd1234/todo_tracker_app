@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_tracker_app/common/CommonNull.dart';
-import 'package:todo_tracker_app/page/HomePage.dart';
 import 'package:todo_tracker_app/provider/MemoInfoListProvider.dart';
-import 'package:todo_tracker_app/provider/SelectedDateTimeProvider.dart';
 import 'package:todo_tracker_app/provider/ThemeProvider.dart';
 import 'package:todo_tracker_app/util/class.dart';
 import 'package:todo_tracker_app/util/final.dart';

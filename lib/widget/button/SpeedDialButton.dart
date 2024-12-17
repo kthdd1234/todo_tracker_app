@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:todo_tracker_app/common/CommonText.dart';
-import 'package:todo_tracker_app/util/constants.dart';
 
 class SpeedDialButton extends StatelessWidget {
   SpeedDialButton({
