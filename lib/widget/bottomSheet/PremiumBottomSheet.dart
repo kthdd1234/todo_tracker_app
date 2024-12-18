@@ -88,23 +88,25 @@ class _PremiumBottomSheetState extends State<PremiumBottomSheet> {
     return CommonModalSheet(
       title: '광고 제거 + 사진 추가',
       actionButton: const ModalCloseButton(),
-      height: 450,
+      height: 455,
       child: Column(
         children: [
-          Expanded(
-            child: CommonContainer(
-              outerPadding: const EdgeInsets.only(bottom: 15),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  svgAsset(name: 'premium-no-ads', width: 100),
-                  CommonSpace(height: 20),
-                  CommonText(text: '단 한 번의 결제로 사진을 추가하고'),
-                  CommonText(text: '평생 광고 없이 앱을 이용해보세요.')
-                ],
-              ),
-            ),
+          PremiumItem(
+            title: '단 한번 결제로 평생 이용할 수 있어요',
+            subTitle: '구독 결제가 아닌 깔끔하게 단 한번 결제!',
+            svg: 'premium-free',
           ),
+          PremiumItem(
+            title: '모든 화면에서 광고가 제거돼요',
+            subTitle: '광고 없이 쾌적하게 앱을 이용해보세요!',
+            svg: 'premium-no-ads',
+          ),
+          PremiumItem(
+            title: '메모 할 때 사진도 추가할 수 있어요',
+            subTitle: '메모 글 뿐만 아니라 사진도 함께 추가해보세요!',
+            svg: 'premium-add-photo',
+          ),
+          CommonSpace(height: 10),
           Padding(
             padding: const EdgeInsets.only(bottom: 10),
             child: CommonText(
@@ -145,6 +147,56 @@ class _PremiumBottomSheetState extends State<PremiumBottomSheet> {
                   ),
                 ),
         ],
+      ),
+    );
+  }
+}
+
+// svgAsset(name: 'premium-no-ads', width: 100),
+// CommonSpace(height: 20),
+// CommonText(text: '단 한 번의 결제로 사진을 추가하고'),
+// CommonText(text: '평생 광고 없이 앱을 이용해보세요.')
+
+class PremiumItem extends StatelessWidget {
+  PremiumItem({
+    super.key,
+    required this.title,
+    required this.subTitle,
+    required this.svg,
+  });
+
+  String title, subTitle, svg;
+
+  @override
+  Widget build(BuildContext context) {
+    double fontSize = context.watch<FontSizeProvider>().fintSize;
+
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10),
+      child: CommonContainer(
+        child: Row(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CommonText(text: title),
+                    CommonSpace(height: 1),
+                    CommonText(
+                      text: subTitle,
+                      initFontSize: fontSize - 2,
+                      color: Colors.grey,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            CommonSpace(width: 20),
+            svgAsset(name: svg, width: 45),
+          ],
+        ),
       ),
     );
   }

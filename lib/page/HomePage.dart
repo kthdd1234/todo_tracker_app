@@ -1,6 +1,8 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_tracker_app/body/CalendarBody.dart';
 import 'package:todo_tracker_app/body/RecordBody.dart';
@@ -113,12 +115,19 @@ class _HomePageState extends State<HomePage> {
     ).onError((err) => log('$err'));
   }
 
+  initializeWindowManager() async {
+    if (Platform.isAndroid) {
+      await FlutterWindowManager.clearFlags(FlutterWindowManager.FLAG_SECURE);
+    }
+  }
+
   @override
   void initState() {
     initializePremium();
     initializeUserInfo();
     initializeGroupInfo();
     initializeMemoInfo();
+    initializeWindowManager();
 
     super.initState();
   }

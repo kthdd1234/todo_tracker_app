@@ -4,6 +4,9 @@ import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:todo_tracker_app/body/search/SearchAppBar.dart';
 import 'package:todo_tracker_app/body/search/SearchInputBar.dart';
 import 'package:todo_tracker_app/body/search/SearchItemContainer.dart';
+import 'package:todo_tracker_app/common/CommonBannerAd.dart';
+import 'package:todo_tracker_app/common/CommonNull.dart';
+import 'package:todo_tracker_app/provider/PremiumProvider.dart';
 import 'package:todo_tracker_app/provider/ThemeProvider.dart';
 import 'package:todo_tracker_app/util/enum.dart';
 import 'package:todo_tracker_app/util/final.dart';
@@ -59,6 +62,8 @@ class _SearchBodyState extends State<SearchBody> {
     Color lightColor = isTodo ? indigo.s200 : orange.s200;
     Color darkColor = isTodo ? indigo.s300 : orange.s300;
 
+    bool isPremium = context.watch<PremiumProvider>().isPremium;
+
     return Column(
       children: [
         SearchAppBar(
@@ -79,7 +84,8 @@ class _SearchBodyState extends State<SearchBody> {
           keyword: controller.text,
           selectedSegment: selectedSegment,
           titleDateTime: titleDateTime,
-        )
+        ),
+        !isPremium ? CommonBannerAd() : const CommonNull()
       ],
     );
   }

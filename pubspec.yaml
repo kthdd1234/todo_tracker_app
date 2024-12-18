@@ -71,6 +71,7 @@ dependencies:
   cloud_firestore: ^5.5.0
   flutter_email_sender: ^6.0.3
   flutter_windowmanager: ^0.2.0
+  in_app_review: ^2.0.10
 
 dev_dependencies:
   flutter_test:
@@ -149,6 +150,7 @@ flutter:
     - assets/svgs/trash.svg
     - assets/svgs/premium-no-ads.svg
     - assets/svgs/premium-badge.svg
+    - assets/svgs/premium-add-photo.svg
     - assets/svgs/search.svg
     - assets/svgs/up-down.svg
     - assets/svgs/down-up.svg
@@ -175,6 +177,7 @@ flutter:
     - assets/svgs/one-month.svg
     - assets/svgs/premium-no-ads.svg
     - assets/svgs/premium-badge.svg
+    - assets/svgs/premium-free.svg
     - assets/svgs/inquire.svg
     - assets/svgs/image.svg
     - assets/svgs/guest.svg

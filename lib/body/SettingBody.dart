@@ -3,8 +3,11 @@ import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:todo_tracker_app/body/setting/SettingAppbar.dart';
+import 'package:todo_tracker_app/body/setting/SettingPremium.dart';
 import 'package:todo_tracker_app/body/setting/SettingSvg.dart';
 import 'package:todo_tracker_app/body/setting/SettingTitle.dart';
 import 'package:todo_tracker_app/body/setting/SettingValue.dart';
@@ -13,11 +16,11 @@ import 'package:todo_tracker_app/page/BackgroundPage.dart';
 import 'package:todo_tracker_app/page/FontPage.dart';
 import 'package:todo_tracker_app/page/NewPasswordPage.dart';
 import 'package:todo_tracker_app/page/ProfilePage.dart';
-import 'package:todo_tracker_app/provider/FontSizeProvider.dart';
 import 'package:todo_tracker_app/provider/PremiumProvider.dart';
 import 'package:todo_tracker_app/provider/ReloadProvider.dart';
 import 'package:todo_tracker_app/provider/UserInfoProvider.dart';
 import 'package:todo_tracker_app/util/class.dart';
+import 'package:todo_tracker_app/util/constants.dart';
 import 'package:todo_tracker_app/util/final.dart';
 import 'package:todo_tracker_app/util/func.dart';
 import 'package:todo_tracker_app/widget/bottomSheet/LanguageModalSheet.dart';
@@ -26,6 +29,7 @@ import 'package:todo_tracker_app/widget/bottomSheet/ThemeBottomSheet.dart';
 import 'package:todo_tracker_app/widget/popup/AlertPopup.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:in_app_review/in_app_review.dart';
 
 class SettingBody extends StatefulWidget {
   const SettingBody({super.key});
@@ -170,6 +174,26 @@ class _SettingBodyState extends State<SettingBody> {
       );
     }
 
+    onShare() {
+      String subject = '쉬운 가계부'.tr();
+
+      Platform.isIOS
+          ? Share.share(APP_STORE_LINK, subject: subject)
+          : Share.share(PLAY_STORE_LINK, subject: subject);
+    }
+
+    onReview() async {
+      InAppReview inAppReview = InAppReview.instance;
+
+      String? appleId = dotenv.env['APPLE_ID'];
+      String? androidId = dotenv.env['ANDROID_ID'];
+
+      await inAppReview.openStoreListing(
+        appStoreId: appleId,
+        microsoftStoreId: androidId,
+      );
+    }
+
     onPrivate() async {
       Uri url = Uri(
         scheme: 'https',
@@ -182,20 +206,19 @@ class _SettingBodyState extends State<SettingBody> {
     }
 
     onVersion() async {
-      // Uri url = Platform.isIOS
-      //     ? Uri(
-      //         scheme: 'https',
-      //         host: 'apps.apple.com',
-      //         path: 'ko/app/easy-money-household-ledger/id6737747809',
-      //       )
-      //     : Uri(
-      //         scheme: 'https',
-      //         host: 'play.google.com',
-      //         path:
-      //             'store/apps/details?id=com.kthdd.household_account_book_app',
-      //       );
+      Uri url = Platform.isIOS
+          ? Uri(
+              scheme: 'https',
+              host: 'apps.apple.com',
+              path: 'ko/app/',
+            )
+          : Uri(
+              scheme: 'https',
+              host: 'play.google.com',
+              path: 'store/apps/details?id=com.kthdd.todo_tracker_app',
+            );
 
-      // await canLaunchUrl(url) ? await launchUrl(url) : print('err');
+      await canLaunchUrl(url) ? await launchUrl(url) : print('err');
     }
 
     List<SettingItemClass> settingItemList = [
@@ -245,6 +268,16 @@ class _SettingBodyState extends State<SettingBody> {
         value: getLocaleName(locale),
         onTap: onLanguage,
       ),
+      // SettingItemClass(
+      //   name: '앱 공유',
+      //   svg: 'share',
+      //   onTap: onShare,
+      // ),
+      // SettingItemClass(
+      //   name: '앱 리뷰',
+      //   svg: 'review',
+      //   onTap: onReview,
+      // ),
       SettingItemClass(
         name: '개발자 문의',
         svg: 'inquire',
@@ -281,10 +314,15 @@ class _SettingBodyState extends State<SettingBody> {
                             SettingSvg(svg: settingItem.svg),
                             SettingTitle(title: settingItem.name),
                             const Spacer(),
-                            SettingValue(
-                              text: settingItem.value,
-                              isVersion: settingItem.name == '앱 버전',
-                            ),
+                            settingItem.svg == 'crown'
+                                ? SettingPremium(
+                                    text: settingItem.value!,
+                                    onTap: settingItem.onTap,
+                                  )
+                                : SettingValue(
+                                    text: settingItem.value,
+                                    isVersion: settingItem.name == '앱 버전',
+                                  ),
                           ],
                         ),
                       ),

@@ -168,6 +168,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     initializeLogin();
     initializeATT();
     initializePrivacyScreen();
+    initializeWindowManager();
 
     WidgetsBinding.instance.addObserver(this);
     super.initState();

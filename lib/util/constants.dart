@@ -52,7 +52,7 @@ const androidAppOpeningTestId = 'ca-app-pub-3940256099942544/9257395921';
 const androidInterstitialTestId = 'ca-app-pub-3940256099942544/1033173712';
 
 /// androidBannerRealId
-const androidBannerRealId = '';
+const androidBannerRealId = 'ca-app-pub-6804308271128440~2090407521';
 
 /// androidNativeRealId
 const androidNativeRealId = '';
@@ -76,7 +76,7 @@ const iOSAppOpeningTestId = 'ca-app-pub-3940256099942544/5575463023';
 const iOSInterstitialTestId = 'ca-app-pub-3940256099942544/4411468910';
 
 /// iOSBannerRealId
-const iOSBannerRealId = '';
+const iOSBannerRealId = 'ca-app-pub-6804308271128440~1175147222';
 
 // iOSNativeRealId
 const iOSNativeRealId = '';
