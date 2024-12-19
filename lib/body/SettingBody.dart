@@ -268,16 +268,16 @@ class _SettingBodyState extends State<SettingBody> {
         value: getLocaleName(locale),
         onTap: onLanguage,
       ),
-      // SettingItemClass(
-      //   name: '앱 공유',
-      //   svg: 'share',
-      //   onTap: onShare,
-      // ),
-      // SettingItemClass(
-      //   name: '앱 리뷰',
-      //   svg: 'review',
-      //   onTap: onReview,
-      // ),
+      SettingItemClass(
+        name: '앱 공유',
+        svg: 'share',
+        onTap: onShare,
+      ),
+      SettingItemClass(
+        name: '앱 리뷰',
+        svg: 'review',
+        onTap: onReview,
+      ),
       SettingItemClass(
         name: '개발자 문의',
         svg: 'inquire',

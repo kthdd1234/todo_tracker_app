@@ -68,15 +68,6 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  onLogout() async {
-    try {
-      await auth.signOut();
-      navigatorRemoveUntil(context: context, page: const IntroPage());
-    } catch (e) {
-      return null;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     UserInfoClass userInfo = context.watch<UserInfoProvider>().userInfo;
@@ -84,6 +75,39 @@ class _ProfilePageState extends State<ProfilePage> {
         context.watch<GroupInfoListProvider>().groupInfoList;
     List<MemoInfoClass> memoInfoList =
         context.watch<MemoInfoListProvider>().memoInfoList;
+    bool isLight = context.watch<ThemeProvider>().isLight;
+    double fontSize = context.watch<FontSizeProvider>().fintSize;
+
+    String loginType = userInfo.loginType;
+    String loginText = authButtonInfo[loginType]!['name'];
+    String svg = authButtonInfo[loginType]!['svg'];
+
+    onSignOut() async {
+      await auth.signOut();
+      navigatorRemoveUntil(context: context, page: const IntroPage());
+    }
+
+    onLogout() {
+      try {
+        if (loginType == 'guest') {
+          showDialog(
+            context: context,
+            builder: (context) => AlertPopup(
+              height: 220,
+              desc: '게스트 계정은 로그아웃 시\n이전에 기록한 데이터를 모두 삭제합니다.\n그래도 진행하시겠습니까?',
+              alert: '(광고 제거 + 사진 추가 구매 내역은 그대로 유지됩니다)',
+              buttonText: '확인',
+              isCancel: true,
+              onTap: () => onSignOut(),
+            ),
+          );
+        } else {
+          onSignOut();
+        }
+      } catch (e) {
+        return null;
+      }
+    }
 
     onLeave() async {
       navigatorPop(context);
@@ -116,12 +140,6 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
       );
     }
-
-    String loginText = authButtonInfo[userInfo.loginType]!['name'];
-    String svg = authButtonInfo[userInfo.loginType]!['svg'];
-
-    bool isLight = context.watch<ThemeProvider>().isLight;
-    double fontSize = context.watch<FontSizeProvider>().fintSize;
 
     return CommonBackground(
       child: CommonScaffold(

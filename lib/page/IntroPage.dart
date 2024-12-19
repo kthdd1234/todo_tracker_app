@@ -11,6 +11,7 @@ import 'package:todo_tracker_app/service/AuthService.dart';
 import 'package:todo_tracker_app/util/class.dart';
 import 'package:todo_tracker_app/util/constants.dart';
 import 'package:todo_tracker_app/util/final.dart';
+import 'package:todo_tracker_app/widget/popup/AlertPopup.dart';
 
 class IntroPage extends StatefulWidget {
   const IntroPage({super.key});
@@ -23,7 +24,18 @@ class _IntroPageState extends State<IntroPage> {
   AuthService authService = AuthService();
 
   onGuestLogin() {
-    authService.signInWithGuest(context);
+    showDialog(
+      context: context,
+      builder: (context) => AlertPopup(
+        height: 180,
+        desc: '게스트 계정으로 시작하시겠습니까?',
+        alert: '(로그아웃 시, 이전에 기록한 데이터는 모두 삭제됩니다)',
+        buttonText: '시작하기',
+        isCancel: true,
+        okColor: blue.s400,
+        onTap: () => authService.signInWithGuest(context),
+      ),
+    );
   }
 
   onGoogleLogin() {
@@ -50,7 +62,7 @@ class _IntroPageState extends State<IntroPage> {
             CommonButton(
               svg: 'guest',
               outerPadding: const EdgeInsets.symmetric(horizontal: 10),
-              text: '계정 없이 그냥 앱 둘러보기',
+              text: 'Guest로 로그인',
               textColor: Colors.white,
               buttonColor: blue.original,
               verticalPadding: 15,

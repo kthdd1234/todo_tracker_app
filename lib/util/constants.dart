@@ -52,7 +52,7 @@ const androidAppOpeningTestId = 'ca-app-pub-3940256099942544/9257395921';
 const androidInterstitialTestId = 'ca-app-pub-3940256099942544/1033173712';
 
 /// androidBannerRealId
-const androidBannerRealId = 'ca-app-pub-6804308271128440~2090407521';
+const androidBannerRealId = 'ca-app-pub-6804308271128440/6240349607';
 
 /// androidNativeRealId
 const androidNativeRealId = '';
@@ -76,7 +76,7 @@ const iOSAppOpeningTestId = 'ca-app-pub-3940256099942544/5575463023';
 const iOSInterstitialTestId = 'ca-app-pub-3940256099942544/4411468910';
 
 /// iOSBannerRealId
-const iOSBannerRealId = 'ca-app-pub-6804308271128440~1175147222';
+const iOSBannerRealId = 'ca-app-pub-6804308271128440/5254570991';
 
 // iOSNativeRealId
 const iOSNativeRealId = '';
@@ -100,11 +100,12 @@ const offeringIdentifier = 'todo tracker - remove ads';
 const entitlementIdentifier = 'todo tracker identifier';
 
 /// APP_STORE_LINK
-const APP_STORE_LINK = "https://apps.apple.com/app";
+const APP_STORE_LINK =
+    "https://apps.apple.com/ko/app/todo-tracker-to-do-list-app/id6739280281";
 
 /// PLAY_STORE_LINK
 const PLAY_STORE_LINK =
-    "https://play.google.com/store/apps/details?id=com.kthdd.";
+    "https://play.google.com/store/apps/details?id=com.kthdd.todo_tracker_app";
 
 /// themeBgColor
 const darkBgColor = Color(0xff1C1C1E); // 28, 28, 30

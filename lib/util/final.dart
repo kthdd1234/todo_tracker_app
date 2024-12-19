@@ -265,7 +265,7 @@ Map<String, Map<String, dynamic>> authButtonInfo = {
   },
   'guest': {
     'svg': 'guest',
-    'name': '없음',
+    'name': '게스트 계정',
     'textColor': Colors.white,
     'bgColor': darkButtonColor,
   },
