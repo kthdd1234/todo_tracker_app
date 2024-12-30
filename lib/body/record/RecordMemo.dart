@@ -10,6 +10,7 @@ import 'package:todo_tracker_app/provider/MemoInfoListProvider.dart';
 import 'package:todo_tracker_app/provider/PremiumProvider.dart';
 import 'package:todo_tracker_app/provider/SelectedDateTimeProvider.dart';
 import 'package:todo_tracker_app/provider/ThemeProvider.dart';
+import 'package:todo_tracker_app/provider/UserInfoProvider.dart';
 import 'package:todo_tracker_app/util/class.dart';
 import 'package:todo_tracker_app/util/constants.dart';
 import 'package:todo_tracker_app/util/final.dart';
@@ -25,6 +26,8 @@ class RecordMemo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String locale = context.locale.toString();
+
+    UserInfoClass userInfo = context.watch<UserInfoProvider>().userInfo;
     DateTime selectedDateTime =
         context.watch<SelectedDateTimeProvider>().selectedDateTime;
     bool isLight = context.watch<ThemeProvider>().isLight;
@@ -51,6 +54,7 @@ class RecordMemo extends StatelessWidget {
           isPremium: isPremium,
           initDateTime: selectedDateTime,
           memoInfoList: memoInfoList,
+          userInfo: userInfo,
           memoInfo: memoInfo,
         ),
       );

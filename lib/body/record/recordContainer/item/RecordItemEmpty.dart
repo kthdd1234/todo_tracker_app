@@ -33,6 +33,7 @@ class RecordItemEmpty extends StatelessWidget {
         context: context,
         builder: (context) => TaskBottomSheet(
           isPremium: isPremium,
+          userInfo: userInfo,
           selectedDateTime: selectedDateTime,
           groupInfo: groupInfoOrderList[0],
         ),

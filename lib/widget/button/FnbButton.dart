@@ -44,6 +44,7 @@ class _FnbButtonState extends State<FnbButton> {
         context: context,
         builder: (context) => TaskBottomSheet(
           isPremium: isPremium,
+          userInfo: userInfo,
           groupInfo: groupInfoOrderList[0],
           selectedDateTime: selectedDateTime,
         ),
@@ -62,6 +63,7 @@ class _FnbButtonState extends State<FnbButton> {
           isPremium: isPremium,
           initDateTime: selectedDateTime,
           memoInfoList: memoInfoList,
+          userInfo: userInfo,
           memoInfo: memoInfo,
         ),
       );

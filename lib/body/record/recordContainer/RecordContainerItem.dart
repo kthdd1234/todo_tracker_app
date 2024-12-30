@@ -7,6 +7,7 @@ import 'package:todo_tracker_app/body/record/recordContainer/item/RecordItemMark
 import 'package:todo_tracker_app/common/CommonDivider.dart';
 import 'package:todo_tracker_app/provider/FontSizeProvider.dart';
 import 'package:todo_tracker_app/provider/SelectedDateTimeProvider.dart';
+import 'package:todo_tracker_app/provider/UserInfoProvider.dart';
 import 'package:todo_tracker_app/util/class.dart';
 import 'package:todo_tracker_app/util/func.dart';
 import 'package:todo_tracker_app/widget/bottomSheet/TaskInfoBottomSheet.dart';
@@ -23,6 +24,7 @@ class RecordContainerItem extends StatelessWidget {
     DateTime selectedDateTime =
         context.watch<SelectedDateTimeProvider>().selectedDateTime;
 
+    UserInfoClass userInfo = context.watch<UserInfoProvider>().userInfo;
     GroupInfoClass groupInfo = recordItem.groupInfo;
     TaskInfoClass taskInfo = recordItem.taskInfo;
     ColorClass color = getColorClass(groupInfo.colorName);
@@ -37,6 +39,7 @@ class RecordContainerItem extends StatelessWidget {
         isScrollControlled: true,
         context: context,
         builder: (context) => TaskInfoBottomSheet(
+          userInfo: userInfo,
           groupInfo: groupInfo,
           taskInfo: taskInfo,
           initDateTime: selectedDateTime,

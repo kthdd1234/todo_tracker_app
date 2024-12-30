@@ -23,11 +23,13 @@ class TaskBottomSheet extends StatefulWidget {
     super.key,
     required this.isPremium,
     required this.selectedDateTime,
+    required this.userInfo,
     required this.groupInfo,
     this.taskInfo,
   });
 
   bool isPremium;
+  UserInfoClass userInfo;
   GroupInfoClass groupInfo;
   TaskInfoClass? taskInfo;
   DateTime selectedDateTime;
@@ -63,9 +65,10 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
       dateTimeInfo.dateTimeList = [widget.selectedDateTime];
     }
 
-    if (widget.isPremium == false) {
-      interstitialAdService.loadAd();
-    }
+    interstitialAdService.loadAd(
+      isPremium: widget.isPremium,
+      userInfo: widget.userInfo,
+    );
 
     super.initState();
   }
@@ -199,9 +202,10 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
 
     navigatorPop(context);
 
-    if (widget.isPremium == false) {
-      interstitialAdService.showAd();
-    }
+    interstitialAdService.showAd(
+      isPremium: widget.isPremium,
+      userInfo: widget.userInfo,
+    );
   }
 
   @override

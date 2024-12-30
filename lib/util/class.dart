@@ -304,6 +304,7 @@ class UserInfoClass {
     required this.fontSize,
     required this.calendarFormat,
     this.passwords,
+    this.adDateTimeKey,
   });
 
   String uid, loginType, fontFamily, background, theme, osType;
@@ -315,6 +316,7 @@ class UserInfoClass {
   double fontSize;
   String calendarFormat;
   String? passwords;
+  int? adDateTimeKey;
 
   UserInfoClass.fromJson(Map<String, dynamic> json)
       : uid = json['uid'] as String,
@@ -330,7 +332,8 @@ class UserInfoClass {
         taskOrderList = taskOrderFromJson(json['taskOrderList']),
         fontSize = json['fontSize'] as double,
         calendarFormat = json['calendarFormat'] as String,
-        passwords = json['passwords'] as String?;
+        passwords = json['passwords'] as String?,
+        adDateTimeKey = json['adDateTimeKey'] as int?;
 
   Map<String, dynamic> toJson() => {
         'uid': uid,
@@ -347,6 +350,7 @@ class UserInfoClass {
         'fontSize': fontSize,
         'calendarFormat': calendarFormat,
         'passwords': passwords,
+        'adDateTimeKey': adDateTimeKey,
       };
 }
 

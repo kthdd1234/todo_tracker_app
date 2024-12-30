@@ -2,6 +2,8 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:todo_tracker_app/method/UserMethod.dart';
+import 'package:todo_tracker_app/util/class.dart';
 import 'package:todo_tracker_app/util/func.dart';
 
 class InterstitialAdService {
@@ -9,41 +11,65 @@ class InterstitialAdService {
 
   String adUnitId = getAdId('interstitial');
 
-  void loadAd() async {
-    InterstitialAd.load(
-      adUnitId: adUnitId,
-      request: const AdRequest(),
-      adLoadCallback: InterstitialAdLoadCallback(
-        onAdLoaded: (ad) {
-          ad.fullScreenContentCallback = FullScreenContentCallback(
-            onAdFailedToShowFullScreenContent: (ad, err) {
-              ad.dispose();
-              _interstitialAd = null;
-            },
-            onAdDismissedFullScreenContent: (ad) {
-              ad.dispose();
-              _interstitialAd = null;
-              loadAd();
-            },
-          );
+  void loadAd({
+    required bool isPremium,
+    required UserInfoClass userInfo,
+  }) async {
+    int nowKey = dateTimeKey(DateTime.now());
+    int? adDateTimeKey = userInfo.adDateTimeKey;
 
-          _interstitialAd = ad;
-          showLog();
-        },
-        onAdFailedToLoad: (LoadAdError error) {
-          debugPrint('InterstitialAd failed to load: $error');
-        },
-      ),
-    );
-  }
+    bool isNotPremium = isPremium == false;
+    bool isDateTimeKey = (adDateTimeKey == null) || (nowKey != adDateTimeKey);
 
-  void showAd() async {
-    if (_interstitialAd != null) {
-      await _interstitialAd!.show();
+    log('loadAd: $nowKey, $adDateTimeKey');
+
+    if (isNotPremium && isDateTimeKey) {
+      InterstitialAd.load(
+        adUnitId: adUnitId,
+        request: const AdRequest(),
+        adLoadCallback: InterstitialAdLoadCallback(
+          onAdLoaded: (ad) {
+            ad.fullScreenContentCallback = FullScreenContentCallback(
+              onAdFailedToShowFullScreenContent: (ad, err) {
+                ad.dispose();
+                _interstitialAd = null;
+              },
+              onAdDismissedFullScreenContent: (ad) {
+                ad.dispose();
+                _interstitialAd = null;
+
+                loadAd(isPremium: isPremium, userInfo: userInfo);
+              },
+            );
+
+            _interstitialAd = ad;
+          },
+          onAdFailedToLoad: (LoadAdError error) {
+            debugPrint('InterstitialAd failed to load: $error');
+          },
+        ),
+      );
     }
   }
 
-  void showLog() {
-    log('전면 광고 로드 체크 => $_interstitialAd');
+  void showAd({
+    required bool isPremium,
+    required UserInfoClass userInfo,
+  }) async {
+    int nowKey = dateTimeKey(DateTime.now());
+    int? adDateTimeKey = userInfo.adDateTimeKey;
+
+    bool isLoadAd = _interstitialAd != null;
+    bool isNotPremium = isPremium == false;
+    bool isDateTimeKey = (adDateTimeKey == null) || (nowKey != adDateTimeKey);
+
+    log('showAd: $nowKey, $adDateTimeKey');
+
+    if (isLoadAd && isNotPremium && isDateTimeKey) {
+      await _interstitialAd!.show();
+
+      userInfo.adDateTimeKey = nowKey;
+      await userMethod.updateUser(userInfo: userInfo);
+    }
   }
 }

@@ -35,12 +35,14 @@ class MemoPage extends StatefulWidget {
     super.key,
     required this.isPremium,
     required this.initDateTime,
+    required this.userInfo,
     required this.memoInfoList,
     this.memoInfo,
   });
 
   bool isPremium;
   DateTime initDateTime;
+  UserInfoClass userInfo;
   List<MemoInfoClass> memoInfoList;
   MemoInfoClass? memoInfo;
 
@@ -69,10 +71,10 @@ class _MemoPageState extends State<MemoPage> {
       }
     }
 
-    // loadAd
-    if (widget.isPremium == false) {
-      interstitialAdService.loadAd();
-    }
+    interstitialAdService.loadAd(
+      isPremium: widget.isPremium,
+      userInfo: widget.userInfo,
+    );
   }
 
   onImage(bool isPremium) {
@@ -202,9 +204,10 @@ class _MemoPageState extends State<MemoPage> {
       } finally {
         navigatorPop(context);
 
-        if (widget.isPremium == false) {
-          interstitialAdService.showAd();
-        }
+        interstitialAdService.showAd(
+          isPremium: widget.isPremium,
+          userInfo: widget.userInfo,
+        );
       }
     }
   }

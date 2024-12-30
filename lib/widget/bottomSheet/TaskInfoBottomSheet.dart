@@ -24,11 +24,13 @@ import 'package:todo_tracker_app/widget/dateTime/CalendarDateTimeMaker.dart';
 class TaskInfoBottomSheet extends StatefulWidget {
   TaskInfoBottomSheet({
     super.key,
+    required this.userInfo,
     required this.groupInfo,
     required this.taskInfo,
     required this.initDateTime,
   });
 
+  UserInfoClass userInfo;
   GroupInfoClass groupInfo;
   TaskInfoClass taskInfo;
   DateTime initDateTime;
@@ -168,6 +170,7 @@ class _TaskInfoBottomSheetState extends State<TaskInfoBottomSheet> {
         builder: (context) => TaskBottomSheet(
           isPremium: isPremium,
           selectedDateTime: widget.initDateTime,
+          userInfo: widget.userInfo,
           groupInfo: widget.groupInfo,
           taskInfo: widget.taskInfo,
         ),
